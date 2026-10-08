@@ -1,0 +1,225 @@
+{
+  "main": {
+    "id": "6e9dc79eb1418063",
+    "type": "split",
+    "children": [
+      {
+        "id": "e8329b3ef67ef987",
+        "type": "tabs",
+        "dimension": 67.82994923857868,
+        "children": [
+          {
+            "id": "63622e04c36a0920",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "Fluxograma.canvas",
+                "viewState": {
+                  "x": 752.6989205900426,
+                  "y": -194.1509075165606,
+                  "zoom": 1.1102230246251565e-16
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Fluxograma"
+            }
+          }
+        ]
+      },
+      {
+        "id": "d847dda3c5085bda",
+        "type": "tabs",
+        "dimension": 32.17005076142132,
+        "children": [
+          {
+            "id": "42bf2ef0a50053e4",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Visualização em gráfico"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "bc2b51a622ea2c2f",
+    "type": "split",
+    "children": [
+      {
+        "id": "a3f704ac62e8912d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5af2ca00508f10ac",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de arquivos"
+            }
+          },
+          {
+            "id": "a817062f43c46a9d",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Procurar"
+            }
+          },
+          {
+            "id": "043867fe5a305dd4",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "e3b419412939d8a7",
+    "type": "split",
+    "children": [
+      {
+        "id": "ec9d0de3fcf01739",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9538c12f1507c173",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Bem-vindo.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Links inversos"
+            }
+          },
+          {
+            "id": "4963f766d874dec3",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Bem-vindo.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Links de saída"
+            }
+          },
+          {
+            "id": "d1e70226301d7625",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "6cbda1e4c24278fd",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas as propriedades"
+            }
+          },
+          {
+            "id": "0a1ed1a9d7041441",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Bem-vindo.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Sumário"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir a troca rápida": false,
+      "graph:Abrir visualização em gráfico": false,
+      "canvas:Criar novo canvas": false,
+      "daily-notes:Abrir a nota de hoje": false,
+      "templates:Inserir modelo": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Criar nova base": false
+    }
+  },
+  "active": "63622e04c36a0920",
+  "lastOpenFiles": [
+    "Logs/Logs.canvas",
+    "Logs/Commit inicial.md",
+    "outros/Pasted image 20261008191220.png",
+    "outros",
+    "Logs/Nexus · Protótipo · Fundação Manoel Cruz.html",
+    "Nexus · Protótipo · Fundação Manoel Cruz.html",
+    "Logs",
+    "Fluxograma.canvas",
+    "Sem título.base",
+    "Bem-vindo.md"
+  ]
+}

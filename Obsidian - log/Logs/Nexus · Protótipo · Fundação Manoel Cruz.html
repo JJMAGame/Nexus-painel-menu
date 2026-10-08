@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nexus · Protótipo · Fundação Manoel Cruz</title>
+<style>
+:root{
+  --ink:#0d1b2a; --navy:#1b3a5c; --blue:#2f6fa7; --sky:#cfe1f2;
+  --paper:#f2f3f5; --line:#dde1e6; --mute:#6b7785; --ok:#1f8a4c; --late:#c0392b; --warn:#c98a12;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:"Lato","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;background:#0d1b2a;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;min-height:100%}
+.phone{width:100%;max-width:400px;height:100dvh;max-height:820px;background:var(--paper);position:relative;overflow:hidden;
+  display:flex;flex-direction:column}
+@media(min-width:500px){.phone{border-radius:34px;border:10px solid #000;height:820px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  body{padding:20px;flex-direction:column;gap:14px}}
+.hint{color:#9fb3c8;font-size:13px;text-align:center;max-width:400px;display:none}
+@media(min-width:500px){.hint{display:block}}
+.screen{display:none;flex:1;flex-direction:column;overflow:hidden}
+.screen.on{display:flex}
+.top{background:var(--ink);color:#fff;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 14px;display:flex;align-items:center;gap:12px}
+.top h1{font-size:18px;font-weight:700;flex:1}
+.ib{background:none;border:0;color:inherit;font-size:20px;cursor:pointer;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;position:relative}
+.ib:focus-visible,button:focus-visible,.tap:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.dot{position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:#e74c3c}
+.body{flex:1;overflow-y:auto;padding:16px;padding-bottom:24px}
+.nav{display:flex;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav button{flex:1;background:none;border:0;padding:10px 0 8px;font:inherit;font-size:11px;color:var(--mute);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+.nav button span{font-size:19px}
+.nav button.act{color:var(--blue);font-weight:700}
+h2{font-size:15px;margin:18px 0 10px;color:var(--navy)}
+h2:first-child{margin-top:0}
+.card{background:#fff;border-radius:var(--r);padding:14px;border:1px solid var(--line)}
+.tap{cursor:pointer}
+.row{display:flex;align-items:center;gap:12px}
+.list .row{padding:12px 0;border-bottom:1px solid var(--line)}
+.list .row:last-child{border-bottom:0}
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;flex:none}
+.t{font-weight:700;font-size:14px}
+.s{font-size:12.5px;color:var(--mute);margin-top:2px}
+.grow{flex:1;min-width:0}
+.pill{font-size:11px;font-weight:700;padding:4px 9px;border-radius:20px;white-space:nowrap}
+.p-ok{background:#e1f3e8;color:var(--ok)}.p-late{background:#fbe4e1;color:var(--late)}.p-warn{background:#fdf1d8;color:var(--warn)}.p-vac{background:#e8ebef;color:var(--mute)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.qa{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px 6px;text-align:center;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--navy)}
+.qa span{display:block;font-size:24px;margin-bottom:6px}
+.hello{background:var(--navy);color:#fff;border-radius:var(--r);padding:18px;display:flex;gap:14px;align-items:center}
+.hello .big{font-size:22px;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.stat{background:rgba(255,255,255,.1);border-radius:10px;padding:10px;text-align:center}
+.stat b{font-size:20px;display:block}.stat small{font-size:11px;opacity:.8}
+.bar{height:10px;border-radius:6px;background:var(--line);overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mute);margin-top:8px;flex-wrap:wrap}
+.legend b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.cal{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.m{border-radius:10px;padding:10px 4px;text-align:center;font-weight:700;font-size:13px}
+.m small{display:block;font-weight:400;font-size:10.5px;margin-top:2px}
+.m.ok{background:#e1f3e8;color:var(--ok)}.m.late{background:#fbe4e1;color:var(--late)}.m.fut{background:#eef0f3;color:#a3adb8}
+.doc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;cursor:pointer}
+.doc .ic{font-size:26px}
+.doc .t{margin-top:8px;font-size:13px}
+.seg{display:flex;background:#e3e7ec;border-radius:10px;padding:3px;margin-bottom:14px}
+.seg button{flex:1;border:0;background:none;padding:8px;font:inherit;font-size:13px;border-radius:8px;cursor:pointer;color:var(--mute)}
+.seg button.act{background:#fff;color:var(--ink);font-weight:700}
+input{width:100%;font:inherit;font-size:15px;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;margin-bottom:10px}
+.btn{width:100%;border:0;border-radius:10px;padding:14px;font:inherit;font-weight:700;font-size:15px;background:var(--blue);color:#fff;cursor:pointer}
+.btn.ghost{background:none;color:var(--blue);padding:10px}
+.login{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px;background:linear-gradient(170deg,var(--ink) 0 42%,var(--paper) 42%)}
+.brand{color:#fff;text-align:center;margin-bottom:34px}
+.brand .lg{font-size:40px;font-weight:300;letter-spacing:1px}
+.brand p{font-size:13px;opacity:.75;margin-top:4px}
+.profile{text-align:center;padding:10px 0 4px}
+.profile .av{width:84px;height:84px;font-size:30px;margin:0 auto 10px}
+.kv{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.kv:last-child{border:0}.kv span{color:var(--mute)}
+.money{font-weight:700;font-variant-numeric:tabular-nums}
+.toast{position:absolute;left:16px;right:16px;bottom:80px;background:var(--ink);color:#fff;padding:12px 14px;border-radius:10px;font-size:13.5px;opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:none}
+.sheet{position:absolute;inset:0;background:rgba(13,27,42,.5);display:none;align-items:flex-end;z-index:5}
+.sheet.on{display:flex}
+.sheet .in{background:#fff;width:100%;border-radius:20px 20px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px))}
+.pv{height:170px;border-radius:10px;background:repeating-linear-gradient(0deg,#f4f6f8 0 18px,#e9edf1 18px 19px);margin:14px 0;display:grid;place-items:center;color:var(--mute);font-size:13px}
+.ex .row{padding:10px 0;border-bottom:1px solid var(--line)}
+.month{font-size:12px;color:var(--mute);font-weight:700;margin:16px 0 4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="phone" id="app">
+
+<!-- LOGIN -->
+<section class="screen on" id="login">
+  <div class="login">
+    <div class="brand"><div class="lg">Nexus</div><p>Gestão de imóveis · Fundação Manoel Cruz</p></div>
+    <div class="card" style="padding:20px">
+      <div class="seg" id="roleSeg">
+        <button class="act" data-role="adm">Administrador</button>
+        <button data-role="inq">Inquilino</button>
+      </div>
+      <input type="email" id="email" value="bruce@fmc.org.br" aria-label="E-mail">
+      <input type="password" value="12345678" aria-label="Senha">
+      <button class="btn" onclick="entrar()">Entrar</button>
+      <button class="btn ghost" onclick="go('senha')">Esqueci a senha</button>
+    </div>
+  </div>
+</section>
+
+<!-- SENHA -->
+<section class="screen" id="senha">
+  <div class="top"><button class="ib" onclick="go('login')" aria-label="Voltar">←</button><h1>Recuperar senha</h1></div>
+  <div class="body">
+    <p class="s" style="font-size:14px;margin-bottom:16px">Informe o e-mail cadastrado. Enviaremos um link para criar uma nova senha.</p>
+    <input type="email" value="jstewart@email.com" aria-label="E-mail">
+    <button class="btn" onclick="toast('Link enviado para jstewart@email.com');setTimeout(()=>go('login'),1200)">Enviar link por e-mail</button>
+  </div>
+</section>
+
+<!-- ================= ADM ================= -->
+<section class="screen" id="adm-home">
+  <div class="top"><h1>Nexus</h1><button class="ib" onclick="go('adm-notif')" aria-label="Notificações">🔔<i class="dot"></i></button><button class="ib" onclick="go('login')" aria-label="Sair">⎋</button></div>
+  <div class="body">
+    <div class="hello">
+      <div class="av" style="background:var(--blue)">B</div>
+      <div><div class="s" style="color:#cfe1f2">Olá,</div><div class="big">Bruce</div></div>
+    </div>
+    <div class="stats" style="background:var(--navy);margin-top:-8px;padding:0 18px 18px;border-radius:0 0 var(--r) var(--r)">
+      <div class="stat"><b>124</b><small>imóveis</small></div>
+      <div class="stat"><b>109</b><small>alugados</small></div>
+      <div class="stat"><b style="color:#ff9b8f">7</b><small>em atraso</small></div>
+    </div>
+    <h2>Acesso rápido</h2>
+    <div class="grid3">
+      <div class="qa" onclick="go('adm-docs')"><span>📄</span>Documentos</div>
+      <div class="qa" onclick="sheet('cad')"><span>➕</span>Cadastrar</div>
+      <div class="qa" onclick="go('adm-modelos')"><span>📝</span>Modelos</div>
+    </div>
+    <h2>Recebimentos de outubro</h2>
+    <div class="card">
+      <div class="row" style="justify-content:space-between;margin-bottom:10px"><span class="money" style="font-size:20px">R$ 187.420</span><span class="s">de R$ 214.300</span></div>
+      <div class="bar"><i style="width:82%;background:var(--ok)"></i><i style="width:7%;background:var(--late)"></i><i style="width:11%;background:var(--warn)"></i></div>
+      <div class="legend"><span><b style="background:var(--ok)"></b>Pago 89</span><span><b style="background:var(--late)"></b>Atrasado 7</span><span><b style="background:var(--warn)"></b>A vencer 13</span></div>
+    </div>
+    <h2>Precisa de atenção</h2>
+    <div class="card list" id="atencao"></div>
+  </div>
+  <nav class="nav" data-nav="adm"></nav>
+</section>
+
+<section class="screen" id="adm-imoveis">
+  <div class="top"><h1>Imóveis</h1><button class="ib" onclick="go('adm-notif')" aria-label="Notificações">🔔<i class="dot"></i></button></div>
+  <div class="body">
+    <input type="search" placeholder="Buscar por endereço ou inquilino" oninput="listaImoveis(this.value)" aria-label="Buscar">
+    <div class="seg" id="filtroSeg">
+      <button class="act" data-f="todos">Todos</button><button data-f="late">Em atraso</button><button data-f="vac">Vagos</button>
+    </div>
+    <div class="card list" id="imoveis"></div>
+  </div>
+  <nav class="nav" data-nav="adm"></nav>
+</section>
+
+<section class="screen" id="adm-imovel">
+  <div class="top"><button class="ib" onclick="go('adm-imoveis')" aria-label="Voltar">←</button><h1 id="im-titulo">Imóvel</h1></div>
+  <div class="body" id="im-body"></div>
+  <nav class="nav" data-nav="adm"></nav>
+</section>
+
+<section class="screen" id="adm-docs">
+  <div class="top"><button class="ib" onclick="back()" aria-label="Voltar">←</button><h1>Documentos</h1></div>
+  <div class="body">
+    <h2>Financeiros</h2>
+    <div class="grid2" id="docsFin"></div>
+    <h2>Dos imóveis</h2>
+    <div class="grid2" id="docsIm"></div>
+  </div>
+  <nav class="nav" data-nav="adm"></nav>
+</section>
+
+<section class="screen" id="adm-modelos">
+  <div class="top"><button class="ib" onclick="back()" aria-label="Voltar">←</button><h1>Modelos</h1></div>
+  <div class="body">
+    <p class="s" style="font-size:13.5px;margin-bottom:14px">Modelos padrão da Fundação. Toque para gerar um documento já preenchido com os dados do imóvel e do inquilino.</p>
+    <div class="grid2" id="modelos"></div>
+  </div>
+  <nav class="nav" data-nav="adm"></nav>
+</section>
+
+<section class="screen" id="adm-fin">
+  <div class="top"><h1>Financeiro</h1><button class="ib" onclick="go('adm-notif')" aria-label="Notificações">🔔<i class="dot"></i></button></div>
+  <div class="body">
+    <div class="card">
+      <div class="s">Receita prevista em 2026</div>
+      <div class="money" style="font-size:24px;margin:4px 0 12px">R$ 2.571.600</div>
+      <div id="chart" style="display:flex;align-items:flex-end;gap:5px;height:110px"></div>
+      <div style="display:flex;gap:5px;font-size:10px;color:var(--mute);margin-top:4px" id="chartL"></div>
+    </div>
+    <h2>Planilhas de controle</h2>
+    <div class="card list">
+      <div class="row tap" onclick="sheet('doc','Fluxo de caixa – out/2026')"><span style="font-size:22px">📊</span><div class="grow"><div class="t">Fluxo de caixa</div><div class="s">Atualizado hoje</div></div>›</div>
+      <div class="row tap" onclick="sheet('doc','Inadimplência – 2026')"><span style="font-size:22px">📊</span><div class="grow"><div class="t">Inadimplência</div><div class="s">7 contratos em atraso</div></div>›</div>
+      <div class="row tap" onclick="sheet('doc','IPTU e condomínios')"><span style="font-size:22px">📊</span><div class="grow"><div class="t">IPTU e condomínios</div><div class="s">3 vencimentos esta semana</div></div>›</div>
+      <div class="row tap" onclick="sheet('doc','Prestação de contas – 3º tri')"><span style="font-size:22px">📊</span><div class="grow"><div class="t">Prestação de contas</div><div class="s">3º trimestre pronto para envio</div></div>›</div>
+    </div>
+  </div>
+  <nav class="nav" data-nav="adm"></nav>
+</section>
+
+<section class="screen" id="adm-notif">
+  <div class="top"><button class="ib" onclick="back()" aria-label="Voltar">←</button><h1>Notificações</h1></div>
+  <div class="body"><div class="card list" id="notifAdm"></div></div>
+  <nav class="nav" data-nav="adm"></nav>
+</section>
+
+<!-- ================= INQUILINO ================= -->
+<section class="screen" id="inq-perfil">
+  <div class="top"><h1>Meu perfil</h1><button class="ib" onclick="go('inq-notif')" aria-label="Notificações">🔔<i class="dot"></i></button><button class="ib" onclick="go('login')" aria-label="Sair">⎋</button></div>
+  <div class="body">
+    <div class="profile">
+      <div class="av" style="background:#2f6fa7">JS</div>
+      <div class="t" style="font-size:18px">John Stewart</div>
+      <div class="s">📍 Av. Ali, 22 · apto 301 · Recife</div>
+    </div>
+    <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
+      <div class="row"><div class="grow"><div class="s">Próximo aluguel · vence 10/11</div><div class="money" style="font-size:22px">R$ 1.850,00</div></div><span class="pill p-warn">A vencer</span></div>
+      <button class="btn" style="margin-top:12px" onclick="sheet('pix')">Pagar com Pix</button>
+    </div>
+    <h2>Meu contrato</h2>
+    <div class="card">
+      <div class="kv"><span>Início</span>01/03/2024</div>
+      <div class="kv"><span>Término</span>28/02/2027</div>
+      <div class="kv"><span>Reajuste</span>IGP-M · março</div>
+      <div class="kv"><span>Situação</span><span class="pill p-ok">Em dia</span></div>
+    </div>
+    <h2>Acesso rápido</h2>
+    <div class="grid2">
+      <div class="qa" onclick="go('inq-extratos')"><span>🧾</span>Extratos</div>
+      <div class="qa" onclick="go('inq-docs')"><span>📁</span>Documentos</div>
+    </div>
+  </div>
+  <nav class="nav" data-nav="inq"></nav>
+</section>
+
+<section class="screen" id="inq-extratos">
+  <div class="top"><h1>Extratos</h1><button class="ib" onclick="go('inq-notif')" aria-label="Notificações">🔔<i class="dot"></i></button></div>
+  <div class="body"><div class="card ex" id="extratos"></div></div>
+  <nav class="nav" data-nav="inq"></nav>
+</section>
+
+<section class="screen" id="inq-docs">
+  <div class="top"><h1>Documentos</h1><button class="ib" onclick="go('inq-notif')" aria-label="Notificações">🔔<i class="dot"></i></button></div>
+  <div class="body">
+    <h2>Enviados por você</h2>
+    <div class="grid2" id="docsInq"></div>
+    <button class="btn" style="margin-top:16px" onclick="toast('Abrindo câmera para digitalizar…')">Enviar novo documento</button>
+    <h2>Do imóvel</h2>
+    <div class="grid2" id="docsInqIm"></div>
+  </div>
+  <nav class="nav" data-nav="inq"></nav>
+</section>
+
+<section class="screen" id="inq-notif">
+  <div class="top"><h1>Notificações</h1></div>
+  <div class="body"><div class="card list" id="notifInq"></div></div>
+  <nav class="nav" data-nav="inq"></nav>
+</section>
+
+<!-- SHEET -->
+<div class="sheet" id="sheet" onclick="if(event.target===this)fechar()"><div class="in" id="sheetIn"></div></div>
+<div class="toast" id="toast"></div>
+</div>
+<p class="hint">Protótipo navegável · Grupo 3 GTI · entre como Administrador ou Inquilino</p>
+
+<script>
+const cores=['#2f6fa7','#1b3a5c','#7a5c9e','#2a8a7a','#b0602f','#5c6f82','#9e3d5c','#3f7d3a'];
+const imoveis=[
+ {id:1,end:'Av. Ali, 22',ap:'apto 301',tipo:'Residencial',inq:'John Stewart',desde:'mar/2024',val:1850,st:'ok',hist:'oooooooooo'},
+ {id:2,end:'Rua Aquela, 67',ap:'casa',tipo:'Residencial',inq:'Ana Beatriz Lins',desde:'jan/2023',val:2400,st:'late',hist:'oooooooolL'},
+ {id:3,end:'Rua Taltal, 45',ap:'sala 12',tipo:'Comercial',inq:'Padaria Boa Massa',desde:'ago/2021',val:4200,st:'ok',hist:'oooooooooo'},
+ {id:4,end:'Rua Ali, 72',ap:'apto 102',tipo:'Residencial',inq:'Carlos Menezes',desde:'mai/2025',val:1600,st:'warn',hist:'oooooooooo'},
+ {id:5,end:'Rua Seila, 12',ap:'apto 504',tipo:'Residencial',inq:null,val:1750,st:'vac'},
+ {id:6,end:'Rua Lá, 45',ap:'loja',tipo:'Comercial',inq:'Ótica Visão',desde:'fev/2022',val:3900,st:'late',hist:'ooooooooooL'},
+ {id:7,end:'Av. Pra Lá, 55',ap:'apto 203',tipo:'Residencial',inq:'Marina Albuquerque',desde:'out/2024',val:1950,st:'ok',hist:'oooooooooo'},
+ {id:8,end:'Av. Acolá, 56',ap:'apto 801',tipo:'Residencial',inq:'Rafael Tavares',desde:'jun/2023',val:2700,st:'ok',hist:'oooooooooo'},
+ {id:9,end:'Av. Longe, 78',ap:'galpão',tipo:'Comercial',inq:null,val:8500,st:'vac'},
+];
+const stTxt={ok:['Em dia','p-ok'],late:['Em atraso','p-late'],warn:['A vencer','p-warn'],vac:['Vago','p-vac']};
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2});
+const ini=n=>n.split(' ').filter(w=>w.length>2||w===w.toUpperCase()).slice(0,2).map(w=>w[0]).join('');
+const $=id=>document.getElementById(id);
+let hist=['login'],role='adm';
+
+function go(id,push=true){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  if(push&&hist[hist.length-1]!==id)hist.push(id);
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('act',b.dataset.go===id));
+  const b=document.querySelector('#'+id+' .body');if(b)b.scrollTop=0;}
+function back(){hist.pop();go(hist[hist.length-1]||'login',false)}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._);t._=setTimeout(()=>t.classList.remove('on'),2200)}
+function entrar(){hist=[];go(role==='adm'?'adm-home':'inq-perfil')}
+
+document.querySelectorAll('#roleSeg button').forEach(b=>b.onclick=()=>{
+  role=b.dataset.role;document.querySelectorAll('#roleSeg button').forEach(x=>x.classList.toggle('act',x===b));
+  $('email').value=role==='adm'?'bruce@fmc.org.br':'jstewart@email.com';});
+
+const navs={adm:[['adm-home','🏠','Início'],['adm-imoveis','🏢','Imóveis'],['adm-docs','📁','Documentos'],['adm-fin','💰','Financeiro']],
+ inq:[['inq-perfil','👤','Perfil'],['inq-extratos','🧾','Extratos'],['inq-docs','📁','Documentos'],['inq-notif','🔔','Avisos']]};
+document.querySelectorAll('.nav').forEach(n=>n.innerHTML=navs[n.dataset.nav].map(([g,i,l])=>`<button data-go="${g}" onclick="go('${g}')"><span>${i}</span>${l}</button>`).join(''));
+
+function rowIm(m){const [t,c]=stTxt[m.st];const cor=cores[m.id%cores.length];
+ return `<div class="row tap" tabindex="0" onclick="abrirImovel(${m.id})"><div class="av" style="background:${m.inq?cor:'#b6bec8'}">${m.inq?ini(m.inq):'—'}</div>
+ <div class="grow"><div class="t">${m.end} · ${m.ap}</div><div class="s">${m.inq||'Disponível para locação'} · ${brl(m.val)}</div></div><span class="pill ${c}">${t}</span></div>`}
+let filtro='todos';
+function listaImoveis(q=''){q=q.toLowerCase();$('imoveis').innerHTML=imoveis.filter(m=>(filtro==='todos'||m.st===filtro)&&(m.end+(m.inq||'')).toLowerCase().includes(q)).map(rowIm).join('')||'<p class="s">Nenhum imóvel encontrado. Tente outro endereço ou nome.</p>'}
+document.querySelectorAll('#filtroSeg button').forEach(b=>b.onclick=()=>{filtro=b.dataset.f;document.querySelectorAll('#filtroSeg button').forEach(x=>x.classList.toggle('act',x===b));listaImoveis()});
+$('atencao').innerHTML=imoveis.filter(m=>m.st==='late'||m.st==='warn').map(rowIm).join('');
+
+const meses=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+function abrirImovel(id){const m=imoveis.find(x=>x.id===id);$('im-titulo').textContent=m.end;const [t,c]=stTxt[m.st];
+ let h=`<div class="card"><div class="row"><div class="av" style="background:${m.inq?cores[m.id%cores.length]:'#b6bec8'};width:54px;height:54px;font-size:18px">${m.inq?ini(m.inq):'—'}</div>
+ <div class="grow"><div class="t" style="font-size:16px">${m.inq||'Imóvel vago'}</div><div class="s">${m.inq?'Inquilino desde '+m.desde:m.tipo+' · '+m.ap}</div></div><span class="pill ${c}">${t}</span></div>
+ <div style="margin-top:12px"><div class="kv"><span>Unidade</span>${m.ap} · ${m.tipo}</div><div class="kv"><span>Aluguel</span><b class="money">${brl(m.val)}</b></div>${m.inq?'<div class="kv"><span>Vencimento</span>dia 10</div>':''}</div></div>`;
+ if(m.inq){h+=`<h2>Pagamentos 2026</h2><div class="cal">`+meses.map((n,i)=>{const s=i>9?'fut':(m.hist[i]==='L'||m.hist[i]==='l')?'late':'ok';
+   return `<div class="m ${s}">${n}<small>${s==='ok'?'pago':s==='late'?'em atraso':'—'}</small></div>`}).join('')+`</div>
+   <div class="legend"><span><b style="background:var(--ok)"></b>Mês pago</span><span><b style="background:var(--late)"></b>Mês em atraso</span></div>
+   ${m.st==='late'?`<button class="btn" style="margin-top:14px" onclick="toast('Lembrete de cobrança enviado para ${m.inq}')">Enviar lembrete de cobrança</button>`:''}
+   <h2>Documentos do inquilino</h2><div class="grid2">${['RG','CPF','Comprovante de renda','Contrato assinado'].map(d=>doc(d,'🪪',d==='Comprovante de renda'?'Vence em 30 dias':'Verificado')).join('')}</div>`}
+ else h+=`<button class="btn" style="margin-top:16px" onclick="sheet('cad')">Cadastrar novo inquilino</button>`;
+ h+=`<h2>Documentos do imóvel</h2><div class="grid2">${['Termo de vistoria','Entrega de chaves','Matrícula','IPTU 2026'].map(d=>doc(d,'📄','PDF')).join('')}</div>`;
+ $('im-body').innerHTML=h;go('adm-imovel')}
+
+function doc(n,ic='📄',s='PDF'){return `<div class="doc" tabindex="0" onclick="sheet('doc','${n}')"><div class="ic">${ic}</div><div class="t">${n}</div><div class="s">${s}</div></div>`}
+$('docsFin').innerHTML=[['Fluxo de caixa','12 arquivos'],['Recibos','318 arquivos'],['Depósitos','96 arquivos'],['Transferências','41 arquivos'],['RDD','Mensal'],['DML','Anual']].map(([n,s])=>doc(n,'🗂️',s)).join('');
+$('docsIm').innerHTML=[['Contratos de locação','109 ativos'],['Termos de vistoria','124 arquivos'],['Entregas de chaves','87 arquivos'],['Matrículas e IPTU','248 arquivos']].map(([n,s])=>doc(n,'🗂️',s)).join('');
+$('modelos').innerHTML=['Contrato de locação','Termo de vistoria','Entrega de chaves','Notificação de atraso','Recibo de aluguel','Rescisão'].map(n=>doc(n,'📝','Modelo')).join('');
+$('docsInq').innerHTML=[['RG','Verificado'],['CPF','Verificado'],['Comprovante de renda','Vence em 30 dias'],['Comprovante de residência','Verificado']].map(([n,s])=>doc(n,'🪪',s)).join('');
+$('docsInqIm').innerHTML=[['Contrato de locação','Assinado'],['Termo de vistoria','mar/2024']].map(([n,s])=>doc(n,'📄',s)).join('');
+
+const vals=[198,201,203,205,207,206,209,210,212,187];
+$('chart').innerHTML=vals.map((v,i)=>`<div style="flex:1;height:${(v-150)/70*100}%;background:${i===9?'var(--warn)':'var(--blue)'};border-radius:4px 4px 0 0" title="${meses[i]}: R$ ${v} mil"></div>`).join('');
+$('chartL').innerHTML=vals.map((v,i)=>`<span style="flex:1;text-align:center">${meses[i][0]}</span>`).join('');
+
+const nAdm=[['Ana Beatriz Lins','Aluguel de outubro em atraso há 8 dias','há 2 h','#7a5c9e'],['Carlos Menezes','Enviou comprovante de renda atualizado','há 5 h','#2a8a7a'],['Ótica Visão','Solicitou segunda via do boleto','ontem','#b0602f'],['Sistema','Contrato de Rua Taltal, 45 vence em 60 dias','ontem','#1b3a5c'],['Marina Albuquerque','Pagamento de outubro confirmado','2 dias','#9e3d5c']];
+$('notifAdm').innerHTML=nAdm.map(([n,m,t,c])=>`<div class="row"><div class="av" style="background:${c}">${n==='Sistema'?'⚙':ini(n)}</div><div class="grow"><div class="t">${n}</div><div class="s">${m}</div></div><span class="s">${t}</span></div>`).join('');
+const nInq=[['Fundação Manoel Cruz','Seu boleto de novembro já está disponível','hoje'],['Fundação Manoel Cruz','Pagamento de outubro confirmado. Obrigado!','08/10'],['Fundação Manoel Cruz','Seu comprovante de renda vence em 30 dias. Envie a versão atualizada.','01/10'],['Fundação Manoel Cruz','Manutenção da caixa d’água no dia 15/10, das 8h às 12h','28/09']];
+$('notifInq').innerHTML=nInq.map(([n,m,t])=>`<div class="row"><div class="av" style="background:var(--navy)">FM</div><div class="grow"><div class="t">${n}</div><div class="s">${m}</div></div><span class="s">${t}</span></div>`).join('');
+
+const ext=[['Outubro/2026',[['Aluguel',1850,'🏠'],['Energia',214.37,'⚡'],['Água',88.10,'💧']],'ok'],['Setembro/2026',[['Aluguel',1850,'🏠'],['Energia',231.90,'⚡'],['Água',91.45,'💧']],'ok'],['Agosto/2026',[['Aluguel',1850,'🏠'],['Energia',198.02,'⚡'],['Água',85.70,'💧']],'ok']];
+$('extratos').innerHTML=`<div class="row" style="padding:0 0 10px"><div class="grow"><div class="s">Novembro/2026 · vence 10/11</div><div class="money" style="font-size:18px">${brl(1850)}</div></div><span class="pill p-warn">A vencer</span></div>`+
+ ext.map(([m,it])=>`<div class="month">${m}</div>`+it.map(([n,v,i])=>`<div class="row tap" onclick="sheet('doc','Comprovante ${n} – ${m}')"><span>${i}</span><div class="grow">${n}</div><span class="money">${brl(v)}</span><span class="pill p-ok">Pago</span></div>`).join('')).join('');
+
+function sheet(tipo,n){let h='';
+ if(tipo==='doc')h=`<div class="t" style="font-size:16px">${n}</div><div class="pv">Pré-visualização do documento</div><div class="grid2"><button class="btn" onclick="toast('Download iniciado');fechar()">Baixar</button><button class="btn" style="background:var(--navy)" onclick="toast('Link copiado para compartilhar');fechar()">Compartilhar</button></div>`;
+ if(tipo==='cad')h=`<div class="t" style="font-size:16px;margin-bottom:12px">Cadastrar</div><div class="grid2"><div class="qa" onclick="toast('Formulário de novo imóvel');fechar()"><span>🏢</span>Novo imóvel</div><div class="qa" onclick="toast('Formulário de novo inquilino');fechar()"><span>👤</span>Novo inquilino</div><div class="qa" onclick="toast('Contrato gerado a partir do modelo');fechar()"><span>📝</span>Novo contrato</div><div class="qa" onclick="toast('Lançamento de pagamento');fechar()"><span>💵</span>Registrar pagamento</div></div>`;
+ if(tipo==='pix')h=`<div class="t" style="font-size:16px">Pagar aluguel de novembro</div><div class="money" style="font-size:26px;margin:6px 0">${brl(1850)}</div><div class="pv" style="height:150px;background:repeating-conic-gradient(#0d1b2a 0 25%,#fff 0 50%) 0 0/22px 22px;border:10px solid #fff;outline:1px solid var(--line)"></div><button class="btn" onclick="toast('Código Pix copiado');fechar()">Copiar código Pix</button>`;
+ $('sheetIn').innerHTML=h;$('sheet').classList.add('on')}
+function fechar(){$('sheet').classList.remove('on')}
+listaImoveis();
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+	"nodes":[
+		{"id":"0242d7f0b8ac9db6","type":"group","x":-1280,"y":400,"width":2520,"height":880,"label":"Logs da Prototização"},
+		{"id":"6f59663e1f690227","type":"group","x":-1280,"y":-480,"width":2520,"height":760,"label":"Log individual"},
+		{"id":"bdfc955e5caed3bb","type":"text","text":"Preparativos","x":-120,"y":-320,"width":250,"height":50,"color":"5"},
+		{"id":"da75c9628a53c581","type":"file","file":"Logs/Commit inicial.md","x":-1120,"y":-200,"width":400,"height":400,"color":"5"}
+	],
+	"edges":[
+		{"id":"f2d888ac24da9c85","fromNode":"bdfc955e5caed3bb","fromSide":"bottom","toNode":"da75c9628a53c581","toSide":"top"}
+	]
+}
