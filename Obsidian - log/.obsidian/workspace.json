@@ -14,15 +14,15 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "Fluxograma.canvas",
+                "file": "Logs/Logs.canvas",
                 "viewState": {
-                  "x": 752.6989205900426,
-                  "y": -194.1509075165606,
-                  "zoom": 1.1102230246251565e-16
+                  "x": -20,
+                  "y": 400,
+                  "zoom": -1.3746654044167232
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "Fluxograma"
+              "title": "Logs"
             }
           }
         ]
@@ -209,16 +209,17 @@
       "bases:Criar nova base": false
     }
   },
-  "active": "63622e04c36a0920",
+  "active": "5af2ca00508f10ac",
   "lastOpenFiles": [
     "Logs/Logs.canvas",
+    "outros/Pasted image 20261008202608.png",
+    "Fluxograma.canvas",
     "Logs/Commit inicial.md",
     "outros/Pasted image 20261008191220.png",
     "outros",
     "Logs/Nexus · Protótipo · Fundação Manoel Cruz.html",
     "Nexus · Protótipo · Fundação Manoel Cruz.html",
     "Logs",
-    "Fluxograma.canvas",
     "Sem título.base",
     "Bem-vindo.md"
   ]
