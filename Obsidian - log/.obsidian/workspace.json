@@ -12,17 +12,14 @@
             "id": "63622e04c36a0920",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Logs/Logs.canvas",
-                "viewState": {
-                  "x": -20,
-                  "y": 400,
-                  "zoom": -1.3746654044167232
-                }
+                "file": "Logs/Fazendo as primeira partes do código.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "Logs"
+              "icon": "lucide-file",
+              "title": "Fazendo as primeira partes do código"
             }
           }
         ]
@@ -209,12 +206,13 @@
       "bases:Criar nova base": false
     }
   },
-  "active": "5af2ca00508f10ac",
+  "active": "63622e04c36a0920",
   "lastOpenFiles": [
+    "Logs/Commit inicial.md",
     "Logs/Logs.canvas",
+    "Logs/Fazendo as primeira partes do código.md",
     "outros/Pasted image 20261008202608.png",
     "Fluxograma.canvas",
-    "Logs/Commit inicial.md",
     "outros/Pasted image 20261008191220.png",
     "outros",
     "Logs/Nexus · Protótipo · Fundação Manoel Cruz.html",
