@@ -6,11 +6,14 @@
 		{"id":"3b5ca24edd99459e","type":"text","text":"Adminstrador","x":760,"y":0,"width":250,"height":60},
 		{"id":"3d53481cceabe42e","type":"text","text":"Criação de conta","x":200,"y":620,"width":250,"height":50},
 		{"id":"47e7e437b5679962","type":"file","file":"outros/Pasted image 20261008191220.png","x":-760,"y":-140,"width":120,"height":50},
-		{"id":"d41f7531bb797e73","type":"text","text":"Banco json","x":-660,"y":-115,"width":250,"height":60,"color":"1"}
+		{"id":"d41f7531bb797e73","type":"text","text":"Banco json","x":-660,"y":-115,"width":250,"height":60,"color":"1"},
+		{"id":"d4bfe4d316823aee","x":-458,"y":-440,"width":218,"height":117,"type":"file","file":"Usuario.java"}
 	],
 	"edges":[
 		{"id":"9fa9240d1f45e8d0","fromNode":"3906bd4e59635c16","fromSide":"right","toNode":"5a8e21aabb7adead","toSide":"left"},
 		{"id":"f21ec7169a7ef48e","fromNode":"3906bd4e59635c16","fromSide":"right","toNode":"3b5ca24edd99459e","toSide":"left"},
-		{"id":"a9e4e19d577a2e24","fromNode":"d41f7531bb797e73","fromSide":"right","toNode":"3906bd4e59635c16","toSide":"left","fromEnd":"arrow","color":"1"}
+		{"id":"a9e4e19d577a2e24","fromNode":"d41f7531bb797e73","fromSide":"right","toNode":"3906bd4e59635c16","toSide":"left","fromEnd":"arrow","color":"1"},
+		{"id":"66cce995ae6f6488","fromNode":"d4bfe4d316823aee","fromSide":"bottom","toNode":"d41f7531bb797e73","toSide":"top","color":"4"},
+		{"id":"a16e25afeacb212e","fromNode":"d4bfe4d316823aee","fromSide":"bottom","toNode":"3906bd4e59635c16","toSide":"top","color":"4"}
 	]
 }

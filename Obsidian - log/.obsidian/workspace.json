@@ -6,7 +6,7 @@
       {
         "id": "e8329b3ef67ef987",
         "type": "tabs",
-        "dimension": 86.10406091370558,
+        "dimension": 73.35423197492163,
         "children": [
           {
             "id": "63622e04c36a0920",
@@ -27,16 +27,23 @@
       {
         "id": "d847dda3c5085bda",
         "type": "tabs",
-        "dimension": 13.895939086294415,
+        "dimension": 26.64576802507837,
         "children": [
           {
             "id": "42bf2ef0a50053e4",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Visualização em gráfico"
+              "type": "canvas",
+              "state": {
+                "file": "Fluxograma.canvas",
+                "viewState": {
+                  "x": 115,
+                  "y": 115,
+                  "zoom": -1.555230110556419
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Fluxograma"
             }
           }
         ]
@@ -214,18 +221,21 @@
       "templates:Inserir modelo": false,
       "command-palette:Abrir paleta de comandos": false,
       "bases:Criar nova base": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": false,
+      "audio-recorder:Começar/parar a gravação de áudio": false
     }
   },
   "active": "63622e04c36a0920",
   "lastOpenFiles": [
     "Logs/Commit inicial.md",
-    "Usuario.java",
+    "Sem título.md",
+    "Fluxograma.canvas",
     "Logs/Fazendo as primeira partes do código.md",
-    "Sem título.base",
+    "outros/Sem título.base",
+    "Recording 20261010114737.m4a",
+    "Usuario.java",
     "Logs/Logs.canvas",
     "outros/Pasted image 20261008202608.png",
-    "Fluxograma.canvas",
     "outros/Pasted image 20261008191220.png",
     "outros",
     "Logs/Nexus · Protótipo · Fundação Manoel Cruz.html",
