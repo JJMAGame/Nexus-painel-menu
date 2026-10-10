@@ -44,3 +44,5 @@ Após a construção dos **Strings** foi incluindo também o **Getter e Setter**
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+Melhorando o Obsidian para ter integração com o Git
