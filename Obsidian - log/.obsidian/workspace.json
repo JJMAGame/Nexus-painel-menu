@@ -6,7 +6,7 @@
       {
         "id": "e8329b3ef67ef987",
         "type": "tabs",
-        "dimension": 67.82994923857868,
+        "dimension": 86.10406091370558,
         "children": [
           {
             "id": "63622e04c36a0920",
@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Logs/Fazendo as primeira partes do código.md",
+                "file": "Logs/Commit inicial.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Fazendo as primeira partes do código"
+              "title": "Commit inicial"
             }
           }
         ]
@@ -27,7 +27,7 @@
       {
         "id": "d847dda3c5085bda",
         "type": "tabs",
-        "dimension": 32.17005076142132,
+        "dimension": 13.895939086294415,
         "children": [
           {
             "id": "42bf2ef0a50053e4",
@@ -187,13 +187,23 @@
               "icon": "lucide-list",
               "title": "Sumário"
             }
+          },
+          {
+            "id": "a2580022720d83b4",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -203,14 +213,17 @@
       "daily-notes:Abrir a nota de hoje": false,
       "templates:Inserir modelo": false,
       "command-palette:Abrir paleta de comandos": false,
-      "bases:Criar nova base": false
+      "bases:Criar nova base": false,
+      "obsidian-git:Open Git source control": false
     }
   },
   "active": "63622e04c36a0920",
   "lastOpenFiles": [
-    "Logs/Commit inicial.md",
-    "Logs/Logs.canvas",
+    "Usuario.java",
     "Logs/Fazendo as primeira partes do código.md",
+    "Logs/Commit inicial.md",
+    "Sem título.base",
+    "Logs/Logs.canvas",
     "outros/Pasted image 20261008202608.png",
     "Fluxograma.canvas",
     "outros/Pasted image 20261008191220.png",
@@ -218,7 +231,6 @@
     "Logs/Nexus · Protótipo · Fundação Manoel Cruz.html",
     "Nexus · Protótipo · Fundação Manoel Cruz.html",
     "Logs",
-    "Sem título.base",
     "Bem-vindo.md"
   ]
 }
