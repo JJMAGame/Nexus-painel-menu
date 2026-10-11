@@ -6,7 +6,7 @@
 		{"id":"f3ba98eb8182844b","type":"file","file":"Logs/Nexus · Protótipo · Fundação Manoel Cruz.html","x":-1245,"y":601,"width":400,"height":400},
 		{"id":"2480e97730b32520","type":"file","file":"outros/Pasted image 20261008202608.png","x":-720,"y":601,"width":520,"height":619},
 		{"id":"cc38d5c6032c3c36","type":"text","text":"PROTOTIPO","x":-920,"y":440,"width":250,"height":60},
-		{"id":"7ec4de29420feff7","x":-660,"y":-200,"width":400,"height":400,"color":"5","type":"file","file":"Logs/Fazendo as primeira partes do código.md"},
+		{"id":"7ec4de29420feff7","type":"file","file":"Logs/Fazendo as primeira partes do código.md","x":-660,"y":-200,"width":400,"height":400,"color":"5"},
 		{"id":"bdfc955e5caed3bb","type":"text","text":"Preparativos","x":-120,"y":-440,"width":250,"height":50,"color":"5"}
 	],
 	"edges":[

@@ -1,6 +1,6 @@
 Fazendo um sistema de usuário usando POO, para conversa com o json, por hora fiz o sistema this.nome as **10:52:23** estarei alogando mais o código cada fez que for evoluindo
 
-```
+```java fold:Encapsulamento
 public class usuario {
     private String nome;
     private String email;
@@ -14,7 +14,7 @@ public class usuario {
 ```
 Após a construção dos **Strings** foi incluindo também o **Getter e Setter** do usuario
 
-```
+```java fold:Getter-and-Setter
 `//getter`
 
     public String getNome() {
