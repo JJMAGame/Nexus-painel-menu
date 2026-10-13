@@ -33,10 +33,17 @@
             "id": "42bf2ef0a50053e4",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Visualização em gráfico"
+              "type": "canvas",
+              "state": {
+                "file": "Fluxograma.canvas",
+                "viewState": {
+                  "x": 115,
+                  "y": -142.91126760563384,
+                  "zoom": -1.4715721815095093
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Fluxograma"
             }
           }
         ]
@@ -218,10 +225,10 @@
       "audio-recorder:Começar/parar a gravação de áudio": false
     }
   },
-  "active": "5af2ca00508f10ac",
+  "active": "42bf2ef0a50053e4",
   "lastOpenFiles": [
-    "Fluxograma.canvas",
     "Logs/Commit inicial.md",
+    "Fluxograma.canvas",
     "Logs/Logs.canvas",
     "Logs/Fazendo as primeira partes do código.md",
     "file:E:/photocraft-0.7.0-windows-x86-portable/README.md",
