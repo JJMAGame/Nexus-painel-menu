@@ -49,6 +49,65 @@ Após a construção dos **Strings** foi incluindo também o **Getter e Setter**
 ```
 Melhorando o Obsidian para ter integração com o Git
 
+---
+
+Colocando o a validação de login no Usuário para criação e validação de conta
+```java fold:Validação-no-Setter
+    // ===== SETTERS COM VALIDAÇÃO =====
+
+    public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio");
+        }
+        this.nome = nome.trim();
+    }
+
+    public void setEmail(String email) {
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("Email inválido");
+        }
+        this.email = email.toLowerCase().trim();
+    }
+
+  
+
+    public void setSenha(String senha) {
+        if (senha == null || senha.length() < 8) {
+            throw new IllegalArgumentException("Senha deve ter no mínimo 8 caracteres");
+
+        }
+        this.senha = senha;
+    }
+
+  
+
+    // ===== MÉTODO DE NEGÓCIO (reaproveitamento futuro) =====
+
+    public boolean autenticar(String email, String senha) {
+        return this.email.equalsIgnoreCase(email) && this.senha.equals(senha);
+
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{nome='" + nome + "', email='" + email + "'}";
+    }
+}
+
+```
+
+Ainda tenho que validar se estar tudo certo se esta no caminho certo para o encapsulamento e herança, terei que revisar o Pilares. *Quais seria os pilares?*
+
+### **Abstração**:
+Consiste em focar nos aspectos essenciais de um objeto do mundo real e representá-los no código por meio de atributos (características) e métodos (ações), ignorando detalhes complexos e desnecessários.
+
+### **Encapsulamento**:
+É a prática de esconder os detalhes internos de funcionamento de um objeto e proteger seus dados (atributos), controlando o acesso a eles por meio de métodos específicos (como _getters_ e _setters_)
+
+### **Herança**:
+Permite que uma classe (subclasse) receba ou herde atributos e comportamentos de outra classe (superclasse), facilitando a reutilização de código e a criação de hierarquias.
+### **Polimorfismo**:
+É a capacidade de objetos de diferentes classes responderem à mesma mensagem ou método de maneiras diferentes, adaptando o comportamento conforme o contexto de cada subclasse.
 # Missão nessa nota
 
 - [ ] ⏫ Aprimorar o esqueleto do usuario

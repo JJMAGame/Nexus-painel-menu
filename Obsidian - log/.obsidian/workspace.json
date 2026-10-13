@@ -6,7 +6,7 @@
       {
         "id": "e8329b3ef67ef987",
         "type": "tabs",
-        "dimension": 44.357366771159874,
+        "dimension": 37.06896551724138,
         "children": [
           {
             "id": "63622e04c36a0920",
@@ -27,23 +27,20 @@
       {
         "id": "d847dda3c5085bda",
         "type": "tabs",
-        "dimension": 55.642633228840126,
+        "dimension": 62.93103448275862,
         "children": [
           {
             "id": "42bf2ef0a50053e4",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Fluxograma.canvas",
-                "viewState": {
-                  "x": 130.64358471823078,
-                  "y": -118.63865292627213,
-                  "zoom": -1.8049055148428426
-                }
+                "file": "Logs/Fazendo as primeira partes do código.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "Fluxograma"
+              "icon": "lucide-file",
+              "title": "Fazendo as primeira partes do código"
             }
           }
         ]
@@ -227,11 +224,11 @@
   },
   "active": "42bf2ef0a50053e4",
   "lastOpenFiles": [
+    "Fluxograma.canvas",
+    "Logs/Fazendo as primeira partes do código.md",
     "Usuariolog.java.md",
     "Logs/Logs.canvas",
     "outros/Pasted image 20261008191220.png",
-    "Logs/Fazendo as primeira partes do código.md",
-    "Fluxograma.canvas",
     "Usuariolog.java",
     "Logs/Commit inicial.md",
     "file:E:/photocraft-0.7.0-windows-x86-portable/README.md",
