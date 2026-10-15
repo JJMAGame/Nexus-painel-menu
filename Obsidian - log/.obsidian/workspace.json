@@ -6,20 +6,23 @@
       {
         "id": "e8329b3ef67ef987",
         "type": "tabs",
-        "dimension": 37.06896551724138,
+        "dimension": 75.47021943573668,
         "children": [
           {
             "id": "63622e04c36a0920",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "Logs/Commit inicial.md",
-                "mode": "source",
-                "source": false
+                "file": "Logs/Logs.canvas",
+                "viewState": {
+                  "x": -20,
+                  "y": 400,
+                  "zoom": -1.5253195542937545
+                }
               },
-              "icon": "lucide-file",
-              "title": "Commit inicial"
+              "icon": "lucide-layout-dashboard",
+              "title": "Logs"
             }
           }
         ]
@@ -27,7 +30,7 @@
       {
         "id": "d847dda3c5085bda",
         "type": "tabs",
-        "dimension": 62.93103448275862,
+        "dimension": 24.529780564263323,
         "children": [
           {
             "id": "42bf2ef0a50053e4",
@@ -222,15 +225,18 @@
       "audio-recorder:Começar/parar a gravação de áudio": false
     }
   },
-  "active": "42bf2ef0a50053e4",
+  "active": "63622e04c36a0920",
   "lastOpenFiles": [
-    "Fluxograma.canvas",
-    "Logs/Fazendo as primeira partes do código.md",
-    "Usuariolog.java.md",
+    "Docs/Teste de qualidade administrador .pdf",
     "Logs/Logs.canvas",
+    "Logs/Fazendo as primeira partes do código.md",
+    "Fluxograma.canvas",
+    "Docs",
+    "file:C:/Users/jorgi/Downloads/Teste de qualidade administrador .pdf",
+    "Logs/Commit inicial.md",
+    "Usuariolog.java.md",
     "outros/Pasted image 20261008191220.png",
     "Usuariolog.java",
-    "Logs/Commit inicial.md",
     "file:E:/photocraft-0.7.0-windows-x86-portable/README.md",
     "Sem título.md",
     "outros/Sem título.base",
@@ -240,7 +246,6 @@
     "outros",
     "Logs/Nexus · Protótipo · Fundação Manoel Cruz.html",
     "Nexus · Protótipo · Fundação Manoel Cruz.html",
-    "Logs",
     "Bem-vindo.md"
   ]
 }

@@ -99,16 +99,49 @@ Colocando o a validação de login no Usuário para criação e validação de c
 Ainda tenho que validar se estar tudo certo se esta no caminho certo para o encapsulamento e herança, terei que revisar o Pilares. *Quais seria os pilares?*
 
 ### **Abstração**:
+- [ ] Foi incluso?
 Consiste em focar nos aspectos essenciais de um objeto do mundo real e representá-los no código por meio de atributos (características) e métodos (ações), ignorando detalhes complexos e desnecessários.
 
 ### **Encapsulamento**:
+- [x] Foi incluso? ✅ 2026-10-15
 É a prática de esconder os detalhes internos de funcionamento de um objeto e proteger seus dados (atributos), controlando o acesso a eles por meio de métodos específicos (como _getters_ e _setters_)
 
 ### **Herança**:
+- [ ] Foi incluso?
 Permite que uma classe (subclasse) receba ou herde atributos e comportamentos de outra classe (superclasse), facilitando a reutilização de código e a criação de hierarquias.
 ### **Polimorfismo**:
+- [ ] Foi incluso?
 É a capacidade de objetos de diferentes classes responderem à mesma mensagem ou método de maneiras diferentes, adaptando o comportamento conforme o contexto de cada subclasse.
 # Missão nessa nota
 
 - [ ] ⏫ Aprimorar o esqueleto do usuario
 - [ ] ⏫ Aplicar o sistema no main
+
+---
+# O Encapsulamento esta sendo construído 15/10/2026
+Foi incluido todo o sistema validação dentro do código e ele esta interagindo no main mas o main ainda vai ser o ponto de entrada, vou dividir as 2 telas tanto do inquilino, tanto do administrador
+
+```java fold:Teste-do-código
+public class main {
+
+    public static void main(String[] args) {
+        Usuario u = new Usuario("Jorge", "jjma@hotmail.com", "123456");
+
+        System.out.println(u);
+        System.out.print(u.getEmail());
+  
+        // Teste de Validação
+
+        try {
+            u.setEmail("invalido");            
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+  
+        System.out.println(u.autenticar("jjma@hotmail.com", "123456")); // True
+        System.out.println(u.autenticar("jjma@hotmail.com", "error")); // False
+    }
+}
+```
+
+Nota de atualização para o uso da aplicação para visualizar se um dos pilares foi incluso
