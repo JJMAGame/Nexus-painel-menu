@@ -14,15 +14,15 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "Logs/Logs.canvas",
+                "file": "Fluxograma.canvas",
                 "viewState": {
-                  "x": -20,
-                  "y": 400,
-                  "zoom": -1.5253195542937545
+                  "x": 95,
+                  "y": 115,
+                  "zoom": -1.0637394690778805
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "Logs"
+              "title": "Fluxograma"
             }
           }
         ]
@@ -222,13 +222,14 @@
       "command-palette:Abrir paleta de comandos": false,
       "bases:Criar nova base": false,
       "obsidian-git:Open Git source control": false,
-      "audio-recorder:Começar/parar a gravação de áudio": false
+      "audio-recorder:Começar/parar a gravação de áudio": false,
+      "remotely-save:Remotely Save": false
     }
   },
   "active": "63622e04c36a0920",
   "lastOpenFiles": [
-    "Docs/Teste de qualidade administrador .pdf",
     "Logs/Logs.canvas",
+    "Docs/Teste de qualidade administrador .pdf",
     "Logs/Fazendo as primeira partes do código.md",
     "Fluxograma.canvas",
     "Docs",
