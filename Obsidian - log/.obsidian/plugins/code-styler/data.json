@@ -315,13 +315,13 @@
           "textItalic": true
         },
         "languageTag": {
-          "display": "always",
+          "display": "none",
           "textFont": "",
           "textBold": true,
           "textItalic": false
         },
         "languageIcon": {
-          "display": "always",
+          "display": "none",
           "displayColour": true
         },
         "externalReference": {
@@ -329,7 +329,7 @@
           "displayVersion": true,
           "displayTimestamp": true
         },
-        "fontSize": 16,
+        "fontSize": 14,
         "foldPlaceholder": ""
       },
       "highlights": {
@@ -351,7 +351,7 @@
         "gradientHighlightsColourStop": "70%",
         "languageBorderColour": true,
         "languageBorderWidth": 5,
-        "iconSize": 30
+        "iconSize": 28
       }
     },
     "colours": {
