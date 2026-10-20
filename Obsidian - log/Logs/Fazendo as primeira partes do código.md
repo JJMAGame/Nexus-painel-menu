@@ -1,0 +1,147 @@
+Fazendo um sistema de usuário usando POO, para conversa com o json, por hora fiz o sistema this.nome as **10:52:23** estarei alogando mais o código cada fez que for evoluindo
+
+```java fold:Encapsulamento
+public class usuario {
+    private String nome;
+    private String email;
+    private String senha;
+    public usuario(String nome, String email, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
+}
+```
+Após a construção dos **Strings** foi incluindo também o **Getter e Setter** do usuario
+
+```java fold:Getter-and-Setter
+`//getter`
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+  
+
+    //setter
+
+  
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+```
+Melhorando o Obsidian para ter integração com o Git
+
+---
+
+Colocando o a validação de login no Usuário para criação e validação de conta
+```java fold:Validação-no-Setter
+    // ===== SETTERS COM VALIDAÇÃO =====
+
+    public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio");
+        }
+        this.nome = nome.trim();
+    }
+
+    public void setEmail(String email) {
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("Email inválido");
+        }
+        this.email = email.toLowerCase().trim();
+    }
+
+  
+
+    public void setSenha(String senha) {
+        if (senha == null || senha.length() < 8) {
+            throw new IllegalArgumentException("Senha deve ter no mínimo 8 caracteres");
+
+        }
+        this.senha = senha;
+    }
+
+  
+
+    // ===== MÉTODO DE NEGÓCIO (reaproveitamento futuro) =====
+
+    public boolean autenticar(String email, String senha) {
+        return this.email.equalsIgnoreCase(email) && this.senha.equals(senha);
+
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{nome='" + nome + "', email='" + email + "'}";
+    }
+}
+
+```
+
+Ainda tenho que validar se estar tudo certo se esta no caminho certo para o encapsulamento e herança, terei que revisar o Pilares. *Quais seria os pilares?*
+
+### **Abstração**:
+- [ ] Foi incluso?
+Consiste em focar nos aspectos essenciais de um objeto do mundo real e representá-los no código por meio de atributos (características) e métodos (ações), ignorando detalhes complexos e desnecessários.
+
+### **Encapsulamento**:
+- [x] Foi incluso? ✅ 2026-10-15
+É a prática de esconder os detalhes internos de funcionamento de um objeto e proteger seus dados (atributos), controlando o acesso a eles por meio de métodos específicos (como _getters_ e _setters_)
+
+### **Herança**:
+- [ ] Foi incluso?
+Permite que uma classe (subclasse) receba ou herde atributos e comportamentos de outra classe (superclasse), facilitando a reutilização de código e a criação de hierarquias.
+### **Polimorfismo**:
+- [ ] Foi incluso?
+É a capacidade de objetos de diferentes classes responderem à mesma mensagem ou método de maneiras diferentes, adaptando o comportamento conforme o contexto de cada subclasse.
+# Missão nessa nota
+
+- [ ] ⏫ Aprimorar o esqueleto do usuario
+- [ ] ⏫ Aplicar o sistema no main
+
+---
+# O Encapsulamento esta sendo construído 15/10/2026
+Foi incluido todo o sistema validação dentro do código e ele esta interagindo no main mas o main ainda vai ser o ponto de entrada, vou dividir as 2 telas tanto do inquilino, tanto do administrador
+
+```java fold:Teste-do-código
+public class main {
+
+    public static void main(String[] args) {
+        Usuario u = new Usuario("Jorge", "jjma@hotmail.com", "123456");
+
+        System.out.println(u);
+        System.out.print(u.getEmail());
+  
+        // Teste de Validação
+
+        try {
+            u.setEmail("invalido");            
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+  
+        System.out.println(u.autenticar("jjma@hotmail.com", "123456")); // True
+        System.out.println(u.autenticar("jjma@hotmail.com", "error")); // False
+    }
+}
+```
+
+Nota de atualização para o uso da aplicação para visualizar se um dos pilares foi incluso
