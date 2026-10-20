@@ -33,9 +33,33 @@
               "icon": "lucide-file",
               "title": "Colocando o sistema Gson no código"
             }
+          },
+          {
+            "id": "922062191003d1f1",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "outros/Pasted image 20261020145600.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20261020145600"
+            }
+          },
+          {
+            "id": "f5420cec6f5ad48c",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "outros/Pasted image 20261020145637.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20261020145637"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       },
       {
         "id": "d847dda3c5085bda",
@@ -236,15 +260,18 @@
       "audio-recorder:Começar/parar a gravação de áudio": false
     }
   },
-  "active": "b17dca076d06ee5a",
+  "active": "5af2ca00508f10ac",
   "lastOpenFiles": [
+    "outros/Pasted image 20261020145600.png",
     "Logs/Colocando o sistema Gson no código.md",
-    "outros/Pasted image 20261019171733.png",
-    "Logs/Fazendo as primeira partes do código.md",
+    "outros/Pasted image 20261020145637.png",
+    "Pasted image 20261020144851.png",
     "Logs/Commit inicial.md",
+    "Logs/Fazendo as primeira partes do código.md",
+    "Fluxograma.canvas",
+    "outros/Pasted image 20261019171733.png",
     "Logs/Logs.canvas",
     "Docs/Teste de qualidade administrador .pdf",
-    "Fluxograma.canvas",
     "Docs",
     "file:C:/Users/jorgi/Downloads/Teste de qualidade administrador .pdf",
     "Usuariolog.java.md",
