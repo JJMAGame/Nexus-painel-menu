@@ -66,13 +66,3 @@ O sistema esta detectando bem o todo o resto do código mas não pega o com. ire
 
 ---
 # Parte 2
-
-No momento que estou escrevendo isso estou reestruturando todo o código utilizando o sistema de arquitetura chamado Maven e por hora esta tudo em ordem, o sistema de de Gson agora funciona so tenho que aprender agora a incluir ele no código
-
-## *Antes*
-
-![[Pasted image 20261020145600.png]]
-
-## *Depois*
-
-![[Pasted image 20261020145637.png]]
