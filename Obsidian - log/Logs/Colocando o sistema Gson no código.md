@@ -66,3 +66,13 @@ O sistema esta detectando bem o todo o resto do código mas não pega o com. ire
 
 ---
 # Parte 2
+
+No momento que eu estou colocando esse texto estou me arrumando para a faculdade, conseguir construir um sistema Maven e junto com a dependencia Gson, agora eu consigo montar um banco de dados localmente
+
+## *Antes*
+
+![[Pasted image 20261020151001.png]]
+
+## *Depois*
+
+![[Pasted image 20261020151040.png]]
