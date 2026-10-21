@@ -163,3 +163,253 @@ No momento que eu estou colocando esse texto estou me arrumando para a faculdade
  
  ---
 # Parte 3
+
+Funcionou, conseguir criar uma commit limpa e colocar um **Apache Maven** utilizando no Visual Studio e todos os códigos foram recorrigidos e atributos adicionados:
+
+```java fold:JsonUtil-Novo
+package com.nexusmaven;
+
+  
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+  
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+  
+
+public class JsonUtil {
+
+    private static final String ARQUIVO = "usuarios.json";
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+  
+
+    // Lê a lista de usuários do arquivo JSON
+
+    public static List<Usuario> lerUsuarios() {
+        File file = new File(ARQUIVO);
+        if (!file.exists()) return new ArrayList<>();
+
+  
+
+        try (Reader reader = new FileReader(file)) {
+            Type tipoLista = new TypeToken<List<Usuario>>() {}.getType();
+            List<Usuario> usuarios = gson.fromJson(reader, tipoLista);
+            return usuarios != null ? usuarios : new ArrayList<>();
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao ler o arquivo JSON", e);
+        }
+    }
+
+  
+
+    public static void salvarUsuarios(List<Usuario> usuarios) {
+        try (Writer writer = new FileWriter(ARQUIVO)) {
+            gson.toJson(usuarios, writer);
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao salvar o arquivo JSON", e);
+
+        }
+
+    }
+
+}
+```
+
+```java fold:Main-Restruturado
+package com.nexusmaven;
+
+  
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class main {
+
+    public static void main(String[] args) {
+
+        // 1. Criando usuários (Senha com 8 caracteres!)
+        Usuario u1 = new Usuario("Jorge", "jjma@hotmail.com", "12345678");
+        Usuario u2 = new Usuario("admin", "admin@hotmail.com", "admin123");
+
+        // 2. Colocando em uma lista
+
+        List<Usuario> listaUsuarios = new ArrayList<>();
+        listaUsuarios.add(u1);
+        listaUsuarios.add(u2);
+
+        // 3. Salvando usuários no arquivo JSON
+
+        JsonUtil.salvarUsuarios(listaUsuarios);
+        System.out.println("Usuários salvos no arquivo JSON.");
+
+
+        // 4. Lendo do arquivo JSON e validar o save
+
+        System.out.println("Lendo usuários do arquivo JSON:");
+        List<Usuario> usuariosLidos = JsonUtil.lerUsuarios();
+
+        for (Usuario u : usuariosLidos) {
+            System.out.println(u);
+
+        }
+
+        // 5. Testando autenticação
+
+        if (!usuariosLidos.isEmpty()) {
+            Usuario teste = usuariosLidos.get(0);
+            boolean logado = teste.autenticar("jjma@hotmail.com", "12345678");
+            System.out.println("\n Teste de login (Jorge): " + (logado ? "Autenticado com sucesso!" : "Falha na autenticação!"));
+
+        }
+    }
+}
+```
+
+```java fold:Usuario-remodelado
+package com.nexusmaven;
+
+  
+
+public class Usuario {
+
+    private String nome;
+    private String email;
+    private String senha;
+
+    // Construtor reaproveita os setters (validação garantida)
+
+    public Usuario(String nome, String email, String senha) {
+
+        setNome(nome);
+        setEmail(email);
+        setSenha(senha);
+
+    }
+
+  
+
+    // ===== GETTERS =====
+
+    public String getNome() { return nome; }
+    public String getEmail() { return email; }
+    public String getSenha() { return senha; }
+
+  
+
+    // O Gson precisa do getter para salvar a senha no arquivo
+
+    public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio");
+
+        }
+
+        this.nome = nome.trim();
+
+    }
+
+  
+
+    public void setEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException("Email não pode ser vazio");
+
+        }
+
+        this.email = email.trim();
+
+    }
+
+  
+
+    public void setSenha(String senha) {
+        if (senha == null || senha.length() < 8) {
+            throw new IllegalArgumentException("Senha deve ter pelo menos 8 caracteres");
+
+        }
+
+        this.senha = senha;
+
+    }
+
+  
+
+    public boolean autenticar(String email, String senha) {
+        return this.email.equalsIgnoreCase(email) && this.senha.equals(senha);
+
+    }
+
+  
+
+    @Override
+    public String toString() {
+        return "Usuario{nome='" + nome + "', email='" + email + "'}";
+
+    }  
+
+}
+```
+
+No processo de teste finalmente o código conseguiu criar um ==🟡json== com os dados de login do cliente, mas ainda falta as outras informações mas terei que formular primeiro todo o sistema de login e senha utilizando o scan mas é um processo
+
+```json fold:Arquivo-de-usuario-criado-pelo-programa
+[
+
+  {
+    "nome": "Jorge",
+    "email": "jjma@hotmail.com",
+    "senha": "12345678"
+  },
+
+  {
+    "nome": "admin",
+    "email": "admin@hotmail.com",
+    "senha": "admin123"
+  }
+
+]
+```
+
+## O que foi descoberto nesse meio tempo
+
+Que a maioria dos programas de IDE um dos exemplos é o eclipse e IJ usam um sistema de arquitetura chamada Maven, aqui uma preve explicação 
+![[Pasted image 20261021175018.png|234]]
+*O Maven é uma ferramenta de automação de build e gerenciamento de projetos para Java. Em termos simples, ele padroniza e automatiza tarefas repetitivas como compilar código, rodar testes, empacotar o programa e baixar bibliotecas de terceiros.*
+
+### *🛠️ Como funciona sem Maven?*
+
+*O próprio JDK (Java Development Kit) já traz as ferramentas básicas para trabalhar sem ferramentas externas de build:*
+
+- ***Compilação e Execução**: Você pode usar o comando `javac` para compilar seus arquivos `.java` e o comando `java` para executar o bytecode gerado .[](https://stackoverflow.com/revisions/2f4062aa-d00a-4050-8b28-012244385b57/view-source)*
+    
+- ***Gerenciamento Manual**: Sem o Maven, você precisa baixar manualmente os arquivos `.jar` (bibliotecas de terceiros) e configurá-los no classpath da sua aplicação para que o Java os encontre durante a compilação e execução .[](https://stackoverflow.com/revisions/2f4062aa-d00a-4050-8b28-012244385b57/view-source)[](https://worktile.com/kb/p/3882381#respond#1)*
+    
+- ***Outras Ferramentas**: Existem alternativas ao Maven, como o **Gradle** (muito popular no desenvolvimento Android) ou até mesmo o **Ant** (mais antigo, mas ainda usado) .[](https://docs.oracle.com/en/middleware/developer-tools/jdeveloper/14.1.2/user-guide/building-java-projects1.html?source=post_page---------------------------%2Cpost_page---------------------------&source=post_page---------------------------%2Cpost_page---------------------------&source=post_page---------------------------%2Cpost_page---------------------------&source=post_page---------------------------%2Cpost_page---------------------------#GUID-609458B4-79BD-4F5E-8ABE-C5C616576E7D#2)[](https://docs.oracle.com/cd/G29095_01/developer-tools/jdeveloper/14.1.2/user-guide/building-java-projects1.html#1)*
+    
+
+### *📦 Por que o Maven é tão usado então?*
+
+*O Maven resolve problemas complexos que o `javac` puro não cobre, principalmente em projetos grandes:*
+
+1. ***Gerenciamento de Dependências**: Em vez de baixar dezenas de `.jar` manualmente, você declara a dependência no arquivo `pom.xml`. O Maven baixa a biblioteca e todas as suas dependências transitivas automaticamente .[](https://worktile.com/kb/p/3882381#respond#1)*
+    
+2. ***Ciclo de Vida Padronizado**: Ele define passos claros (`clean`, `compile`, `test`, `package`) que garantem que qualquer pessoa na equipe consiga compilar o projeto da mesma forma, evitando o clássico problema de "na minha máquina funciona" .[](https://docs.oracle.com/en/middleware/developer-tools/jdeveloper/14.1.2/user-guide/building-java-projects1.html?source=post_page---------------------------%2Cpost_page---------------------------&source=post_page---------------------------%2Cpost_page---------------------------&source=post_page---------------------------%2Cpost_page---------------------------&source=post_page---------------------------%2Cpost_page---------------------------#GUID-609458B4-79BD-4F5E-8ABE-C5C616576E7D#2)[](https://worktile.com/kb/p/3882381#respond#1)*
+    
+3. ***Estrutura de Projeto**: O Maven impõe uma estrutura de pastas padrão (ex: `src/main/java`), o que facilita a compreensão do projeto por novos desenvolvedores .*
+
+###### *Pesquisa feita pelo DeepSeek*
+
+Por agora estarei fazendo um doc dos processos para depois ser utilizado na apresentação tecnica

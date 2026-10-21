@@ -38,6 +38,5 @@ public class JsonUtil {
         } catch (IOException e) {
             throw new RuntimeException("Erro ao salvar o arquivo JSON", e);
         }
-        
     }
 }
