@@ -302,7 +302,7 @@
         "lineNumbers": true,
         "unwrapLines": true,
         "wrapLinesActive": false,
-        "curvature": 4
+        "curvature": 7
       },
       "gutter": {
         "highlight": true,
@@ -315,7 +315,7 @@
           "textItalic": true
         },
         "languageTag": {
-          "display": "always",
+          "display": "none",
           "textFont": "",
           "textBold": true,
           "textItalic": false
@@ -329,7 +329,7 @@
           "displayVersion": true,
           "displayTimestamp": true
         },
-        "fontSize": 16,
+        "fontSize": 14,
         "foldPlaceholder": ""
       },
       "highlights": {
@@ -350,8 +350,8 @@
         "gradientHighlights": false,
         "gradientHighlightsColourStop": "70%",
         "languageBorderColour": true,
-        "languageBorderWidth": 5,
-        "iconSize": 30
+        "languageBorderWidth": 6,
+        "iconSize": 28
       }
     },
     "colours": {
