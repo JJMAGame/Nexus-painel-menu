@@ -99,7 +99,7 @@ Colocando o a validação de login no Usuário para criação e validação de c
 Ainda tenho que validar se estar tudo certo se esta no caminho certo para o encapsulamento e herança, terei que revisar o Pilares. *Quais seria os pilares?*
 
 ### **Abstração**:
-- [ ] Foi incluso?
+- [x] Foi incluso? ✅ 2026-10-21
 Consiste em focar nos aspectos essenciais de um objeto do mundo real e representá-los no código por meio de atributos (características) e métodos (ações), ignorando detalhes complexos e desnecessários.
 
 ### **Encapsulamento**:
@@ -114,8 +114,8 @@ Permite que uma classe (subclasse) receba ou herde atributos e comportamentos de
 É a capacidade de objetos de diferentes classes responderem à mesma mensagem ou método de maneiras diferentes, adaptando o comportamento conforme o contexto de cada subclasse.
 # Missão nessa nota
 
-- [ ] ⏫ Aprimorar o esqueleto do usuario
-- [ ] ⏫ Aplicar o sistema no main
+- [x] ⏫ Aprimorar o esqueleto do usuario ✅ 2026-10-21
+- [x] ⏫ Aplicar o sistema no main ✅ 2026-10-21
 
 ---
 # O Encapsulamento esta sendo construído 15/10/2026
