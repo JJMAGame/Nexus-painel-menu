@@ -77,7 +77,7 @@ No momento que eu estou colocando esse texto estou me arrumando para a faculdade
 
 ![[Pasted image 20261020151040.png]]
 
-```pom fold:Todo-o-sistema-pom hl:29-33
+```xml fold:Todo-o-sistema-pom hl:29-33
 
 <?xml version="1.0" encoding="UTF-8"?>
 
@@ -110,7 +110,7 @@ No momento que eu estou colocando esse texto estou me arrumando para a faculdade
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <version>2.10.1</version>
-      </dependency>
+    </dependency>
   </dependencies>
   
   <build>
@@ -160,3 +160,6 @@ No momento que eu estou colocando esse texto estou me arrumando para a faculdade
   </build>
 </project>
 ```
+ 
+ ---
+# Parte 3

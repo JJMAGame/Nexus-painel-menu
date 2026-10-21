@@ -6,7 +6,7 @@
       {
         "id": "e8329b3ef67ef987",
         "type": "tabs",
-        "dimension": 52.91878172588832,
+        "dimension": 75.11230907457322,
         "children": [
           {
             "id": "63622e04c36a0920",
@@ -66,7 +66,7 @@
       {
         "id": "d847dda3c5085bda",
         "type": "tabs",
-        "dimension": 47.08121827411168,
+        "dimension": 24.887690925426774,
         "children": [
           {
             "id": "42bf2ef0a50053e4",
@@ -263,14 +263,14 @@
   },
   "active": "da606270d5241c36",
   "lastOpenFiles": [
+    "Logs/Fazendo as primeira partes do código.md",
+    "Logs/Colocando o sistema Gson no código.md",
     "outros/Pasted image 20261020151001.png",
     "outros/Pasted image 20261020151040.png",
-    "Logs/Colocando o sistema Gson no código.md",
     "outros/Pasted image 20261020145637.png",
     "outros/Pasted image 20261020145600.png",
     "Pasted image 20261020144851.png",
     "Logs/Commit inicial.md",
-    "Logs/Fazendo as primeira partes do código.md",
     "Fluxograma.canvas",
     "outros/Pasted image 20261019171733.png",
     "Logs/Logs.canvas",

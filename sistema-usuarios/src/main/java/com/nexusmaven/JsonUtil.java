@@ -2,8 +2,10 @@ package com.nexusmaven;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,5 +30,14 @@ public class JsonUtil {
         } catch (IOException e) {
             throw new RuntimeException("Erro ao ler o arquivo JSON", e);
         }
+    }
+
+    public static void salvarUsuarios(List<Usuario> usuarios) {
+        try (Writer writer = new FileWriter(ARQUIVO)) {
+            gson.toJson(usuarios, writer);
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao salvar o arquivo JSON", e);
+        }
+        
     }
 }

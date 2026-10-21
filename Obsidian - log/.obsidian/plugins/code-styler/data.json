@@ -302,7 +302,7 @@
         "lineNumbers": true,
         "unwrapLines": true,
         "wrapLinesActive": false,
-        "curvature": 4
+        "curvature": 7
       },
       "gutter": {
         "highlight": true,
@@ -321,7 +321,7 @@
           "textItalic": false
         },
         "languageIcon": {
-          "display": "none",
+          "display": "always",
           "displayColour": true
         },
         "externalReference": {
@@ -350,7 +350,7 @@
         "gradientHighlights": false,
         "gradientHighlightsColourStop": "70%",
         "languageBorderColour": true,
-        "languageBorderWidth": 5,
+        "languageBorderWidth": 6,
         "iconSize": 28
       }
     },
