@@ -13,18 +13,12 @@ public class Usuario {
     }
 
     // ===== GETTERS =====
-    public String getNome() { 
-        return nome; 
-    }
+    public String getNome() { return nome; }
+    public String getEmail() { return email; }
+    public String getSenha() { return senha; }
 
-    public String getEmail() { 
-        return email; 
-    }
-
-    // ⚠️ Senha NÃO tem getter público por segurança
-    // (use autenticar() em vez disso)
-
-    // ===== SETTERS COM VALIDAÇÃO =====
+    // O Gson precisa do getter para salvar a senha no arquivo
+    
     public void setNome(String nome) {
         if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome não pode ser vazio");
@@ -33,20 +27,19 @@ public class Usuario {
     }
 
     public void setEmail(String email) {
-        if (email == null || !email.contains("@")) {
-            throw new IllegalArgumentException("Email inválido");
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException("Email não pode ser vazio");
         }
-        this.email = email.toLowerCase().trim();
+        this.email = email.trim();
     }
 
     public void setSenha(String senha) {
         if (senha == null || senha.length() < 8) {
-            throw new IllegalArgumentException("Senha deve ter no mínimo 8 caracteres");
+            throw new IllegalArgumentException("Senha deve ter pelo menos 8 caracteres");
         }
         this.senha = senha;
     }
 
-    // ===== MÉTODO DE NEGÓCIO (reaproveitamento futuro) =====
     public boolean autenticar(String email, String senha) {
         return this.email.equalsIgnoreCase(email) && this.senha.equals(senha);
     }
@@ -54,5 +47,5 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{nome='" + nome + "', email='" + email + "'}";
-    }
+    }   
 }
