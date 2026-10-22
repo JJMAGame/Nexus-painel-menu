@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Docs/Produzindo um projeto ( Parte 1 ).md",
+                "file": "Logs/Produzindo um projeto ( Parte 1 ).md",
                 "mode": "source",
                 "source": false
               },
@@ -202,8 +202,9 @@
   },
   "active": "5af2ca00508f10ac",
   "lastOpenFiles": [
+    "Docs/Produzindo um projeto ( Parte 1 ).pdf",
+    "Logs/Produzindo um projeto ( Parte 1 ).md",
     "Docs/Teste de qualidade administrador .pdf",
-    "Docs/Produzindo um projeto ( Parte 1 ).md",
     "outros/Pasted image 20261020151040.png",
     "Logs/Colocando o sistema Gson no código.md",
     "Logs/Fazendo as primeira partes do código.md",
@@ -228,7 +229,6 @@
     "outros/Pasted image 20261008202608.png",
     "outros",
     "Logs/Nexus · Protótipo · Fundação Manoel Cruz.html",
-    "Nexus · Protótipo · Fundação Manoel Cruz.html",
     "Bem-vindo.md"
   ]
 }
