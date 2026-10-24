@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Logs/Produzindo um projeto ( Parte 1 ).md",
+                "file": "Criando - Criação de conta... em partes.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Produzindo um projeto ( Parte 1 )"
+              "title": "Criando - Criação de conta... em partes"
             }
           }
         ]
@@ -185,7 +185,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 463.5
+    "width": 463.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -203,20 +204,21 @@
   "active": "da606270d5241c36",
   "lastOpenFiles": [
     "Fluxograma.canvas",
+    "Criando - Criação de conta... em partes.md",
+    "Logs/Logs.canvas",
     "Logs/Produzindo um projeto ( Parte 1 ).md",
+    "Logs/Commit inicial.md",
+    "Logs/Colocando o sistema Gson no código.md",
     "Docs/Produzindo um projeto ( Parte 1 ).pdf",
     "Docs/Teste de qualidade administrador .pdf",
     "outros/Pasted image 20261020151040.png",
-    "Logs/Colocando o sistema Gson no código.md",
     "Logs/Fazendo as primeira partes do código.md",
-    "Logs/Commit inicial.md",
     "outros/Pasted image 20261021175018.png",
     "outros/Pasted image 20261020151001.png",
     "outros/Pasted image 20261020145637.png",
     "outros/Pasted image 20261020145600.png",
     "Pasted image 20261020144851.png",
     "outros/Pasted image 20261019171733.png",
-    "Logs/Logs.canvas",
     "Docs",
     "file:C:/Users/jorgi/Downloads/Teste de qualidade administrador .pdf",
     "Usuariolog.java.md",
