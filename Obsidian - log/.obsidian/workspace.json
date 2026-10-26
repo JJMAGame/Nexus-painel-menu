@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Logs/Fazendo as primeira partes do código.md",
+                "file": "Logs/Percepção.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Fazendo as primeira partes do código"
+              "title": "Percepção"
             }
           }
         ]
@@ -185,8 +185,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 463.5,
-    "collapsed": true
+    "width": 463.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -203,13 +202,16 @@
   },
   "active": "df40526157f59902",
   "lastOpenFiles": [
-    "Logs/Logs.canvas",
-    "Logs/Produzindo um projeto ( Parte 1 ).md",
+    "Sem título.canvas",
+    "Logs/Percepção.md",
+    "outros/Pasted image 20261026194400.png",
     "Fluxograma.canvas",
+    "Logs/Produzindo um projeto ( Parte 1 ).md",
+    "Logs/Fazendo as primeira partes do código.md",
+    "Logs/Logs.canvas",
     "Logs/Criando os java.md",
     "outros/Pasted image 20261026144111.png",
     "Logs/Criando - Criação de conta... em partes.md",
-    "Logs/Fazendo as primeira partes do código.md",
     "Logs/Commit inicial.md",
     "Docs/Produzindo um projeto ( Parte 1 ).pdf",
     "Docs/Teste de qualidade administrador .pdf",
@@ -230,7 +232,6 @@
     "outros/Sem título.base",
     "Recording 20261010114737.m4a",
     "Usuario.java",
-    "outros/Pasted image 20261008202608.png",
     "outros",
     "Logs/Nexus · Protótipo · Fundação Manoel Cruz.html",
     "Bem-vindo.md"
