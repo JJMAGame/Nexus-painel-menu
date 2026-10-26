@@ -34,8 +34,8 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        if (senha == null || senha.length() < 6) {
-            throw new IllegalArgumentException("Senha deve ter pelo menos 6 caracteres");
+        if (senha == null || senha.length() < 6 || senha.length() > 12) {
+            throw new IllegalArgumentException("Senha deve ter entre 6 e 12 caracteres");
         }
         this.senha = senha;
     }
