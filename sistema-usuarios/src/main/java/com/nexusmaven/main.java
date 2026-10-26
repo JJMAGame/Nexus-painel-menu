@@ -11,7 +11,9 @@ public class main {
         System.out.println("      TELA DE LOGIN - NEXUS      ");
         System.out.println("=================================");
 
-        boolean logado =false;
+        boolean logado = false;
+
+        Usuario usuarioLogado = null; // Variável para armazenar o usuário logado
 
         //loop de login
         while (!logado) {
@@ -38,6 +40,8 @@ public class main {
                     // 3. Tenta autenticar (O método autenticar usa o Hash e o Salt)
                     if (u.autenticar(emailDigitado, senhaDigitada)) {
                         System.out.println("\n Login realizado com sucesso! Bem-vindo, " + u.getNome() + ".");
+                        logado = true;
+                        usuarioLogado = u; // Armazena o usuário logado
                         logado = true;
                     } else {
                         System.out.println("\n Senha incorreta. Tente novamente.\n");

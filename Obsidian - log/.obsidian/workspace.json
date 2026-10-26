@@ -22,6 +22,29 @@
             }
           }
         ]
+      },
+      {
+        "id": "a82bafe3a1b961ec",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "df40526157f59902",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "Logs/Logs.canvas",
+                "viewState": {
+                  "x": 1061.6317381736367,
+                  "y": -125.00777145537154,
+                  "zoom": -2.621924244346583
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Logs"
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -201,17 +224,17 @@
       "audio-recorder:Começar/parar a gravação de áudio": false
     }
   },
-  "active": "5af2ca00508f10ac",
+  "active": "df40526157f59902",
   "lastOpenFiles": [
+    "Logs/Logs.canvas",
+    "Fluxograma.canvas",
+    "Logs/Criando - Criação de conta... em partes.md",
     "Logs/Produzindo um projeto ( Parte 1 ).md",
-    "Docs/Produzindo um projeto ( Parte 1 ).pdf",
     "Logs/Fazendo as primeira partes do código.md",
     "Logs/Commit inicial.md",
-    "Logs/Logs.canvas",
-    "Logs/Colocando o sistema Gson no código.md",
-    "Logs/Criando - Criação de conta... em partes.md",
-    "Fluxograma.canvas",
+    "Docs/Produzindo um projeto ( Parte 1 ).pdf",
     "Docs/Teste de qualidade administrador .pdf",
+    "Logs/Colocando o sistema Gson no código.md",
     "outros/Pasted image 20261020151040.png",
     "outros/Pasted image 20261021175018.png",
     "outros/Pasted image 20261020151001.png",
