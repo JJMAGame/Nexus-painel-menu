@@ -12,7 +12,8 @@
 		{"id":"da75c9628a53c581","type":"file","file":"Logs/Commit inicial.md","x":-655,"y":-229,"width":400,"height":400,"color":"5"},
 		{"id":"7ec4de29420feff7","type":"file","file":"Logs/Fazendo as primeira partes do código.md","x":-195,"y":-229,"width":400,"height":400,"color":"5"},
 		{"id":"4d1a051b98ae7333","type":"file","file":"Logs/Colocando o sistema Gson no código.md","x":270,"y":-229,"width":400,"height":400,"color":"5"},
-		{"id":"03bace9e255ab605","x":1080,"y":-229,"width":400,"height":400,"color":"3","type":"file","file":"Logs/Criando - Criação de conta... em partes.md"}
+		{"id":"03bace9e255ab605","type":"file","file":"Logs/Criando - Criação de conta... em partes.md","x":1080,"y":-229,"width":400,"height":400,"color":"3"},
+		{"id":"a4d6411619a624b6","type":"file","file":"Logs/Criando os java.md","x":1565,"y":-229,"width":400,"height":400,"color":"3"}
 	],
 	"edges":[
 		{"id":"f2d888ac24da9c85","fromNode":"bdfc955e5caed3bb","fromSide":"bottom","toNode":"da75c9628a53c581","toSide":"top"},
@@ -24,6 +25,7 @@
 		{"id":"bbd1d2fe9119f837","fromNode":"da75c9628a53c581","fromSide":"bottom","toNode":"f65c5810be4ffebb","toSide":"top"},
 		{"id":"ecf921ff529ca127","fromNode":"7ec4de29420feff7","fromSide":"bottom","toNode":"f65c5810be4ffebb","toSide":"top"},
 		{"id":"935551cfa68e71ba","fromNode":"4d1a051b98ae7333","fromSide":"bottom","toNode":"f65c5810be4ffebb","toSide":"top"},
-		{"id":"522a396a07e2be50","fromNode":"c446dfd199d55b22","fromSide":"bottom","toNode":"03bace9e255ab605","toSide":"top"}
+		{"id":"522a396a07e2be50","fromNode":"c446dfd199d55b22","fromSide":"bottom","toNode":"03bace9e255ab605","toSide":"top"},
+		{"id":"b599fccd79f3e448","fromNode":"c446dfd199d55b22","fromSide":"bottom","toNode":"a4d6411619a624b6","toSide":"top"}
 	]
 }

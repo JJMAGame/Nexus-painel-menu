@@ -107,7 +107,7 @@ Consiste em focar nos aspectos essenciais de um objeto do mundo real e represent
 É a prática de esconder os detalhes internos de funcionamento de um objeto e proteger seus dados (atributos), controlando o acesso a eles por meio de métodos específicos (como _getters_ e _setters_)
 
 ### **Herança**:
-- [ ] Foi incluso?
+- [x] Foi incluso? ✅ 2026-10-26
 Permite que uma classe (subclasse) receba ou herde atributos e comportamentos de outra classe (superclasse), facilitando a reutilização de código e a criação de hierarquias.
 ### **Polimorfismo**:
 - [ ] Foi incluso?
