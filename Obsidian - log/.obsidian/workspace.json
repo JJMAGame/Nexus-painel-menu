@@ -13,15 +13,15 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "Fluxograma.canvas",
+                "file": "Logs/Logs.canvas",
                 "viewState": {
-                  "x": -282.89537916692717,
-                  "y": 39.33815932975857,
-                  "zoom": -1.3890422907458995
+                  "x": 806.3324873096444,
+                  "y": 521.9162436548223,
+                  "zoom": -2.28859091101325
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "Fluxograma"
+              "title": "Logs"
             }
           }
         ]
@@ -188,7 +188,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 400.5
+    "width": 400.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -205,24 +206,24 @@
   },
   "active": "df40526157f59902",
   "lastOpenFiles": [
+    "Logs/Criando - Criação de conta... em partes.md",
+    "Docs/Teste de qualidade administrador .pdf",
+    "Docs/Produzindo um projeto ( Parte 1 ).pdf",
+    "Fluxograma.canvas",
     "Logs/Produzindo um projeto ( Parte 1 ).md",
     "Logs/Colocando o sistema Gson no código.md",
     "Logs/Commit inicial.md",
-    "Logs/Criando - Criação de conta... em partes.md",
     "Logs/Criando os java.md",
     "Logs/Logs.canvas",
     "Logs/Percepção.md",
     "outros/Pasted image 20261020145637.png",
     "outros/Pasted image 20261020145600.png",
-    "Fluxograma.canvas",
     "2026-10-26.md",
     "outros/Recording 20261026212631.m4a",
     "Logs/Fazendo as primeira partes do código.md",
-    "Docs/Teste de qualidade administrador .pdf",
     "Sem título.canvas",
     "outros/Pasted image 20261026194400.png",
     "outros/Pasted image 20261026144111.png",
-    "Docs/Produzindo um projeto ( Parte 1 ).pdf",
     "outros/Pasted image 20261020151040.png",
     "outros/Pasted image 20261021175018.png",
     "outros/Pasted image 20261020151001.png",

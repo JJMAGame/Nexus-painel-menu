@@ -15,11 +15,11 @@ public class GerarDados {
         nome = scanner.nextLine();
         System.out.print("Digite o email do usuário: ");
         email = scanner.nextLine();
-        System.out.print("Digite a senha do usuário (mínimo 6 caracteres):");
+        System.out.print("Digite a senha do usuário (mínimo 6 e máximo 12 caracteres):");
         senha = scanner.nextLine();
 
         scanner.close();
-        
+
         Usuario u = new Usuario(nome, email, senha);
 
         List<Usuario> lista = new ArrayList<>();
