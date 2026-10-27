@@ -11,17 +11,14 @@
             "id": "df40526157f59902",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Logs/Logs.canvas",
-                "viewState": {
-                  "x": 806.3324873096444,
-                  "y": 521.9162436548223,
-                  "zoom": -2.28859091101325
-                }
+                "file": "Logs/Percepção.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "Logs"
+              "icon": "lucide-file",
+              "title": "Percepção"
             }
           }
         ]
@@ -206,6 +203,8 @@
   },
   "active": "df40526157f59902",
   "lastOpenFiles": [
+    "Logs/Fazendo as primeira partes do código.md",
+    "Logs/Logs.canvas",
     "Logs/Criando - Criação de conta... em partes.md",
     "Docs/Teste de qualidade administrador .pdf",
     "Docs/Produzindo um projeto ( Parte 1 ).pdf",
@@ -214,13 +213,11 @@
     "Logs/Colocando o sistema Gson no código.md",
     "Logs/Commit inicial.md",
     "Logs/Criando os java.md",
-    "Logs/Logs.canvas",
     "Logs/Percepção.md",
     "outros/Pasted image 20261020145637.png",
     "outros/Pasted image 20261020145600.png",
     "2026-10-26.md",
     "outros/Recording 20261026212631.m4a",
-    "Logs/Fazendo as primeira partes do código.md",
     "Sem título.canvas",
     "outros/Pasted image 20261026194400.png",
     "outros/Pasted image 20261026144111.png",

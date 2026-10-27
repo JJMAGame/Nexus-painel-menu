@@ -1,6 +1,5 @@
 package com.nexusmaven;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,13 +19,19 @@ public class GerarDados {
 
         scanner.close();
 
-        Usuario u = new Usuario(nome, email, senha);
+        try{
+            Usuario u = new Usuario(nome, email, senha);
 
-        List<Usuario> lista = new ArrayList<>();
-        lista.add(u);
+            List<Usuario> usuarios = JsonUtil.lerUsuarios();
+            usuarios.add(u);
 
-        JsonUtil.salvarUsuarios(lista);
-        System.out.println("✅ Usuário salvo no arquivo JSON com sucesso!");
+            JsonUtil.salvarUsuarios(usuarios);
 
+            System.out.println("Dados de usuário gerados e salvos com sucesso!");
+            System.out.println("Total de usuários no sistema: " + usuarios.size());
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("❌ Erro: " + e.getMessage());
+        }
     }
 }
