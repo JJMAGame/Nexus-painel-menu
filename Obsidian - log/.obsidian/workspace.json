@@ -185,7 +185,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 463.5
+    "width": 400.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -202,25 +203,27 @@
   },
   "active": "df40526157f59902",
   "lastOpenFiles": [
-    "Sem título.canvas",
-    "Logs/Percepção.md",
-    "outros/Pasted image 20261026194400.png",
-    "Fluxograma.canvas",
-    "Logs/Produzindo um projeto ( Parte 1 ).md",
     "Logs/Fazendo as primeira partes do código.md",
     "Logs/Logs.canvas",
-    "Logs/Criando os java.md",
-    "outros/Pasted image 20261026144111.png",
     "Logs/Criando - Criação de conta... em partes.md",
-    "Logs/Commit inicial.md",
-    "Docs/Produzindo um projeto ( Parte 1 ).pdf",
     "Docs/Teste de qualidade administrador .pdf",
+    "Docs/Produzindo um projeto ( Parte 1 ).pdf",
+    "Fluxograma.canvas",
+    "Logs/Produzindo um projeto ( Parte 1 ).md",
     "Logs/Colocando o sistema Gson no código.md",
+    "Logs/Commit inicial.md",
+    "Logs/Criando os java.md",
+    "Logs/Percepção.md",
+    "outros/Pasted image 20261020145637.png",
+    "outros/Pasted image 20261020145600.png",
+    "2026-10-26.md",
+    "outros/Recording 20261026212631.m4a",
+    "Sem título.canvas",
+    "outros/Pasted image 20261026194400.png",
+    "outros/Pasted image 20261026144111.png",
     "outros/Pasted image 20261020151040.png",
     "outros/Pasted image 20261021175018.png",
     "outros/Pasted image 20261020151001.png",
-    "outros/Pasted image 20261020145637.png",
-    "outros/Pasted image 20261020145600.png",
     "Pasted image 20261020144851.png",
     "outros/Pasted image 20261019171733.png",
     "Docs",
@@ -233,7 +236,6 @@
     "Recording 20261010114737.m4a",
     "Usuario.java",
     "outros",
-    "Logs/Nexus · Protótipo · Fundação Manoel Cruz.html",
     "Bem-vindo.md"
   ]
 }

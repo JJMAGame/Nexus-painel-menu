@@ -1,19 +1,20 @@
 {
 	"nodes":[
-		{"id":"8551429f4686329e","type":"group","x":-1640,"y":-520,"width":2800,"height":760,"color":"1","label":"Maven Arquitetura"},
-		{"id":"a3ed1c2bde88489b","type":"group","x":-1440,"y":-280,"width":1010,"height":320,"label":"Jason"},
-		{"id":"3906bd4e59635c16","type":"text","text":"Login (Main)","x":-240,"y":-120,"width":290,"height":60},
-		{"id":"5a8e21aabb7adead","type":"text","text":"Inquilino","x":760,"y":-280,"width":250,"height":60},
-		{"id":"3b5ca24edd99459e","type":"text","text":"Adminstrador","x":760,"y":0,"width":250,"height":60},
+		{"id":"8551429f4686329e","type":"group","x":-1640,"y":-620,"width":2800,"height":860,"color":"1","label":"Maven Arquitetura"},
+		{"id":"a3ed1c2bde88489b","type":"group","x":-1440,"y":-280,"width":1010,"height":480,"label":"Jason"},
 		{"id":"47e7e437b5679962","type":"file","file":"outros/Pasted image 20261008191220.png","x":-800,"y":-140,"width":120,"height":50},
 		{"id":"d41f7531bb797e73","type":"text","text":"Banco json","x":-700,"y":-115,"width":250,"height":60,"color":"3"},
 		{"id":"3d53481cceabe42e","type":"text","text":"Criação de conta ( GerarDados )","x":-700,"y":80,"width":250,"height":70,"color":"2"},
-		{"id":"faa83614f9abe0ec","x":-1240,"y":-200,"width":250,"height":60,"color":"3","type":"text","text":"Imovel"},
-		{"id":"0b4dcbeb206e852b","x":-1240,"y":-60,"width":250,"height":60,"color":"3","type":"text","text":"Usuario"},
+		{"id":"faa83614f9abe0ec","type":"text","text":"Imovel","x":-1240,"y":-200,"width":250,"height":60,"color":"3"},
+		{"id":"0b4dcbeb206e852b","type":"text","text":"Usuario","x":-1240,"y":-60,"width":250,"height":60,"color":"3"},
 		{"id":"10d06305c54a84f6","type":"file","file":"outros/Pasted image 20261008191220.png","x":-1340,"y":-225,"width":120,"height":50},
 		{"id":"d93649d49b0274ab","type":"file","file":"outros/Pasted image 20261008191220.png","x":-1340,"y":-90,"width":120,"height":50},
-		{"id":"76652782be038740","x":-700,"y":-250,"width":250,"height":50,"type":"text","text":"jsonUtil"},
-		{"id":"0e9b3cdfcffdeda1","x":-220,"y":-310,"width":250,"height":60,"type":"text","text":"Usuario"}
+		{"id":"0e9b3cdfcffdeda1","type":"text","text":"Usuario","x":-220,"y":-310,"width":250,"height":60},
+		{"id":"3906bd4e59635c16","type":"text","text":"Login (Main)","x":-240,"y":-120,"width":290,"height":60},
+		{"id":"3b5ca24edd99459e","type":"text","text":"Adminstrador","x":760,"y":0,"width":250,"height":60},
+		{"id":"76652782be038740","type":"text","text":"jsonUtil","x":-700,"y":-250,"width":250,"height":50},
+		{"id":"5a8e21aabb7adead","type":"text","text":"Inquilino","x":760,"y":-250,"width":250,"height":60},
+		{"id":"07bff8367a6dfae5","x":760,"y":-440,"width":250,"height":60,"type":"text","text":"Secretaria"}
 	],
 	"edges":[
 		{"id":"9fa9240d1f45e8d0","fromNode":"3906bd4e59635c16","fromSide":"right","toNode":"5a8e21aabb7adead","toSide":"left"},
@@ -28,6 +29,8 @@
 		{"id":"20899dae2743a42e","fromNode":"0e9b3cdfcffdeda1","fromSide":"bottom","toNode":"3906bd4e59635c16","toSide":"top","color":"3","label":"Encapsulamento e abstração"},
 		{"id":"197c58abc3efbacd","fromNode":"0e9b3cdfcffdeda1","fromSide":"right","toNode":"5a8e21aabb7adead","toSide":"top","color":"4","label":"Herança"},
 		{"id":"1cc84d8b6ecaece1","fromNode":"0e9b3cdfcffdeda1","fromSide":"right","toNode":"3b5ca24edd99459e","toSide":"top","color":"4","label":"Herança"},
-		{"id":"4e1caedc51b9c7fa","fromNode":"76652782be038740","fromSide":"right","toNode":"0e9b3cdfcffdeda1","toSide":"left","color":"3"}
+		{"id":"4e1caedc51b9c7fa","fromNode":"76652782be038740","fromSide":"right","toNode":"0e9b3cdfcffdeda1","toSide":"left","color":"3"},
+		{"id":"258a6bb81126112d","fromNode":"3906bd4e59635c16","fromSide":"right","toNode":"07bff8367a6dfae5","toSide":"left"},
+		{"id":"63b639ebf8db2048","fromNode":"0e9b3cdfcffdeda1","fromSide":"right","toNode":"07bff8367a6dfae5","toSide":"top","color":"4","label":"Herança"}
 	]
 }
