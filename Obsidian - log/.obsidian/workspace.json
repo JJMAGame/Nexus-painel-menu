@@ -11,17 +11,10 @@
             "id": "df40526157f59902",
             "type": "leaf",
             "state": {
-              "type": "canvas",
-              "state": {
-                "file": "Fluxograma.canvas",
-                "viewState": {
-                  "x": -253.4302325581395,
-                  "y": -75.84302325581399,
-                  "zoom": -1.162449880880166
-                }
-              },
-              "icon": "lucide-layout-dashboard",
-              "title": "Fluxograma"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Visualização em gráfico"
             }
           }
         ]
@@ -205,15 +198,19 @@
   },
   "active": "df40526157f59902",
   "lastOpenFiles": [
+    "outros/Pasted image 20261020145637.png",
+    "outros/Pasted image 20261020145600.png",
+    "Fluxograma.canvas",
+    "Logs/Percepção.md",
+    "2026-10-26.md",
+    "outros/Recording 20261026212631.m4a",
+    "Logs/Fazendo as primeira partes do código.md",
     "Logs/Criando - Criação de conta... em partes.md",
     "Logs/Commit inicial.md",
     "Docs/Teste de qualidade administrador .pdf",
-    "Logs/Percepção.md",
-    "Fluxograma.canvas",
     "Sem título.canvas",
     "outros/Pasted image 20261026194400.png",
     "Logs/Produzindo um projeto ( Parte 1 ).md",
-    "Logs/Fazendo as primeira partes do código.md",
     "Logs/Logs.canvas",
     "Logs/Criando os java.md",
     "outros/Pasted image 20261026144111.png",
@@ -222,8 +219,6 @@
     "outros/Pasted image 20261020151040.png",
     "outros/Pasted image 20261021175018.png",
     "outros/Pasted image 20261020151001.png",
-    "outros/Pasted image 20261020145637.png",
-    "outros/Pasted image 20261020145600.png",
     "Pasted image 20261020144851.png",
     "outros/Pasted image 20261019171733.png",
     "Docs",
@@ -236,7 +231,6 @@
     "Recording 20261010114737.m4a",
     "Usuario.java",
     "outros",
-    "Logs/Nexus · Protótipo · Fundação Manoel Cruz.html",
     "Bem-vindo.md"
   ]
 }
