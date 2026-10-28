@@ -20,11 +20,11 @@ public class Imovel {
     public String getLocalizacao() { return localizacao; }
 
     // ===== SETTERS COM VALIDAÇÃO =====
-    public void setNome(String nome) {
-        if (nome == null || nome.trim().isEmpty()) {
+    public void setNome(String lnome) {
+        if (lnome == null || lnome.trim().isEmpty()) {
             throw new IllegalArgumentException("O nome do imóvel não pode ser vazio.");
         }
-        this.lnome = nome.trim();
+        this.lnome = lnome.trim();
     }
 
     public void setLocalizacao(String localizacao) {
