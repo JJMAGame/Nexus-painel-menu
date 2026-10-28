@@ -15,28 +15,29 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 public class JsonUtil {
-    private static final String ARQUIVO = "usuarios.json";
+    
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    // Lê a lista de usuários do arquivo JSON
-    public static List<Usuario> lerUsuarios() {
-        File file = new File(ARQUIVO);
+    // <T> significa que esse método aceita qualquer classe
+    public static <T> List<T> ler(String nomeArquivo, Class<T> classe) {
+        File file = new File(nomeArquivo);
         if (!file.exists()) return new ArrayList<>();
 
         try (Reader reader = new FileReader(file)) {
-            Type tipoLista = new TypeToken<List<Usuario>>() {}.getType();
-            List<Usuario> usuarios = gson.fromJson(reader, tipoLista);
-            return usuarios != null ? usuarios : new ArrayList<>();
+            // Cria o tipo genérico da lista baseado na classe passada
+            Type tipoLista = TypeToken.getParameterized(List.class, classe).getType();
+            List<T> lista = gson.fromJson(reader, tipoLista);
+            return lista != null ? lista : new ArrayList<>();
         } catch (IOException e) {
-            throw new RuntimeException("Erro ao ler o arquivo JSON", e);
+            throw new RuntimeException("Erro ao ler o arquivo JSON: " + nomeArquivo, e);
         }
     }
 
-    public static void salvarUsuarios(List<Usuario> usuarios) {
-        try (Writer writer = new FileWriter(ARQUIVO)) {
-            gson.toJson(usuarios, writer);
+    public static <T> void salvar(String nomeArquivo, List<T> lista) {
+        try (Writer writer = new FileWriter(nomeArquivo)) {
+            gson.toJson(lista, writer);
         } catch (IOException e) {
-            throw new RuntimeException("Erro ao salvar o arquivo JSON", e);
+            throw new RuntimeException("Erro ao salvar o arquivo JSON: " + nomeArquivo, e);
         }
     }
 }
