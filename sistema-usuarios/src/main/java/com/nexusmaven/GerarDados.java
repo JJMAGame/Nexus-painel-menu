@@ -61,8 +61,6 @@ public class GerarDados {
            } catch (IllegalArgumentException e) {
                System.out.println("❌ Erro: " + e.getMessage());
            }
-
-
         }
     }
 }
