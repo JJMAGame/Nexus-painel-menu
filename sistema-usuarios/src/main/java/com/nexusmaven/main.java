@@ -23,7 +23,7 @@ public class main {
             System.out.print("Senha: ");
             String senhaDigitada = scanner.nextLine();
 
-            List<Usuario> usuarios = JsonUtil.lerUsuarios();
+            List<Usuario> usuarios = JsonUtil.ler("usuarios.json", Usuario.class);
 
             if (usuarios.isEmpty()) {
                 System.out.println("\n Nenhum usuário encontrado no JSON. Rode o GerarDados primeiro.\n");

@@ -185,8 +185,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 400.5,
-    "collapsed": true
+    "width": 400.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -203,17 +202,17 @@
   },
   "active": "df40526157f59902",
   "lastOpenFiles": [
-    "Logs/Fazendo as primeira partes do código.md",
-    "Logs/Logs.canvas",
-    "Logs/Criando - Criação de conta... em partes.md",
-    "Docs/Teste de qualidade administrador .pdf",
-    "Docs/Produzindo um projeto ( Parte 1 ).pdf",
-    "Fluxograma.canvas",
-    "Logs/Produzindo um projeto ( Parte 1 ).md",
-    "Logs/Colocando o sistema Gson no código.md",
-    "Logs/Commit inicial.md",
     "Logs/Criando os java.md",
+    "Logs/Criando - Criação de conta... em partes.md",
+    "Logs/Commit inicial.md",
+    "Logs/Colocando o sistema Gson no código.md",
+    "Logs/Produzindo um projeto ( Parte 1 ).md",
+    "Logs/Fazendo as primeira partes do código.md",
     "Logs/Percepção.md",
+    "Docs/Produzindo um projeto ( Parte 1 ).pdf",
+    "Logs/Logs.canvas",
+    "Docs/Teste de qualidade administrador .pdf",
+    "Fluxograma.canvas",
     "outros/Pasted image 20261020145637.png",
     "outros/Pasted image 20261020145600.png",
     "2026-10-26.md",
