@@ -22,17 +22,34 @@ public class GerarDados {
                System.out.print("Digite o email do usuário: ");
                email = scanner.nextLine();
                System.out.print("Digite a senha do usuário (mínimo 6 e máximo 12 caracteres):");
-           senha = scanner.nextLine();
+               senha = scanner.nextLine();
+
+               //Qual é o tipo?
+
+               System.out.println("\nQual o tipo de conta?");
+               System.out.println("1 - Inquilino (Padrão");
+               System.out.println("2 - Administrador");
+               System.out.println("Escolha o tipo: ");
+               String tipoConta = scanner.nextLine();
+
    
            try{
-               Usuario u = new Usuario(nome, email, senha);
+               Usuario u = null;
+
+               if (tipoConta.equals("2")) {
+                  u = new admin(nome, email, senha);
+               } else {
+                  u = new inquilino(nome, email, senha);
+               }
+               
    
                List<Usuario> usuarios = JsonUtil.ler("usuarios.json", Usuario.class);
                usuarios.add(u);
    
                JsonUtil.salvar("usuarios.json", usuarios);
    
-               System.out.println("Dados de usuário gerados e salvos com sucesso!");
+               String tipoExibicao = tipoConta.equals("2") ? "Administrador" : "Inquilino";
+               System.out.println("Dados de usuário gerados e salvos com sucesso! do tipo " + tipoConta);
                System.out.println("Total de usuários no sistema: " + usuarios.size());
    
            } catch (IllegalArgumentException e) {

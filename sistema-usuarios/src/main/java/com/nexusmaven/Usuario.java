@@ -5,6 +5,9 @@ public class Usuario {
     private String email;
     private String senha;
 
+    // ⚠️ ADICIONE ESTE CONSTRUTOR VAZIO AQUI
+    public Usuario() {} 
+
     // Construtor reaproveita os setters (validação garantida)
     public Usuario(String nome, String email, String senha) {
         setNome(nome);
