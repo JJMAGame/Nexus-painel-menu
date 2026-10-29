@@ -775,4 +775,4 @@ Um dos arquivos gerado pelo sistema
 
 # O que falta?
 
-Construção da telas do **Inquilino**, **Adminstrador** e **Secretaria** com os privilégios de cada um deles sendo o maximo o Adminstrador
+Construção da telas do **Inquilino**, **Adminstrador** e **Secretaria** com os privilégios de cada um deles sendo o máximo o Administrador
