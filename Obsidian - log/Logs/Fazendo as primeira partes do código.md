@@ -110,7 +110,7 @@ Consiste em focar nos aspectos essenciais de um objeto do mundo real e represent
 - [x] Foi incluso? ✅ 2026-10-26
 Permite que uma classe (subclasse) receba ou herde atributos e comportamentos de outra classe (superclasse), facilitando a reutilização de código e a criação de hierarquias.
 ### **Polimorfismo**:
-- [ ] Foi incluso?
+- [x] Foi incluso? ✅ 2026-10-29
 É a capacidade de objetos de diferentes classes responderem à mesma mensagem ou método de maneiras diferentes, adaptando o comportamento conforme o contexto de cada subclasse.
 # Missão nessa nota
 
