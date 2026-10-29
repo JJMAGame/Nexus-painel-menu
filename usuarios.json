@@ -1,17 +1,8 @@
 [
   {
-    "nome": "test",
-    "email": "test@test.test",
-    "senha": "test123"
-  },
-  {
-    "nome": "test2",
-    "email": "test2@test.test",
-    "senha": "test321"
-  },
-  {
-    "nome": "Jorge",
-    "email": "jjma@hotmail.com",
-    "senha": "123456"
+    "tipo": "admin",
+    "nome": "admin",
+    "email": "admin@admin.com",
+    "senha": "admin123"
   }
 ]

@@ -55,10 +55,27 @@ public class main {
             }
         }
         
-        // Aqui começaria o "Menu Principal" do sistema após o login
-        System.out.println("\n--- Painel Principal ---");
-        System.out.println("(Aqui você implementaria o resto do sistema...)");
-        
+        // ===== CHAMANDO O OUTRO JAVA =====
+        // Se o login deu certo, chama a classe PainelUsuario
+        if (logado && usuarioLogado != null) {
+            
+            // admin
+            if (usuarioLogado instanceof admin) {
+                admin admin = (admin) usuarioLogado;
+                admin.abrirMenu();
+            }
+
+            //inquilino
+            else if (usuarioLogado instanceof inquilino) {
+                inquilino inquilino = (inquilino) usuarioLogado;
+                inquilino.abrirMenu(scanner);
+            }
+
+            //Caso der errado
+            else {
+                System.out.println("Tipo de usuário desconhecido. Encerrando o programa.");
+            }
+        }    
         scanner.close();
     }
 }
