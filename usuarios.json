@@ -10,5 +10,11 @@
     "nome": "comum",
     "email": "comum@comum.com",
     "senha": "comum123"
+  },
+  {
+    "tipo": "inquilino",
+    "nome": "jorge",
+    "email": "jjma@hotmail.com",
+    "senha": "senha123"
   }
 ]
