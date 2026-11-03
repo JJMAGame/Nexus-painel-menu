@@ -7,8 +7,8 @@ public class admin extends Usuario {
 
     public admin() {} // Obrigatório para o Gson
 
-    public admin(String nome, String email, String senha) {
-        super(nome, email, senha);
+    public admin(String nome, String email, String senha, String cpf) {
+        super(nome, email, senha, cpf);
     }
 
     public String getTipo() { return tipo; }

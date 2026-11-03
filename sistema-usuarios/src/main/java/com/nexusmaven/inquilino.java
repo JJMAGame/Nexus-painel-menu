@@ -7,8 +7,8 @@ public class inquilino extends Usuario {
 
     public inquilino() {} // Obrigatório para o Gson
 
-    public inquilino(String nome, String email, String senha) {
-        super(nome, email, senha);
+    public inquilino(String nome, String email, String senha, String cpf) {
+        super(nome, email, senha, cpf);
     }
 
     public String getTipo() { return tipo; }

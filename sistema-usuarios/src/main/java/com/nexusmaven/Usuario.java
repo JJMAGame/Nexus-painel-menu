@@ -4,21 +4,24 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
+    private String cpf;
 
-    // ⚠️ ADICIONE ESTE CONSTRUTOR VAZIO AQUI
+    //CONSTRUTOR VAZIO AQUI PARA O GSON FUNCIONAR
     public Usuario() {} 
 
     // Construtor reaproveita os setters (validação garantida)
-    public Usuario(String nome, String email, String senha) {
+    public Usuario(String nome, String email, String senha, String cpf) {
         setNome(nome);
         setEmail(email);
         setSenha(senha);
+        setCpf(cpf);
     }
 
     // ===== GETTERS =====
     public String getNome() { return nome; }
     public String getEmail() { return email; }
     public String getSenha() { return senha; }
+    public String getCpf() { return cpf; }
 
     // O Gson precisa do getter para salvar a senha no arquivo
     
@@ -41,6 +44,13 @@ public class Usuario {
             throw new IllegalArgumentException("Senha deve ter entre 6 e 12 caracteres");
         }
         this.senha = senha;
+    }
+
+    public void setCpf(String cpf) { // ⚠️ NOVO
+        if (cpf == null || cpf.trim().isEmpty()) {
+            throw new IllegalArgumentException("CPF não pode ser vazio");
+        }
+    this.cpf = cpf.trim();
     }
 
     public boolean autenticar(String email, String senha) {

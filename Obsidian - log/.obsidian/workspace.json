@@ -11,17 +11,14 @@
             "id": "df40526157f59902",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Fluxograma.canvas",
-                "viewState": {
-                  "x": 1249.9840152601998,
-                  "y": -20.959784471417493,
-                  "zoom": -2.333333333333333
-                }
+                "file": "Iniciando a construção do Admin.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "Fluxograma"
+              "icon": "lucide-file",
+              "title": "Iniciando a construção do Admin"
             }
           }
         ]
@@ -188,7 +185,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 400.5
+    "width": 400.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -203,12 +201,14 @@
       "audio-recorder:Começar/parar a gravação de áudio": false
     }
   },
-  "active": "df40526157f59902",
+  "active": "5af2ca00508f10ac",
   "lastOpenFiles": [
+    "outros/Pasted image 20261103090957.png",
+    "Fluxograma.canvas",
+    "Iniciando a construção do Admin.md",
     "Logs/Direcionameto.md",
     "Logs/Percepção.md",
     "outros/Pasted image 20261029181917.png",
-    "Fluxograma.canvas",
     "Logs/Produzindo um projeto ( Parte 1 ).md",
     "Logs/Fazendo as primeira partes do código.md",
     "Logs/Criando os java.md",

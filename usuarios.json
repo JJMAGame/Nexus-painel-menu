@@ -3,18 +3,28 @@
     "tipo": "admin",
     "nome": "admin",
     "email": "admin@admin.com",
-    "senha": "admin123"
+    "senha": "admin123",
+    "cpf": "12345678900"
   },
   {
     "tipo": "inquilino",
     "nome": "comum",
     "email": "comum@comum.com",
-    "senha": "comum123"
+    "senha": "comum123",
+    "cpf": "98765432100"
   },
   {
     "tipo": "inquilino",
     "nome": "jorge",
     "email": "jjma@hotmail.com",
-    "senha": "senha123"
+    "senha": "senha123",
+    "cpf": "12345678901"
+  },
+  {
+    "tipo": "inquilino",
+    "nome": "cobaia",
+    "email": "cobaia@yahoo.com",
+    "senha": "cobaia123",
+    "cpf": "19405432199"
   }
 ]
