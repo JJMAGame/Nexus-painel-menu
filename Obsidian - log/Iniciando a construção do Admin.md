@@ -76,3 +76,233 @@ public class Usuario {
     }  
 }
 ```
+
+Após isso alguns códigos foram atualizados para adicionar a nova herança, além da nova geração dos dados
+
+**Inquilino e imóvel**
+
+```java fold:inquilino-atualizado hl:6-7,15,16
+package com.nexusmaven;
+ 
+import java.util.Scanner;
+
+public class inquilino extends Usuario {
+    private final String tipo = "inquilino";
+
+  
+
+    public inquilino() {} // Obrigatório para o Gson
+
+  
+
+    public inquilino(String nome, String email, String senha, String cpf) {
+        super(nome, email, senha, cpf);
+    }
+
+    public String getTipo() { return tipo; }
+        public void abrirMenu(Scanner scanner) {
+        int opcao = -1;
+
+  
+
+        while (opcao != 0) {
+            System.out.println("\n=================================");
+            System.out.println("        MENU INQUILINO - NEXUS     ");
+            System.out.println("===================================");
+            System.out.println("Olá, " + getNome() + "! O que deseja fazer?");
+            System.out.println("1 - Ver meus dados");
+            System.out.println("2 - Ver imóveis disponíveis");
+            System.out.println("0 - Sair (Logout)");
+            System.out.print("Escolha uma opção: ");
+
+  
+
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Por favor, digite um número válido.");
+                continue;
+            }
+
+            switch (opcao) {
+                case 1:
+                    System.out.println("\n--- SEUS DADOS ---");
+                    System.out.println("Nome: " + getNome());
+                    System.out.println("Email: " + getEmail());
+                    break;
+                case 2:
+                    System.out.println("\n--- IMÓVEIS DISPONÍVEIS ---");
+                    // Aqui você pode ler o imoveis.json e listar
+                    System.out.println("(Listagem de imóveis em desenvolvimento...)");
+                    break;
+                case 0:
+                    System.out.println("👋 Saindo do menu do inquilino...");
+                    break;
+                default:
+                    System.out.println("❌ Opção inválida. Tente novamente.");
+            }
+        }
+    }
+}
+```
+
+```java fold:admin-atualizado hl:13-14
+package com.nexusmaven;
+
+import java.util.Scanner;
+
+public class admin extends Usuario {
+    private final String tipo = "admin";
+
+  
+
+    public admin() {} // Obrigatório para o Gson
+
+  
+    public admin(String nome, String email, String senha, String cpf) {
+        super(nome, email, senha, cpf);
+    }
+
+  
+
+    public String getTipo() { return tipo; }
+
+  
+
+        public void abrirMenu() {
+        Scanner scanner = new Scanner(System.in);
+        int opcao = -1;
+
+  
+
+        while (opcao != 0) {
+            System.out.println("\n=================================");
+            System.out.println("         MENU ADMIN - NEXUS        ");
+            System.out.println("===================================");
+            System.out.println("Olá, " + getNome() + "! Bem-vindo ao painel de administração.");
+            System.out.println("1 - Gerar novos dados (Usuários/Imóveis)");
+            System.out.println("2 - Registrar pagamentos");
+            System.out.println("0 - Sair (Logout)");
+            System.out.print("Escolha uma opção: ");
+
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Por favor, digite um número válido.");
+                continue;
+            }
+
+  
+            switch (opcao) {
+                case 1:
+                    // Chama a classe que gera dados (que também tem o seu próprio Scanner)
+                    GerarDados.main(null);
+                    break;
+                case 2:
+                    System.out.println("💰 Registrar pagamentos - funcionalidade em desenvolvimento.");
+                    break;
+                case 0:
+                    System.out.println("👋 Saindo do menu admin...");
+                    break;
+                default:
+                    System.out.println("❌ Opção inválida. Tente novamente.");
+
+            }
+        }
+    }
+}
+```
+
+E tudo que foi para auxiliar no **GerarDados**
+
+```java fold:GerarDados-Atualizado hl:23-24,37-41,62-63
+package com.nexusmaven;
+
+import java.util.List;
+import java.util.Scanner;
+
+public class GerarDados {
+    public static void main(String[] args) {
+        String nome, email, senha, cpf;
+        System.out.println("⏳ Gerando novos dados de usuarios...");
+        Scanner scanner = new Scanner(System.in);
+
+        //Qual tipo de dados vai ser gerado:
+        System.out.println("Escolha o tipo de dados que deseja gerar:");
+        System.out.println("1. Gerar usuário");
+        System.out.println("2. Gerar imovel");
+        String escolha = scanner.nextLine();
+
+        if (escolha.equals("1")) {
+               System.out.print("Digite o nome do usuário: ");
+               nome = scanner.nextLine();
+               System.out.print("Digite o email do usuário: ");
+               email = scanner.nextLine();
+               System.out.print("Digite o CPF do usuário: "); // ⚠️ NOVO
+               cpf = scanner.nextLine();                      // ⚠️ NOVO
+               System.out.print("Digite a senha do usuário (mínimo 6 e máximo 12 caracteres):");
+               senha = scanner.nextLine();
+
+               System.out.println("\nQual o tipo de conta?");
+               System.out.println("1 - Inquilino (Padrão)");
+               System.out.println("2 - Administrador");
+               System.out.print("Escolha o tipo: ");
+               String tipoConta = scanner.nextLine();
+
+           try{
+               Usuario u = null;
+
+               if (tipoConta.equals("2")) {
+                  u = new admin(nome, email, senha, cpf);     // ⚠️ Passando o CPF
+               } else {
+                  u = new inquilino(nome, email, senha, cpf); // ⚠️ Passando o CPF
+               }
+               
+               List<Usuario> usuarios = JsonUtil.ler("usuarios.json", Usuario.class);
+               usuarios.add(u);
+   
+               JsonUtil.salvar("usuarios.json", usuarios);
+   
+               String tipoExibicao = tipoConta.equals("2") ? "Administrador" : "Inquilino";
+               System.out.println("Dados de usuário gerados e salvos com sucesso! do tipo " + tipoExibicao);
+               System.out.println("Total de usuários no sistema: " + usuarios.size());
+   
+           } catch (IllegalArgumentException e) {
+               System.out.println("❌ Erro: " + e.getMessage());
+           }
+        }
+        
+        else if (escolha.equals("2")) {
+            System.out.print("Digite o nome do imóvel: ");
+            String lnome = scanner.nextLine();
+            System.out.print("Digite a localização do imóvel: ");
+            String localizacao = scanner.nextLine();
+            System.out.print("Digite o CPF do proprietário: "); // ⚠️ NOVO
+            String cpfProprietario = scanner.nextLine();        // ⚠️ NOVO
+
+            try{
+                // Passando o CPF para o Imóvel
+                Imovel imovel = new Imovel(lnome, localizacao, cpfProprietario);
+   
+               List<Imovel> imoveis = JsonUtil.ler("imoveis.json", Imovel.class);
+               imoveis.add(imovel);
+   
+               JsonUtil.salvar("imoveis.json", imoveis);
+   
+               System.out.println("Dados de imóvel gerados e salvos com sucesso!");
+               System.out.println("Total de imóveis no sistema: " + imoveis.size());
+   
+           } catch (IllegalArgumentException e) {
+               System.out.println("❌ Erro: " + e.getMessage());
+           }
+        }
+    }
+}
+```
+
+Mas ainda falta muita coisa para o desenvolvimento do menu do painel administrativo que é melhor já iniciar para depois se preocupar com loop.
+
+
+
+
+
