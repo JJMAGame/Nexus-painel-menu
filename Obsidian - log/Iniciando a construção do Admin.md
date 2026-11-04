@@ -302,7 +302,7 @@ public class GerarDados {
 
 Mas ainda falta muita coisa para o desenvolvimento do menu do painel administrativo que é melhor já iniciar para depois se preocupar com loop.
 
-### Uma atualização que o copilot fez
+### Uma atualização que o Copilot fez
 
 *Mensagem do copilot*
 
