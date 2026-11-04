@@ -302,6 +302,21 @@ public class GerarDados {
 
 Mas ainda falta muita coisa para o desenvolvimento do menu do painel administrativo que é melhor já iniciar para depois se preocupar com loop.
 
+### Uma atualização que o copilot fez
+
+*Mensagem do copilot*
+
+Eu verifiquei o projeto e vi que ele **já estava configurado para Java 25**: o `pom.xml` define o release 25, e o README e um teste também verificam essa versão. Por isso, não alterei os arquivos do projeto.
+
+O que fiz foi preparar o ambiente local:
+
+- Instalei o **Eclipse Temurin JDK 25.0.5 LTS** em `C:\Users\jorgi\.jdk\jdk-25.0.5+8`.
+- Configurei a variável de usuário `JAVA_HOME` para apontar para esse JDK.
+- Instalei o **Maven 3.9.15** em `C:\Users\jorgi\.maven\apache-maven-3.9.15`.
+- Executei a compilação e os testes com Java 25: **os 2 testes passaram**.
+
+Um detalhe: o comando `java` ainda pode iniciar o Java 27, porque ele continua antes do Java 25 no `PATH` do sistema. Não alterei esse `PATH`; o Maven usa o Java 25 por meio de `JAVA_HOME`.
+
 
 
 

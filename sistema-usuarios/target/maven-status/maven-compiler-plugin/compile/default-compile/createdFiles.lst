@@ -1,0 +1,8 @@
+com\nexusmaven\admin.class
+com\nexusmaven\JsonUtil$UsuarioAdapter.class
+com\nexusmaven\Usuario.class
+com\nexusmaven\JsonUtil.class
+com\nexusmaven\Imovel.class
+com\nexusmaven\inquilino.class
+com\nexusmaven\main.class
+com\nexusmaven\GerarDados.class
