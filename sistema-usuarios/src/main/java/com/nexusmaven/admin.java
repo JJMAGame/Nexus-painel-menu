@@ -24,6 +24,7 @@ public class admin extends Usuario {
             System.out.println("Olá, " + getNome() + "! Bem-vindo ao painel de administração.");
             System.out.println("1 - Gerar novos dados (Usuários/Imóveis)");
             System.out.println("2 - Registrar pagamentos");
+            System.out.println("3 - Receita do mes");
             System.out.println("0 - Sair (Logout)");
             System.out.print("Escolha uma opção: ");
 
@@ -41,6 +42,9 @@ public class admin extends Usuario {
                     break;
                 case 2:
                     System.out.println("💰 Registrar pagamentos - funcionalidade em desenvolvimento.");
+                    break;
+                case 3:
+                    System.out.println("📈 Receita do mês - funcionalidade em desenvolvimento.");
                     break;
                 case 0:
                     System.out.println("👋 Saindo do menu admin...");

@@ -2,6 +2,7 @@
   {
     "lnome": "Casa do interior",
     "localizacao": "R. Guariroba - S�o Jorge, Alto Para�so de Goi�s - GO, 73770-000",
-    "cpfProprietario": "19405432199"
+    "cpfProprietario": "19405432199",
+    "valorAluguel": 1500.5
   }
 ]
