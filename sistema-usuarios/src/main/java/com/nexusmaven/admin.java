@@ -1,5 +1,6 @@
 package com.nexusmaven;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class admin extends Usuario {
@@ -41,10 +42,44 @@ public class admin extends Usuario {
                     GerarDados.main(null); 
                     break;
                 case 2:
-                    System.out.println("💰 Registrar pagamentos - funcionalidade em desenvolvimento.");
+                     System.out.println("\n--- REGISTRO FINANCEIRO ---");
+                     System.out.print("Digite o CPF do Inquilino: ");
+                     String cpfInquilino = scanner.nextLine();
+                     
+                     System.out.print("Digite o nome do Local (Imóvel): ");
+                     String nomeLocal = scanner.nextLine();
+      
+                     System.out.print("Digite o mês de referência (ex: 10/2026): ");
+                     String mes = scanner.nextLine();
+
+                    try {
+                        System.out.print("Valor do Aluguel: R$ ");
+                        double aluguel = Double.parseDouble(scanner.nextLine());
+                        
+                        System.out.print("Valor da Água: R$ ");
+                        double agua = Double.parseDouble(scanner.nextLine());
+                        
+                        System.out.print("Valor da Energia: R$ ");
+                        double energia = Double.parseDouble(scanner.nextLine());
+                        
+                        System.out.print("Valor da Manutenção: R$ ");
+                        double manutencao = Double.parseDouble(scanner.nextLine());
+        
+                        Financeiro fin = new Financeiro(cpfInquilino, nomeLocal, aluguel, agua, energia, manutencao, mes);
+        
+                        List<Financeiro> listaFin = JsonUtil.ler("financeiro.json", Financeiro.class);
+                        listaFin.add(fin);
+                        JsonUtil.salvar("financeiro.json", listaFin);
+        
+                        System.out.println("\n✅ Registro financeiro salvo com sucesso!");
+                        System.out.println("Total gerado neste mês: R$ " + fin.calcularTotal());
+        
+                    } catch (NumberFormatException e) {
+                        System.out.println("❌ Erro: Digite apenas números para os valores (use ponto para centavos).");
+                    }
                     break;
                 case 3:
-                    System.out.println("📈 Receita do mês - funcionalidade em desenvolvimento.");
+                    System.out.println("📊 Receita do mês - funcionalidade em desenvolvimento.");
                     break;
                 case 0:
                     System.out.println("👋 Saindo do menu admin...");
