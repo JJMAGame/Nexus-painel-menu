@@ -11,14 +11,17 @@
             "id": "df40526157f59902",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "Logs/Iniciando a construção do Admin.md",
-                "mode": "source",
-                "source": false
+                "file": "Fluxograma.canvas",
+                "viewState": {
+                  "x": 3145.3290914037275,
+                  "y": -900.6446120151295,
+                  "zoom": -0.5543800226925601
+                }
               },
-              "icon": "lucide-file",
-              "title": "Iniciando a construção do Admin"
+              "icon": "lucide-layout-dashboard",
+              "title": "Fluxograma"
             }
           }
         ]
@@ -200,11 +203,11 @@
       "audio-recorder:Começar/parar a gravação de áudio": false
     }
   },
-  "active": "5af2ca00508f10ac",
+  "active": "df40526157f59902",
   "lastOpenFiles": [
+    "Logs/Iniciando a construção do Admin.md",
     "outros/Pasted image 20261103090957.png",
     "Fluxograma.canvas",
-    "Logs/Iniciando a construção do Admin.md",
     "Logs/Direcionameto.md",
     "Logs/Percepção.md",
     "outros/Pasted image 20261029181917.png",
@@ -228,7 +231,6 @@
     "outros/Pasted image 20261021175018.png",
     "outros/Pasted image 20261020151001.png",
     "Pasted image 20261020144851.png",
-    "outros/Pasted image 20261019171733.png",
     "Docs",
     "file:C:/Users/jorgi/Downloads/Teste de qualidade administrador .pdf",
     "Usuariolog.java.md",

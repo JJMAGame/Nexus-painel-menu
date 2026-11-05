@@ -23,6 +23,7 @@ public class JsonUtil {
     
     private static final Gson gson = new GsonBuilder().
     setPrettyPrinting().
+    disableHtmlEscaping().
     registerTypeAdapter(Usuario.class, new UsuarioAdapter()).
     create();
 

@@ -317,7 +317,269 @@ O que fiz foi preparar o ambiente local:
 
 Um detalhe: o comando `java` ainda pode iniciar o Java 27, porque ele continua antes do Java 25 no `PATH` do sistema. Não alterei esse `PATH`; o Maven usa o Java 25 por meio de `JAVA_HOME`.
 
+---
+# Módulo Financeiro e Codificação UTF-8
+
+## 1. Adicionando Valor de Aluguel ao Imóvel
+
+Para que o sistema saiba quanto custa o aluguel, adicionamos o atributo `valorAluguel` na classe `Imovel`. Usamos o tipo `double` (ponto flutuante) para lidar com valores monetários.
 
 
+```java fold:imoveis-atualizado
+package com.nexusmaven;
 
+public class Imovel {
 
+    // Dados essenciais
+    private String lnome;
+    private String localizacao;
+    private String cpfProprietario;
+    private double valorAluguel;
+
+    // Construtor vazio (necessário para o Gson ler o JSON)
+    public Imovel() {}
+
+    // Construtor padrão atualizado
+    public Imovel(String lnome, String localizacao, String cpfProprietario, double valorAluguel) {
+        setNome(lnome);
+        setLocalizacao(localizacao);
+        setCpfProprietario(cpfProprietario);
+        setValorAluguel(valorAluguel);
+    }
+
+    // ===== GETTERS =====
+    public String getNome() { return lnome; }
+    public String getLocalizacao() { return localizacao; }
+    public String getCpfProprietario() { return cpfProprietario; }
+    public double getValorAluguel() { return valorAluguel; }
+
+    // ===== SETTERS COM VALIDAÇÃO =====
+    public void setNome(String lnome) {
+        if (lnome == null || lnome.trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome do imóvel não pode ser vazio.");
+        }
+        this.lnome = lnome.trim();
+    }
+
+    public void setLocalizacao(String localizacao) {
+        if (localizacao == null || localizacao.trim().isEmpty()) {
+            throw new IllegalArgumentException("A localização não pode ser vazia.");
+        }
+        this.localizacao = localizacao.trim();
+    }
+
+    public void setCpfProprietario(String cpfProprietario) {
+        if (cpfProprietario == null || cpfProprietario.trim().isEmpty()) {
+            throw new IllegalArgumentException("O CPF do proprietário não pode ser vazio.");
+        }
+        this.cpfProprietario = cpfProprietario.trim();
+    }
+
+    public void setValorAluguel(double valorAluguel) { 
+        if (valorAluguel < 0) {
+            throw new IllegalArgumentException("O valor do aluguel não pode ser negativo.");
+        }
+        this.valorAluguel = valorAluguel;
+    }
+
+    @Override
+    public String toString() {
+        return "Imóvel [Nome: " + lnome + ", Local: " + localizacao + ", Aluguel: R$" + valorAluguel + "]";
+    }
+}
+```
+
+## 2. Criando o Módulo Financeiro
+
+Para registrar os pagamentos mensais (Aluguel + Água + Energia + Manutenção), criamos uma nova classe chamada `Financeiro`. Ela será salva em um arquivo separado (`financeiro.json`).
+
+```java fold:Financeiro
+package com.nexusmaven;
+
+public class Financeiro {
+    private String cpfInquilino;
+    private String nomeLocal;
+    private double valorAluguel;
+    private double agua;
+    private double energia;
+    private double manutencao;
+    private String mesReferencia;
+
+    // Construtor vazio para o Gson
+    public Financeiro() {}
+
+    public Financeiro(String cpfInquilino, String nomeLocal, double valorAluguel, double agua, double energia, double manutencao, String mesReferencia) {
+        this.cpfInquilino = cpfInquilino;
+        this.nomeLocal = nomeLocal;
+        this.valorAluguel = valorAluguel;
+        this.agua = agua;
+        this.energia = energia;
+        this.manutencao = manutencao;
+        this.mesReferencia = mesReferencia;
+    }
+
+    // ===== GETTERS =====
+    public String getCpfInquilino() { return cpfInquilino; }
+    public String getNomeLocal() { return nomeLocal; }
+    public double getValorAluguel() { return valorAluguel; }
+    public double getAgua() { return agua; }
+    public double getEnergia() { return energia; }
+    public double getManutencao() { return manutencao; }
+    public String getMesReferencia() { return mesReferencia; }
+
+    // ===== MÉTODO DE NEGÓCIO =====
+    // Calcula a receita total deste aluguel (Aluguel + Contas)
+    public double calcularTotal() {
+        return valorAluguel + agua + energia + manutencao;
+    }
+
+    @Override
+    public String toString() {
+        return "Mês: " + mesReferencia + " | Local: " + nomeLocal + " | Inquilino CPF: " + cpfInquilino +
+               "\n   Aluguel: R$" + valorAluguel + " | Água: R$" + agua + 
+               " | Energia: R$" + energia + " | Manutenção: R$" + manutencao +
+               "\n   💰 TOTAL A PAGAR: R$" + calcularTotal() + "\n";
+    }
+}
+```
+
+Depois disso o `GerarDados.java` foi atualizado para ter agora uma 3 opção
+
+```java fold:GerarDados-Atualizado
+package com.nexusmaven;
+
+import java.util.List;
+import java.util.Scanner;
+
+public class GerarDados {
+    public static void main(String[] args) {
+        String nome, email, senha, cpf;
+        System.out.println("⏳ Gerando novos dados...");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Escolha o tipo de dados que deseja gerar:");
+        System.out.println("1. Gerar usuário");
+        System.out.println("2. Gerar imovel");
+        String escolha = scanner.nextLine();
+
+        if (escolha.equals("1")) {
+               System.out.print("Digite o nome do usuário: ");
+               nome = scanner.nextLine();
+               System.out.print("Digite o email do usuário: ");
+               email = scanner.nextLine();
+               System.out.print("Digite o CPF do usuário: "); 
+               cpf = scanner.nextLine();                      
+               System.out.print("Digite a senha (mínimo 6 e máximo 12 caracteres): ");
+               senha = scanner.nextLine();
+
+               System.out.println("\nQual o tipo de conta?");
+               System.out.println("1 - Inquilino (Padrão)");
+               System.out.println("2 - Administrador");
+               System.out.print("Escolha o tipo: ");
+               String tipoConta = scanner.nextLine();
+
+           try{
+               Usuario u = null;
+
+               if (tipoConta.equals("2")) {
+                  u = new admin(nome, email, senha, cpf);     
+               } else {
+                  u = new inquilino(nome, email, senha, cpf); 
+               }
+               
+               List<Usuario> usuarios = JsonUtil.ler("usuarios.json", Usuario.class);
+               usuarios.add(u);
+   
+               JsonUtil.salvar("usuarios.json", usuarios);
+   
+               String tipoExibicao = tipoConta.equals("2") ? "Administrador" : "Inquilino";
+               System.out.println("✅ Usuário do tipo " + tipoExibicao + " salvo com sucesso!");
+               System.out.println("Total de usuários no sistema: " + usuarios.size());
+   
+           } catch (IllegalArgumentException e) {
+               System.out.println("❌ Erro: " + e.getMessage());
+           }
+        }
+        
+        else if (escolha.equals("2")) {
+            System.out.print("Digite o nome do imóvel: ");
+            String lnome = scanner.nextLine();
+            System.out.print("Digite a localização do imóvel: ");
+            String localizacao = scanner.nextLine();
+            System.out.print("Digite o CPF do proprietário: "); 
+            String cpfProprietario = scanner.nextLine();        
+
+            // ⚠️ NOVO: Pedindo o valor do aluguel
+            System.out.print("Digite o valor do aluguel (ex: 1500.50): ");
+            double valorAluguel = 0;
+            try {
+                valorAluguel = Double.parseDouble(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Erro: Valor do aluguel inválido. Use ponto para centavos.");
+                return; // Cancela o cadastro
+            }
+
+            try{
+                // Passando o valor para o Imóvel
+                Imovel imovel = new Imovel(lnome, localizacao, cpfProprietario, valorAluguel);
+   
+               List<Imovel> imoveis = JsonUtil.ler("imoveis.json", Imovel.class);
+               imoveis.add(imovel);
+   
+               JsonUtil.salvar("imoveis.json", imoveis);
+   
+               System.out.println("✅ Imóvel salvo com sucesso! Aluguel: R$" + valorAluguel);
+               System.out.println("Total de imóveis no sistema: " + imoveis.size());
+   
+           } catch (IllegalArgumentException e) {
+               System.out.println("❌ Erro: " + e.getMessage());
+           }
+        }
+            else if (escolha.equals("3")) {
+            System.out.println("\n--- REGISTRO FINANCEIRO ---");
+            System.out.print("Digite o CPF do Inquilino: ");
+            String cpfInquilino = scanner.nextLine();
+            
+            System.out.print("Digite o nome do Local (Imóvel): ");
+            String nomeLocal = scanner.nextLine();
+
+            System.out.print("Digite o mês de referência (ex: 10/2026): ");
+            String mes = scanner.nextLine();
+
+            try {
+                System.out.print("Valor do Aluguel: R$ ");
+                double aluguel = Double.parseDouble(scanner.nextLine());
+                
+                System.out.print("Valor da Água: R$ ");
+                double agua = Double.parseDouble(scanner.nextLine());
+                
+                System.out.print("Valor da Energia: R$ ");
+                double energia = Double.parseDouble(scanner.nextLine());
+                
+                System.out.print("Valor da Manutenção: R$ ");
+                double manutencao = Double.parseDouble(scanner.nextLine());
+
+                Financeiro fin = new Financeiro(cpfInquilino, nomeLocal, aluguel, agua, energia, manutencao, mes);
+
+                List<Financeiro> listaFin = JsonUtil.ler("financeiro.json", Financeiro.class);
+                listaFin.add(fin);
+                JsonUtil.salvar("financeiro.json", listaFin);
+
+                System.out.println("\n✅ Registro financeiro salvo com sucesso!");
+                System.out.println("Total gerado neste mês: R$ " + fin.calcularTotal());
+
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Erro: Digite apenas números para os valores (use ponto para centavos).");
+            }
+        }
+    }
+  }
+```
+
+##  3. O Problema do UTF-8 (Acentos e Interrogações)
+
+>[!warning] isso ainda não foi validado como corrigido
+
+Ao gerar o JSON, notamos que palavras como "São" e "Paraíso" estavam virando `S?o` e `Para?so`.
+
+**Causa:** O Windows/PowerShell não estava configurado para UTF-8, e o Gson estava tentando escapar caracteres especiais (HTML Escaping).
