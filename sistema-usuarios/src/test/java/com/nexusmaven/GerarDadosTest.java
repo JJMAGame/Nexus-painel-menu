@@ -1,17 +1,17 @@
 package com.nexusmaven;
 
-import static com.nexusmaven.ApoioDeTestes.capturarSaida;
-import static com.nexusmaven.ApoioDeTestes.entrada;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import static com.nexusmaven.ApoioDeTestes.capturarSaida;
+import static com.nexusmaven.ApoioDeTestes.entrada;
 
 /** Fluxo do GerarDados do começo ao fim, gravando em bancos temporários. */
 public class GerarDadosTest {
@@ -32,21 +32,21 @@ public class GerarDadosTest {
 
         List<Usuario> lidos = JsonUtil.ler(usuarios(), Usuario.class);
         assertEquals(1, lidos.size());
-        assertTrue(lidos.get(0) instanceof Inquilino);
+        assertTrue(lidos.get(0) instanceof inquilino);
         assertTrue(saida, saida.contains("Tipo: Inquilino"));
     }
 
     @Test
     public void qualquerRespostaDiferenteDe2ViraInquilino() {
         rodar("1", "Maria", "maria@nexus.com", "abc12345", "");
-        assertTrue(JsonUtil.ler(usuarios(), Usuario.class).get(0) instanceof Inquilino);
+        assertTrue(JsonUtil.ler(usuarios(), Usuario.class).get(0) instanceof inquilino);
     }
 
     @Test
     public void criaAdministrador() {
         String saida = rodar("1", "Chefe", "chefe@nexus.com", "abc12345", "2");
 
-        assertTrue(JsonUtil.ler(usuarios(), Usuario.class).get(0) instanceof Admin);
+        assertTrue(JsonUtil.ler(usuarios(), Usuario.class).get(0) instanceof admin);
         assertTrue(saida, saida.contains("Tipo: Administrador"));
     }
 

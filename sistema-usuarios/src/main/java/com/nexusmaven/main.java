@@ -3,7 +3,7 @@ package com.nexusmaven;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class main {
     public static void main(String[] args) {
         try (Scanner scanner = EntradaConsole.criarScanner()) {
             executar(scanner, JsonUtil.ARQUIVO_USUARIOS);
@@ -22,9 +22,9 @@ public class Main {
         }
 
         // ===== CHAMANDO O MENU DO TIPO DE USUÁRIO =====
-        if (usuarioLogado instanceof Admin admin) {
+        if (usuarioLogado instanceof admin admin) {
             admin.abrirMenu(scanner);
-        } else if (usuarioLogado instanceof Inquilino inquilino) {
+        } else if (usuarioLogado instanceof inquilino inquilino) {
             inquilino.abrirMenu(scanner);
         } else {
             System.out.println("Tipo de usuário desconhecido. Encerrando o programa.");

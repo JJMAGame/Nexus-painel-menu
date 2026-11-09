@@ -3,11 +3,11 @@ package com.nexusmaven;
 import java.util.List;
 import java.util.Scanner;
 
-public class Admin extends Usuario {
+public class admin extends Usuario {
     private final String tipo = "admin";
 
-    public Admin() {}
-    public Admin(String nome, String email, String senha, String cpf) { super(nome, email, senha, cpf); }
+    public admin() {}
+    public admin(String nome, String email, String senha, String cpf) { super(nome, email, senha, cpf); }
 
     public String getTipo() { return tipo; }
 

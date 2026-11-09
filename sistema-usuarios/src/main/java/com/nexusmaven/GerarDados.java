@@ -53,8 +53,8 @@ public class GerarDados {
 
         try {
             Usuario novo = administrador
-                    ? new Admin(nome, email, senha, cpf)
-                    : new Inquilino(nome, email, senha, cpf);
+                    ? new admin(nome, email, senha, cpf)
+                    : new inquilino(nome, email, senha, cpf);
 
             List<Usuario> usuarios = JsonUtil.ler(arquivoUsuarios, Usuario.class);
 
