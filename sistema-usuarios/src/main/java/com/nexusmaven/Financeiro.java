@@ -9,7 +9,6 @@ public class Financeiro {
     private double manutencao;
     private String mesReferencia;
 
-    // Construtor vazio para o Gson
     public Financeiro() {}
 
     public Financeiro(String cpfInquilino, String nomeLocal, double valorAluguel, double agua, double energia, double manutencao, String mesReferencia) {
@@ -22,17 +21,10 @@ public class Financeiro {
         this.mesReferencia = mesReferencia;
     }
 
-    // ===== GETTERS =====
     public String getCpfInquilino() { return cpfInquilino; }
     public String getNomeLocal() { return nomeLocal; }
-    public double getValorAluguel() { return valorAluguel; }
-    public double getAgua() { return agua; }
-    public double getEnergia() { return energia; }
-    public double getManutencao() { return manutencao; }
     public String getMesReferencia() { return mesReferencia; }
-
-    // ===== MÉTODO DE NEGÓCIO =====
-    // Calcula a receita total deste aluguel (Aluguel + Contas)
+    
     public double calcularTotal() {
         return valorAluguel + agua + energia + manutencao;
     }
@@ -42,6 +34,6 @@ public class Financeiro {
         return "Mês: " + mesReferencia + " | Local: " + nomeLocal + " | Inquilino CPF: " + cpfInquilino +
                "\n   Aluguel: R$" + valorAluguel + " | Água: R$" + agua + 
                " | Energia: R$" + energia + " | Manutenção: R$" + manutencao +
-               "\n   💰 TOTAL A PAGAR: R$" + calcularTotal() + "\n";
+               "\n   💰 TOTAL: R$" + calcularTotal() + "\n";
     }
 }

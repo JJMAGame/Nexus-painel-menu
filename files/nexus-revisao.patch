@@ -1,0 +1,1617 @@
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..48423d4
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,2 @@
++# Saída de build do Maven (gerada por "mvn compile/test")
++sistema-usuarios/target/
+diff --git a/.vscode/settings.json b/.vscode/settings.json
+index c5f3f6b..dea4da5 100644
+--- a/.vscode/settings.json
++++ b/.vscode/settings.json
+@@ -1,3 +1,4 @@
+ {
+-    "java.configuration.updateBuildConfiguration": "interactive"
+-}
+\ No newline at end of file
++    "java.configuration.updateBuildConfiguration": "interactive",
++    "files.encoding": "utf8"
++}
+diff --git a/imoveis.json b/imoveis.json
+index b7a147d..5d74ee5 100644
+--- a/imoveis.json
++++ b/imoveis.json
+@@ -1,6 +1,6 @@
+ [
+   {
+-    "lnome": "Casa de Jos� Jorge",
+-    "localizacao": "R. Ubirat�, 226 - Alto Jos� do Pinho, Recife - PE, 52110-290"
++    "nome": "Casa de José Jorge",
++    "localizacao": "R. Ubiratã, 226 - Alto José do Pinho, Recife - PE, 52110-290"
+   }
+ ]
+\ No newline at end of file
+diff --git a/sistema-usuarios/README.md b/sistema-usuarios/README.md
+index d3b72e2..d88572a 100644
+--- a/sistema-usuarios/README.md
++++ b/sistema-usuarios/README.md
+@@ -15,3 +15,17 @@ mvn clean test
+ The test suite checks that the generated test class files use Java 25 bytecode
+ (class-file version 69), helping prevent accidental changes to the runtime
+ baseline.
++
++## Executar
++
++Os bancos de dados são os arquivos `usuarios.json` e `imoveis.json` na **raiz do
++repositório**, e o programa os procura na pasta de onde ele é executado. Rode a
++partir da raiz (`Nexus-painel-menu/`), não de dentro de `sistema-usuarios/`.
++Os arquivos JSON sempre são lidos e gravados em UTF-8.
++
++## Padrões do código
++
++- Classes e arquivos em PascalCase (`Admin`, `Inquilino`, `Main`); métodos e variáveis em camelCase.
++- Cada usuário no JSON tem o campo `"tipo"` (`admin` ou `inquilino`); sem ele, é lido como inquilino.
++- A pasta `target/` é gerada pelo Maven e não vai para o Git (veja o `.gitignore`).
++
+diff --git a/sistema-usuarios/src/main/java/com/nexusmaven/admin.java b/sistema-usuarios/src/main/java/com/nexusmaven/Admin.java
+similarity index 73%
+rename from sistema-usuarios/src/main/java/com/nexusmaven/admin.java
+rename to sistema-usuarios/src/main/java/com/nexusmaven/Admin.java
+index 55f4fd9..c9ffa8b 100644
+--- a/sistema-usuarios/src/main/java/com/nexusmaven/admin.java
++++ b/sistema-usuarios/src/main/java/com/nexusmaven/Admin.java
+@@ -2,23 +2,22 @@ package com.nexusmaven;
+ 
+ import java.util.Scanner;
+ 
+-public class admin extends Usuario {
++public class Admin extends Usuario {
+     private final String tipo = "admin";
+ 
+-    public admin() {} // Obrigatório para o Gson
++    public Admin() {} // Obrigatório para o Gson
+ 
+-    public admin(String nome, String email, String senha) {
++    public Admin(String nome, String email, String senha) {
+         super(nome, email, senha);
+     }
+ 
+     public String getTipo() { return tipo; }
+ 
+-        public void abrirMenu() {
+-        Scanner scanner = new Scanner(System.in);
++    public void abrirMenu(Scanner scanner) {
+         int opcao = -1;
+ 
+         while (opcao != 0) {
+-            System.out.println("\n=================================");
++            System.out.println("\n===================================");
+             System.out.println("         MENU ADMIN - NEXUS        ");
+             System.out.println("===================================");
+             System.out.println("Olá, " + getNome() + "! Bem-vindo ao painel de administração.");
+@@ -27,17 +26,16 @@ public class admin extends Usuario {
+             System.out.println("0 - Sair (Logout)");
+             System.out.print("Escolha uma opção: ");
+ 
+-            try {
+-                opcao = Integer.parseInt(scanner.nextLine());
+-            } catch (NumberFormatException e) {
++            opcao = EntradaConsole.lerOpcao(scanner);
++            if (opcao == EntradaConsole.OPCAO_INVALIDA) {
+                 System.out.println("❌ Por favor, digite um número válido.");
+                 continue;
+             }
+ 
+             switch (opcao) {
+                 case 1:
+-                    // Chama a classe que gera dados (que também tem o seu próprio Scanner)
+-                    GerarDados.main(null); 
++                    // Usa o mesmo Scanner do programa (vários Scanner no System.in perdem entrada)
++                    GerarDados.executar(scanner);
+                     break;
+                 case 2:
+                     System.out.println("💰 Registrar pagamentos - funcionalidade em desenvolvimento.");
+diff --git a/sistema-usuarios/src/main/java/com/nexusmaven/EntradaConsole.java b/sistema-usuarios/src/main/java/com/nexusmaven/EntradaConsole.java
+new file mode 100644
+index 0000000..f3cf9c1
+--- /dev/null
++++ b/sistema-usuarios/src/main/java/com/nexusmaven/EntradaConsole.java
+@@ -0,0 +1,48 @@
++package com.nexusmaven;
++
++import java.nio.charset.Charset;
++import java.util.Scanner;
++
++/**
++ * Entrada pelo terminal compartilhada por todos os menus.
++ * Existe um único Scanner no programa inteiro (criado no Main e repassado),
++ * porque vários Scanner sobre o mesmo System.in perdem texto já lido no buffer.
++ */
++public final class EntradaConsole {
++
++    /** Retornado por {@link #lerOpcao(Scanner)} quando o texto digitado não é um número. */
++    public static final int OPCAO_INVALIDA = -1;
++
++    private EntradaConsole() {}
++
++    /** Cria o Scanner lendo o terminal no charset do próprio terminal (no Windows, a página de código do console). */
++    public static Scanner criarScanner() {
++        return new Scanner(System.in, charsetDoTerminal());
++    }
++
++    static Charset charsetDoTerminal() {
++        for (String propriedade : new String[] {"stdin.encoding", "native.encoding"}) {
++            String nome = System.getProperty(propriedade);
++            if (nome != null) {
++                try {
++                    return Charset.forName(nome);
++                } catch (IllegalArgumentException e) {
++                    // charset desconhecido neste JDK: tenta a próxima opção
++                }
++            }
++        }
++        return Charset.defaultCharset();
++    }
++
++    /** Lê uma opção numérica de menu. Fim da entrada vale como 0 (sair). */
++    public static int lerOpcao(Scanner scanner) {
++        if (!scanner.hasNextLine()) {
++            return 0;
++        }
++        try {
++            return Integer.parseInt(scanner.nextLine().trim());
++        } catch (NumberFormatException e) {
++            return OPCAO_INVALIDA;
++        }
++    }
++}
+diff --git a/sistema-usuarios/src/main/java/com/nexusmaven/GerarDados.java b/sistema-usuarios/src/main/java/com/nexusmaven/GerarDados.java
+index d40d487..6fbe0b2 100644
+--- a/sistema-usuarios/src/main/java/com/nexusmaven/GerarDados.java
++++ b/sistema-usuarios/src/main/java/com/nexusmaven/GerarDados.java
+@@ -4,80 +4,97 @@ import java.util.List;
+ import java.util.Scanner;
+ 
+ public class GerarDados {
++
++    // Permite rodar o GerarDados sozinho (como antes)
+     public static void main(String[] args) {
+-        String nome, email, senha;
+-        System.out.println("⏳ Gerando novos dados de usuarios...");
+-        Scanner scanner = new Scanner(System.in);
++        try (Scanner scanner = EntradaConsole.criarScanner()) {
++            executar(scanner);
++        }
++    }
++
++    // Usado pelo menu do Admin, repassando o mesmo Scanner do programa
++    public static void executar(Scanner scanner) {
++        executar(scanner, JsonUtil.ARQUIVO_USUARIOS, JsonUtil.ARQUIVO_IMOVEIS);
++    }
++
++    // Versão com os arquivos informados (usada nos testes, para não mexer nos bancos reais)
++    static void executar(Scanner scanner, String arquivoUsuarios, String arquivoImoveis) {
++        System.out.println("⏳ Gerando novos dados...");
+ 
+-        //Qual tipo de dados vai ser gerado:
++        // Qual tipo de dados vai ser gerado:
+         System.out.println("Escolha o tipo de dados que deseja gerar:");
+         System.out.println("1. Gerar usuário");
+-        System.out.println("2. Gerar imovel");
+-        String escolha = scanner.nextLine();
+-
+-        if (escolha.equals("1")) {
+-               // Cria o usuário com os dados fornecidos pelo usuário
+-               System.out.print("Digite o nome do usuário: ");
+-               nome = scanner.nextLine();
+-               System.out.print("Digite o email do usuário: ");
+-               email = scanner.nextLine();
+-               System.out.print("Digite a senha do usuário (mínimo 6 e máximo 12 caracteres):");
+-               senha = scanner.nextLine();
+-
+-               //Qual é o tipo?
+-
+-               System.out.println("\nQual o tipo de conta?");
+-               System.out.println("1 - Inquilino (Padrão");
+-               System.out.println("2 - Administrador");
+-               System.out.println("Escolha o tipo: ");
+-               String tipoConta = scanner.nextLine();
+-
+-   
+-           try{
+-               Usuario u = null;
+-
+-               if (tipoConta.equals("2")) {
+-                  u = new admin(nome, email, senha);
+-               } else {
+-                  u = new inquilino(nome, email, senha);
+-               }
+-               
+-   
+-               List<Usuario> usuarios = JsonUtil.ler("usuarios.json", Usuario.class);
+-               usuarios.add(u);
+-   
+-               JsonUtil.salvar("usuarios.json", usuarios);
+-   
+-               String tipoExibicao = tipoConta.equals("2") ? "Administrador" : "Inquilino";
+-               System.out.println("Dados de usuário gerados e salvos com sucesso! do tipo " + tipoConta);
+-               System.out.println("Total de usuários no sistema: " + usuarios.size());
+-   
+-           } catch (IllegalArgumentException e) {
+-               System.out.println("❌ Erro: " + e.getMessage());
+-           }
++        System.out.println("2. Gerar imóvel");
++        String escolha = scanner.nextLine().trim();
++
++        switch (escolha) {
++            case "1" -> gerarUsuario(scanner, arquivoUsuarios);
++            case "2" -> gerarImovel(scanner, arquivoImoveis);
++            default -> System.out.println("❌ Opção inválida. Nenhum dado foi gerado.");
+         }
+-        
+-        else if (escolha.equals("2")) {
+-            // Cria o imovel novo
+-            System.out.print("Digite o nome do imóvel: ");
+-            String lnome = scanner.nextLine();
+-            System.out.print("Digite a localização do imóvel: ");
+-            String localizacao = scanner.nextLine();
+-
+-            try{
+-                Imovel imovel = new Imovel(lnome, localizacao);
+-   
+-               List<Imovel> imoveis = JsonUtil.ler("imoveis.json", Imovel.class);
+-               imoveis.add(imovel);
+-   
+-               JsonUtil.salvar("imoveis.json", imoveis);
+-   
+-               System.out.println("Dados de imóvel gerados e salvos com sucesso!");
+-               System.out.println("Total de imóveis no sistema: " + imoveis.size());
+-   
+-           } catch (IllegalArgumentException e) {
+-               System.out.println("❌ Erro: " + e.getMessage());
+-           }
++    }
++
++    private static void gerarUsuario(Scanner scanner, String arquivoUsuarios) {
++        // Cria o usuário com os dados fornecidos pelo usuário
++        System.out.print("Digite o nome do usuário: ");
++        String nome = scanner.nextLine();
++        System.out.print("Digite o email do usuário: ");
++        String email = scanner.nextLine();
++        System.out.print("Digite a senha do usuário (mínimo 6 e máximo 12 caracteres): ");
++        String senha = scanner.nextLine();
++
++        // Qual é o tipo?
++        System.out.println("\nQual o tipo de conta?");
++        System.out.println("1 - Inquilino (Padrão)");
++        System.out.println("2 - Administrador");
++        System.out.print("Escolha o tipo: ");
++        boolean administrador = scanner.nextLine().trim().equals("2");
++
++        try {
++            Usuario novo = administrador
++                    ? new Admin(nome, email, senha)
++                    : new Inquilino(nome, email, senha);
++
++            List<Usuario> usuarios = JsonUtil.ler(arquivoUsuarios, Usuario.class);
++
++            boolean emailJaExiste = usuarios.stream()
++                    .anyMatch(u -> novo.getEmail().equalsIgnoreCase(u.getEmail()));
++            if (emailJaExiste) {
++                System.out.println("❌ Erro: já existe um usuário com o email " + novo.getEmail() + ".");
++                return;
++            }
++
++            usuarios.add(novo);
++            JsonUtil.salvar(arquivoUsuarios, usuarios);
++
++            String tipoExibicao = administrador ? "Administrador" : "Inquilino";
++            System.out.println("Dados de usuário gerados e salvos com sucesso! Tipo: " + tipoExibicao);
++            System.out.println("Total de usuários no sistema: " + usuarios.size());
++
++        } catch (IllegalArgumentException e) {
++            System.out.println("❌ Erro: " + e.getMessage());
++        }
++    }
++
++    private static void gerarImovel(Scanner scanner, String arquivoImoveis) {
++        // Cria o imóvel novo
++        System.out.print("Digite o nome do imóvel: ");
++        String nome = scanner.nextLine();
++        System.out.print("Digite a localização do imóvel: ");
++        String localizacao = scanner.nextLine();
++
++        try {
++            Imovel imovel = new Imovel(nome, localizacao);
++
++            List<Imovel> imoveis = JsonUtil.ler(arquivoImoveis, Imovel.class);
++            imoveis.add(imovel);
++            JsonUtil.salvar(arquivoImoveis, imoveis);
++
++            System.out.println("Dados de imóvel gerados e salvos com sucesso!");
++            System.out.println("Total de imóveis no sistema: " + imoveis.size());
++
++        } catch (IllegalArgumentException e) {
++            System.out.println("❌ Erro: " + e.getMessage());
+         }
+     }
+ }
+diff --git a/sistema-usuarios/src/main/java/com/nexusmaven/Imovel.java b/sistema-usuarios/src/main/java/com/nexusmaven/Imovel.java
+index 71625cd..e9d7bc8 100644
+--- a/sistema-usuarios/src/main/java/com/nexusmaven/Imovel.java
++++ b/sistema-usuarios/src/main/java/com/nexusmaven/Imovel.java
+@@ -1,30 +1,34 @@
+ package com.nexusmaven;
+ 
++import com.google.gson.annotations.SerializedName;
++
+ public class Imovel {
+ 
+-    // Dados essenciais
+-    private String lnome;
++    // Dados essenciais.
++    // No JSON a chave agora é "nome"; arquivos antigos com "lnome" continuam sendo lidos.
++    @SerializedName(value = "nome", alternate = {"lnome"})
++    private String nome;
+     private String localizacao;
+ 
+     // Construtor vazio (necessário para o Gson ler o JSON)
+     public Imovel() {}
+ 
+     // Construtor padrão
+-    public Imovel(String lnome, String localizacao) {
+-        setNome(lnome);
++    public Imovel(String nome, String localizacao) {
++        setNome(nome);
+         setLocalizacao(localizacao);
+     }
+ 
+     // ===== GETTERS =====
+-    public String getNome() { return lnome; }
++    public String getNome() { return nome; }
+     public String getLocalizacao() { return localizacao; }
+ 
+     // ===== SETTERS COM VALIDAÇÃO =====
+-    public void setNome(String lnome) {
+-        if (lnome == null || lnome.trim().isEmpty()) {
++    public void setNome(String nome) {
++        if (nome == null || nome.trim().isEmpty()) {
+             throw new IllegalArgumentException("O nome do imóvel não pode ser vazio.");
+         }
+-        this.lnome = lnome.trim();
++        this.nome = nome.trim();
+     }
+ 
+     public void setLocalizacao(String localizacao) {
+diff --git a/sistema-usuarios/src/main/java/com/nexusmaven/Inquilino.java b/sistema-usuarios/src/main/java/com/nexusmaven/Inquilino.java
+new file mode 100644
+index 0000000..c37f98e
+--- /dev/null
++++ b/sistema-usuarios/src/main/java/com/nexusmaven/Inquilino.java
+@@ -0,0 +1,127 @@
++package com.nexusmaven;
++
++import java.util.List;
++import java.util.Scanner;
++
++/**
++ * Esqueleto do painel do inquilino.
++ *
++ * As opções seguem as telas do protótipo navegável (Logs/Nexus · Protótipo · Fundação Manoel Cruz.html):
++ * Meu perfil, Meu contrato, Próximo aluguel (pagar com Pix), Extratos, Documentos e Notificações.
++ * Hoje só "Ver meus dados" e "Ver imóveis" funcionam; o resto são métodos vazios com TODO.
++ *
++ * TODO: ligar o inquilino a um imóvel/contrato (ex.: campo "imovel" no usuarios.json).
++ *       Sem esse vínculo, "Meu contrato", "Próximo aluguel" e "Extratos" não têm de onde ler os dados.
++ */
++public class Inquilino extends Usuario {
++    private final String tipo = "inquilino";
++
++    public Inquilino() {} // Obrigatório para o Gson
++
++    public Inquilino(String nome, String email, String senha) {
++        super(nome, email, senha);
++    }
++
++    public String getTipo() { return tipo; }
++
++    // ===== MENU =====
++    public void abrirMenu(Scanner scanner) {
++        int opcao = -1;
++
++        while (opcao != 0) {
++            exibirMenu();
++
++            opcao = EntradaConsole.lerOpcao(scanner);
++            if (opcao == EntradaConsole.OPCAO_INVALIDA) {
++                System.out.println("❌ Por favor, digite um número válido.");
++                continue;
++            }
++
++            switch (opcao) {
++                case 1 -> verMeusDados();
++                case 2 -> verImoveisDisponiveis();
++                case 3 -> verMeuContrato();
++                case 4 -> verProximoAluguel();
++                case 5 -> verExtratos();
++                case 6 -> verDocumentos();
++                case 7 -> verNotificacoes();
++                case 0 -> System.out.println("👋 Saindo do menu do inquilino...");
++                default -> System.out.println("❌ Opção inválida. Tente novamente.");
++            }
++        }
++    }
++
++    private void exibirMenu() {
++        System.out.println("\n===================================");
++        System.out.println("        MENU INQUILINO - NEXUS     ");
++        System.out.println("===================================");
++        System.out.println("Olá, " + getNome() + "! O que deseja fazer?");
++        System.out.println("1 - Ver meus dados");
++        System.out.println("2 - Ver imóveis disponíveis");
++        System.out.println("3 - Meu contrato");
++        System.out.println("4 - Próximo aluguel");
++        System.out.println("5 - Extratos");
++        System.out.println("6 - Documentos");
++        System.out.println("7 - Notificações");
++        System.out.println("0 - Sair (Logout)");
++        System.out.print("Escolha uma opção: ");
++    }
++
++    // ===== FUNCIONALIDADES =====
++
++    // Pronto
++    private void verMeusDados() {
++        System.out.println("\n--- SEUS DADOS ---");
++        System.out.println("Nome: " + getNome());
++        System.out.println("Email: " + getEmail());
++    }
++
++    // Pronto (lista tudo o que existe em imoveis.json)
++    // TODO: filtrar só os vagos quando o Imovel ganhar um campo de situação (vago/alugado/em atraso).
++    private void verImoveisDisponiveis() {
++        exibirImoveis(JsonUtil.ler(JsonUtil.ARQUIVO_IMOVEIS, Imovel.class));
++    }
++
++    // Separado do método acima para poder ser testado sem depender do imoveis.json real
++    void exibirImoveis(List<Imovel> imoveis) {
++        System.out.println("\n--- IMÓVEIS DISPONÍVEIS ---");
++        if (imoveis.isEmpty()) {
++            System.out.println("Nenhum imóvel cadastrado.");
++            return;
++        }
++        for (int i = 0; i < imoveis.size(); i++) {
++            Imovel imovel = imoveis.get(i);
++            System.out.println((i + 1) + ". " + imovel.getNome() + " - " + imovel.getLocalizacao());
++        }
++    }
++
++    // TODO: mostrar início, término, índice de reajuste (ex.: IGP-M) e situação do contrato.
++    private void verMeuContrato() {
++        emDesenvolvimento("Meu contrato");
++    }
++
++    // TODO: mostrar valor, vencimento e situação (em dia / a vencer / em atraso).
++    //       Depois: opção "Pagar com Pix".
++    private void verProximoAluguel() {
++        emDesenvolvimento("Próximo aluguel");
++    }
++
++    // TODO: listar os pagamentos já feitos.
++    private void verExtratos() {
++        emDesenvolvimento("Extratos");
++    }
++
++    // TODO: documentos enviados pelo inquilino, documentos do imóvel e envio de um novo documento.
++    private void verDocumentos() {
++        emDesenvolvimento("Documentos");
++    }
++
++    // TODO: avisos de vencimento, reajuste e documentos novos.
++    private void verNotificacoes() {
++        emDesenvolvimento("Notificações");
++    }
++
++    private void emDesenvolvimento(String recurso) {
++        System.out.println("🚧 " + recurso + " - funcionalidade em desenvolvimento.");
++    }
++}
+diff --git a/sistema-usuarios/src/main/java/com/nexusmaven/JsonUtil.java b/sistema-usuarios/src/main/java/com/nexusmaven/JsonUtil.java
+index a8d64b1..94faf6e 100644
+--- a/sistema-usuarios/src/main/java/com/nexusmaven/JsonUtil.java
++++ b/sistema-usuarios/src/main/java/com/nexusmaven/JsonUtil.java
+@@ -1,12 +1,16 @@
+ package com.nexusmaven;
+ 
+-import java.io.File;
+-import java.io.FileReader;
+-import java.io.FileWriter;
+ import java.io.IOException;
+ import java.io.Reader;
++import java.io.UncheckedIOException;
+ import java.io.Writer;
+ import java.lang.reflect.Type;
++import java.nio.charset.CharacterCodingException;
++import java.nio.charset.StandardCharsets;
++import java.nio.file.AtomicMoveNotSupportedException;
++import java.nio.file.Files;
++import java.nio.file.Path;
++import java.nio.file.StandardCopyOption;
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+@@ -15,37 +19,81 @@ import com.google.gson.GsonBuilder;
+ import com.google.gson.JsonDeserializationContext;
+ import com.google.gson.JsonDeserializer;
+ import com.google.gson.JsonElement;
++import com.google.gson.JsonIOException;
+ import com.google.gson.JsonObject;
+ import com.google.gson.JsonParseException;
+ import com.google.gson.reflect.TypeToken;
+ 
++/** Lê e grava os "bancos de dados" do sistema, que são arquivos JSON sempre em UTF-8. */
+ public class JsonUtil {
+-    
+-    private static final Gson gson = new GsonBuilder().
+-    setPrettyPrinting().
+-    registerTypeAdapter(Usuario.class, new UsuarioAdapter()).
+-    create();
++
++    public static final String ARQUIVO_USUARIOS = "usuarios.json";
++    public static final String ARQUIVO_IMOVEIS = "imoveis.json";
++
++    private static final Gson gson = new GsonBuilder()
++            .setPrettyPrinting()
++            .disableHtmlEscaping() // grava & ' < > como estão, em vez de \u0026 \u0027...
++            .registerTypeAdapter(Usuario.class, new UsuarioAdapter())
++            .create();
+ 
+     // <T> significa que esse método aceita qualquer classe
+     public static <T> List<T> ler(String nomeArquivo, Class<T> classe) {
+-        File file = new File(nomeArquivo);
+-        if (!file.exists()) return new ArrayList<>();
++        Path caminho = Path.of(nomeArquivo);
++        if (!Files.exists(caminho)) return new ArrayList<>();
+ 
+-        try (Reader reader = new FileReader(file)) {
+-            // Cria o tipo genérico da lista baseado na classe passada
++        // Files.newBufferedReader é estrito: um arquivo que não seja UTF-8 falha
++        // com erro claro em vez de trocar os acentos por "?" em silêncio.
++        try (Reader reader = Files.newBufferedReader(caminho, StandardCharsets.UTF_8)) {
+             Type tipoLista = TypeToken.getParameterized(List.class, classe).getType();
+             List<T> lista = gson.fromJson(reader, tipoLista);
+             return lista != null ? lista : new ArrayList<>();
+         } catch (IOException e) {
+-            throw new RuntimeException("Erro ao ler o arquivo JSON: " + nomeArquivo, e);
++            throw new UncheckedIOException("Erro ao ler o arquivo JSON (ele precisa estar em UTF-8): " + nomeArquivo, e);
++        } catch (JsonParseException e) {
++            // O Gson embrulha o erro de leitura; se a causa for charset, o problema é o arquivo não estar em UTF-8.
++            CharacterCodingException codificacao = causaDeCodificacao(e);
++            if (codificacao != null) {
++                throw new UncheckedIOException(
++                        "Erro ao ler o arquivo JSON (ele precisa estar em UTF-8): " + nomeArquivo, codificacao);
++            }
++            throw new IllegalStateException("Conteúdo inválido no arquivo JSON " + nomeArquivo + ": " + e.getMessage(), e);
++        }
++    }
++
++    private static CharacterCodingException causaDeCodificacao(Throwable erro) {
++        for (Throwable causa = erro; causa != null; causa = causa.getCause()) {
++            if (causa instanceof CharacterCodingException codificacao) {
++                return codificacao;
++            }
+         }
++        return null;
+     }
+ 
++    /**
++     * Grava num arquivo temporário e só depois troca pelo definitivo,
++     * então uma falha no meio da gravação nunca deixa o banco pela metade.
++     */
+     public static <T> void salvar(String nomeArquivo, List<T> lista) {
+-        try (Writer writer = new FileWriter(nomeArquivo)) {
+-            gson.toJson(lista, writer);
+-        } catch (IOException e) {
+-            throw new RuntimeException("Erro ao salvar o arquivo JSON: " + nomeArquivo, e);
++        Path destino = Path.of(nomeArquivo).toAbsolutePath();
++        Path temporario = destino.resolveSibling(destino.getFileName() + ".tmp");
++
++        try {
++            try (Writer writer = Files.newBufferedWriter(temporario, StandardCharsets.UTF_8)) {
++                gson.toJson(lista, writer);
++            }
++            try {
++                Files.move(temporario, destino, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
++            } catch (AtomicMoveNotSupportedException e) {
++                Files.move(temporario, destino, StandardCopyOption.REPLACE_EXISTING);
++            }
++        } catch (IOException | JsonIOException e) {
++            try {
++                Files.deleteIfExists(temporario);
++            } catch (IOException ignorada) {
++                // não há mais nada a fazer com o temporário
++            }
++            throw new UncheckedIOException("Erro ao salvar o arquivo JSON: " + nomeArquivo,
++                    e instanceof IOException io ? io : new IOException(e));
+         }
+     }
+ 
+@@ -56,22 +104,28 @@ public class JsonUtil {
+         @Override
+         public Usuario deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                 throws JsonParseException {
++            if (!json.isJsonObject()) {
++                throw new JsonParseException("Cada usuário deve ser um objeto JSON.");
++            }
+             JsonObject jsonObject = json.getAsJsonObject();
+-            
+-            // Verifica se a etiqueta "tipo" existe no JSON
+-            if (jsonObject.has("tipo")) {
+-                String tipo = jsonObject.get("tipo").getAsString();
+-                if (tipo.equals("admin")) {
+-                    return context.deserialize(jsonObject, admin.class);
+-                } else if (tipo.equals("inquilino")) {
+-                    return context.deserialize(jsonObject, inquilino.class);
+-                }
++            JsonElement tipoJson = jsonObject.get("tipo");
++
++            // Registros antigos, sem "tipo", viram Inquilino (a conta padrão, sem privilégios).
++            if (tipoJson == null || tipoJson.isJsonNull()) {
++                return context.deserialize(jsonObject, Inquilino.class);
+             }
+-            
+-            // Se não tiver a etiqueta "tipo" (ou for um tipo desconhecido), 
+-            // tenta ler como um Usuario comum para não quebrar o sistema.
+-            // (Se o seu sistema só aceita admin/inquilino, você pode trocar por um throw)
+-            return context.deserialize(jsonObject, Usuario.class);
++            if (!tipoJson.isJsonPrimitive()) {
++                throw new JsonParseException("O campo \"tipo\" deve ser um texto.");
++            }
++
++            String tipo = tipoJson.getAsString();
++            return switch (tipo) {
++                case "admin" -> context.deserialize(jsonObject, Admin.class);
++                case "inquilino" -> context.deserialize(jsonObject, Inquilino.class);
++                // Antes caía em context.deserialize(..., Usuario.class), que chamava este
++                // mesmo adaptador de novo, sem parar (StackOverflowError).
++                default -> throw new JsonParseException("Tipo de usuário desconhecido: " + tipo);
++            };
+         }
+     }
+ }
+diff --git a/sistema-usuarios/src/main/java/com/nexusmaven/Main.java b/sistema-usuarios/src/main/java/com/nexusmaven/Main.java
+new file mode 100644
+index 0000000..6ad2900
+--- /dev/null
++++ b/sistema-usuarios/src/main/java/com/nexusmaven/Main.java
+@@ -0,0 +1,73 @@
++package com.nexusmaven;
++
++import java.util.List;
++import java.util.Scanner;
++
++public class Main {
++    public static void main(String[] args) {
++        try (Scanner scanner = EntradaConsole.criarScanner()) {
++            executar(scanner, JsonUtil.ARQUIVO_USUARIOS);
++        }
++    }
++
++    // Separado do main para poder ser testado com outro banco e outra entrada
++    static void executar(Scanner scanner, String arquivoUsuarios) {
++        System.out.println("=================================");
++        System.out.println("      TELA DE LOGIN - NEXUS      ");
++        System.out.println("=================================");
++
++        Usuario usuarioLogado = fazerLogin(scanner, arquivoUsuarios);
++        if (usuarioLogado == null) {
++            return;
++        }
++
++        // ===== CHAMANDO O MENU DO TIPO DE USUÁRIO =====
++        if (usuarioLogado instanceof Admin admin) {
++            admin.abrirMenu(scanner);
++        } else if (usuarioLogado instanceof Inquilino inquilino) {
++            inquilino.abrirMenu(scanner);
++        } else {
++            System.out.println("Tipo de usuário desconhecido. Encerrando o programa.");
++        }
++    }
++
++    /** Repete o login até acertar. Devolve null se não há usuários ou se a entrada terminar. */
++    static Usuario fazerLogin(Scanner scanner, String arquivoUsuarios) {
++        List<Usuario> usuarios = JsonUtil.ler(arquivoUsuarios, Usuario.class);
++
++        if (usuarios.isEmpty()) {
++            System.out.println("\n Nenhum usuário encontrado no JSON. Rode o GerarDados primeiro.\n");
++            return null;
++        }
++
++        while (true) {
++            System.out.print("Email: ");
++            if (!scanner.hasNextLine()) return null;
++            String emailDigitado = scanner.nextLine().trim();
++
++            System.out.print("Senha: ");
++            if (!scanner.hasNextLine()) return null;
++            String senhaDigitada = scanner.nextLine();
++
++            Usuario encontrado = buscarPorEmail(usuarios, emailDigitado);
++
++            if (encontrado == null) {
++                System.out.println("\n Email não encontrado no sistema. Tente novamente.\n");
++            } else if (encontrado.autenticar(emailDigitado, senhaDigitada)) {
++                System.out.println("\n Login realizado com sucesso! Bem-vindo, " + encontrado.getNome() + ".");
++                return encontrado;
++            } else {
++                System.out.println("\n Senha incorreta. Tente novamente.\n");
++            }
++        }
++    }
++
++    private static Usuario buscarPorEmail(List<Usuario> usuarios, String email) {
++        for (Usuario u : usuarios) {
++            if (email.equalsIgnoreCase(u.getEmail())) {
++                return u;
++            }
++        }
++        return null;
++    }
++}
+diff --git a/sistema-usuarios/src/main/java/com/nexusmaven/Usuario.java b/sistema-usuarios/src/main/java/com/nexusmaven/Usuario.java
+index 9d27a9f..71c90e1 100644
+--- a/sistema-usuarios/src/main/java/com/nexusmaven/Usuario.java
++++ b/sistema-usuarios/src/main/java/com/nexusmaven/Usuario.java
+@@ -1,12 +1,17 @@
+ package com.nexusmaven;
+ 
++import java.util.Locale;
++import java.util.regex.Pattern;
++
+ public class Usuario {
++    private static final Pattern PADRAO_EMAIL = Pattern.compile("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$");
++
+     private String nome;
+     private String email;
+     private String senha;
+ 
+-    // ⚠️ ADICIONE ESTE CONSTRUTOR VAZIO AQUI
+-    public Usuario() {} 
++    // Construtor vazio (necessário para o Gson ler o JSON)
++    public Usuario() {}
+ 
+     // Construtor reaproveita os setters (validação garantida)
+     public Usuario(String nome, String email, String senha) {
+@@ -20,8 +25,7 @@ public class Usuario {
+     public String getEmail() { return email; }
+     public String getSenha() { return senha; }
+ 
+-    // O Gson precisa do getter para salvar a senha no arquivo
+-    
++    // ===== SETTERS COM VALIDAÇÃO =====
+     public void setNome(String nome) {
+         if (nome == null || nome.trim().isEmpty()) {
+             throw new IllegalArgumentException("Nome não pode ser vazio");
+@@ -33,7 +37,11 @@ public class Usuario {
+         if (email == null || email.trim().isEmpty()) {
+             throw new IllegalArgumentException("Email não pode ser vazio");
+         }
+-        this.email = email.trim();
++        String normalizado = email.trim().toLowerCase(Locale.ROOT);
++        if (!PADRAO_EMAIL.matcher(normalizado).matches()) {
++            throw new IllegalArgumentException("Email inválido");
++        }
++        this.email = normalizado;
+     }
+ 
+     public void setSenha(String senha) {
+@@ -43,12 +51,14 @@ public class Usuario {
+         this.senha = senha;
+     }
+ 
++    // TODO: guardar hash + salt em vez da senha em texto puro (hoje ela fica legível no usuarios.json).
+     public boolean autenticar(String email, String senha) {
+-        return this.email.equalsIgnoreCase(email) && this.senha.equals(senha);
++        return email != null && email.equalsIgnoreCase(this.email)
++                && senha != null && senha.equals(this.senha);
+     }
+ 
+     @Override
+     public String toString() {
+         return "Usuario{nome='" + nome + "', email='" + email + "'}";
+-    }   
++    }
+ }
+diff --git a/sistema-usuarios/src/main/java/com/nexusmaven/inquilino.java b/sistema-usuarios/src/main/java/com/nexusmaven/inquilino.java
+deleted file mode 100644
+index 9ceb32d..0000000
+--- a/sistema-usuarios/src/main/java/com/nexusmaven/inquilino.java
++++ /dev/null
+@@ -1,55 +0,0 @@
+-package com.nexusmaven;
+-
+-import java.util.Scanner;
+-
+-public class inquilino extends Usuario {
+-    private final String tipo = "inquilino";
+-
+-    public inquilino() {} // Obrigatório para o Gson
+-
+-    public inquilino(String nome, String email, String senha) {
+-        super(nome, email, senha);
+-    }
+-
+-    public String getTipo() { return tipo; }
+-
+-	    public void abrirMenu(Scanner scanner) {
+-        int opcao = -1;
+-
+-        while (opcao != 0) {
+-            System.out.println("\n=================================");
+-            System.out.println("        MENU INQUILINO - NEXUS     ");
+-            System.out.println("===================================");
+-            System.out.println("Olá, " + getNome() + "! O que deseja fazer?");
+-            System.out.println("1 - Ver meus dados");
+-            System.out.println("2 - Ver imóveis disponíveis");
+-            System.out.println("0 - Sair (Logout)");
+-            System.out.print("Escolha uma opção: ");
+-
+-            try {
+-                opcao = Integer.parseInt(scanner.nextLine());
+-            } catch (NumberFormatException e) {
+-                System.out.println("❌ Por favor, digite um número válido.");
+-                continue;
+-            }
+-
+-            switch (opcao) {
+-                case 1:
+-                    System.out.println("\n--- SEUS DADOS ---");
+-                    System.out.println("Nome: " + getNome());
+-                    System.out.println("Email: " + getEmail());
+-                    break;
+-                case 2:
+-                    System.out.println("\n--- IMÓVEIS DISPONÍVEIS ---");
+-                    // Aqui você pode ler o imoveis.json e listar
+-                    System.out.println("(Listagem de imóveis em desenvolvimento...)");
+-                    break;
+-                case 0:
+-                    System.out.println("👋 Saindo do menu do inquilino...");
+-                    break;
+-                default:
+-                    System.out.println("❌ Opção inválida. Tente novamente.");
+-            }
+-        }
+-    }
+-}
+diff --git a/sistema-usuarios/src/main/java/com/nexusmaven/main.java b/sistema-usuarios/src/main/java/com/nexusmaven/main.java
+deleted file mode 100644
+index ddedfbc..0000000
+--- a/sistema-usuarios/src/main/java/com/nexusmaven/main.java
++++ /dev/null
+@@ -1,81 +0,0 @@
+-package com.nexusmaven;
+-
+-import java.util.List;
+-import java.util.Scanner;
+-
+-public class main {
+-    public static void main(String[] args) {
+-        Scanner scanner = new Scanner(System.in);
+-
+-        System.out.println("=================================");
+-        System.out.println("      TELA DE LOGIN - NEXUS      ");
+-        System.out.println("=================================");
+-
+-        boolean logado = false;
+-
+-        Usuario usuarioLogado = null; // Variável para armazenar o usuário logado
+-
+-        //loop de login
+-        while (!logado) {
+-            System.out.print("Email: ");
+-            String emailDigitado = scanner.nextLine();
+-
+-            System.out.print("Senha: ");
+-            String senhaDigitada = scanner.nextLine();
+-
+-            List<Usuario> usuarios = JsonUtil.ler("usuarios.json", Usuario.class);
+-
+-            if (usuarios.isEmpty()) {
+-                System.out.println("\n Nenhum usuário encontrado no JSON. Rode o GerarDados primeiro.\n");
+-                break;
+-            }
+-
+-            boolean encontrouEmail = false;
+-
+-            // 2. Procura o usuário na lista
+-            for (Usuario u : usuarios) {
+-                if (u.getEmail().equalsIgnoreCase(emailDigitado)) {
+-                    encontrouEmail = true;
+-                    
+-                    // 3. Tenta autenticar (O método autenticar usa o Hash e o Salt)
+-                    if (u.autenticar(emailDigitado, senhaDigitada)) {
+-                        System.out.println("\n Login realizado com sucesso! Bem-vindo, " + u.getNome() + ".");
+-                        logado = true;
+-                        usuarioLogado = u; // Armazena o usuário logado
+-                        logado = true;
+-                    } else {
+-                        System.out.println("\n Senha incorreta. Tente novamente.\n");
+-                    }
+-                    break;
+-                }
+-            }
+-
+-            if (!encontrouEmail) {
+-                System.out.println("\n Email não encontrado no sistema. Tente novamente.\n");
+-            }
+-        }
+-        
+-        // ===== CHAMANDO O OUTRO JAVA =====
+-        // Se o login deu certo, chama a classe PainelUsuario
+-        if (logado && usuarioLogado != null) {
+-            
+-            // admin
+-            if (usuarioLogado instanceof admin) {
+-                admin admin = (admin) usuarioLogado;
+-                admin.abrirMenu();
+-            }
+-
+-            //inquilino
+-            else if (usuarioLogado instanceof inquilino) {
+-                inquilino inquilino = (inquilino) usuarioLogado;
+-                inquilino.abrirMenu(scanner);
+-            }
+-
+-            //Caso der errado
+-            else {
+-                System.out.println("Tipo de usuário desconhecido. Encerrando o programa.");
+-            }
+-        }    
+-        scanner.close();
+-    }
+-}
+\ No newline at end of file
+diff --git a/sistema-usuarios/src/test/java/com/nexusmaven/ApoioDeTestes.java b/sistema-usuarios/src/test/java/com/nexusmaven/ApoioDeTestes.java
+new file mode 100644
+index 0000000..b94beae
+--- /dev/null
++++ b/sistema-usuarios/src/test/java/com/nexusmaven/ApoioDeTestes.java
+@@ -0,0 +1,32 @@
++package com.nexusmaven;
++
++import static java.nio.charset.StandardCharsets.UTF_8;
++
++import java.io.ByteArrayInputStream;
++import java.io.ByteArrayOutputStream;
++import java.io.PrintStream;
++import java.util.Scanner;
++
++/** Funções comuns dos testes: simular o teclado e capturar o que vai para a tela. */
++final class ApoioDeTestes {
++
++    private ApoioDeTestes() {}
++
++    /** Cada argumento é uma linha digitada; depois da última, a entrada termina. */
++    static Scanner entrada(String... linhas) {
++        String texto = String.join("\n", linhas) + "\n";
++        return new Scanner(new ByteArrayInputStream(texto.getBytes(UTF_8)), UTF_8);
++    }
++
++    static String capturarSaida(Runnable acao) {
++        PrintStream original = System.out;
++        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
++        System.setOut(new PrintStream(buffer, true, UTF_8));
++        try {
++            acao.run();
++        } finally {
++            System.setOut(original);
++        }
++        return buffer.toString(UTF_8);
++    }
++}
+diff --git a/sistema-usuarios/src/test/java/com/nexusmaven/BancosDoRepositorioTest.java b/sistema-usuarios/src/test/java/com/nexusmaven/BancosDoRepositorioTest.java
+new file mode 100644
+index 0000000..21688a8
+--- /dev/null
++++ b/sistema-usuarios/src/test/java/com/nexusmaven/BancosDoRepositorioTest.java
+@@ -0,0 +1,86 @@
++package com.nexusmaven;
++
++import static java.nio.charset.StandardCharsets.UTF_8;
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertFalse;
++import static org.junit.Assert.assertTrue;
++
++import java.io.IOException;
++import java.nio.ByteBuffer;
++import java.nio.file.Files;
++import java.nio.file.Path;
++import java.util.HashSet;
++import java.util.List;
++import java.util.Locale;
++import java.util.Set;
++
++import org.junit.Assume;
++import org.junit.Test;
++
++/**
++ * Confere os bancos de verdade do repositório (usuarios.json e imoveis.json, na raiz).
++ * O Maven roda os testes dentro de sistema-usuarios/, por isso o "../".
++ * Se os arquivos não forem encontrados (outra pasta de trabalho), os testes são ignorados.
++ */
++public class BancosDoRepositorioTest {
++
++    private static final Path USUARIOS = Path.of("..", JsonUtil.ARQUIVO_USUARIOS);
++    private static final Path IMOVEIS = Path.of("..", JsonUtil.ARQUIVO_IMOVEIS);
++
++    private static void estrito(Path arquivo) throws IOException {
++        // lança CharacterCodingException se houver bytes que não sejam UTF-8 válido
++        UTF_8.newDecoder().decode(ByteBuffer.wrap(Files.readAllBytes(arquivo)));
++    }
++
++    @Test
++    public void usuariosJsonEstaEmUtf8EComRegistrosValidos() throws IOException {
++        Assume.assumeTrue(Files.exists(USUARIOS));
++        estrito(USUARIOS);
++
++        List<Usuario> usuarios = JsonUtil.ler(USUARIOS.toString(), Usuario.class);
++        assertFalse("usuarios.json não pode estar vazio", usuarios.isEmpty());
++
++        Set<String> emails = new HashSet<>();
++        boolean temAdmin = false;
++        for (Usuario u : usuarios) {
++            assertTrue("Tipo inesperado: " + u, u instanceof Admin || u instanceof Inquilino);
++            // refaz a validação dos setters, que o Gson ignora ao ler o arquivo
++            new Usuario(u.getNome(), u.getEmail(), u.getSenha());
++            assertTrue("Email repetido: " + u.getEmail(), emails.add(u.getEmail().toLowerCase(Locale.ROOT)));
++            temAdmin |= u instanceof Admin;
++        }
++        assertTrue("Precisa existir ao menos um administrador", temAdmin);
++    }
++
++    @Test
++    public void imoveisJsonEstaEmUtf8EComRegistrosValidos() throws IOException {
++        Assume.assumeTrue(Files.exists(IMOVEIS));
++        estrito(IMOVEIS);
++
++        List<Imovel> imoveis = JsonUtil.ler(IMOVEIS.toString(), Imovel.class);
++        assertFalse("imoveis.json não pode estar vazio", imoveis.isEmpty());
++
++        for (Imovel i : imoveis) {
++            new Imovel(i.getNome(), i.getLocalizacao());
++            assertFalse("Acento corrompido em: " + i.getNome(), i.getNome().indexOf('\uFFFD') >= 0);
++            assertFalse("Acento corrompido em: " + i.getLocalizacao(), i.getLocalizacao().indexOf('\uFFFD') >= 0);
++        }
++    }
++
++    @Test
++    public void lerESalvarOsBancosReaisNaoMudaOConteudo() throws IOException {
++        Assume.assumeTrue(Files.exists(USUARIOS) && Files.exists(IMOVEIS));
++        Path temporario = Files.createTempFile("nexus-", ".json");
++        try {
++            List<Usuario> usuarios = JsonUtil.ler(USUARIOS.toString(), Usuario.class);
++            JsonUtil.salvar(temporario.toString(), usuarios);
++            assertEquals(Files.readString(USUARIOS, UTF_8).strip(), Files.readString(temporario, UTF_8).strip());
++
++            List<Imovel> imoveis = JsonUtil.ler(IMOVEIS.toString(), Imovel.class);
++            JsonUtil.salvar(temporario.toString(), imoveis);
++            assertEquals(Files.readString(IMOVEIS, UTF_8).strip(), Files.readString(temporario, UTF_8).strip());
++        } finally {
++            Files.deleteIfExists(temporario);
++        }
++    }
++}
+diff --git a/sistema-usuarios/src/test/java/com/nexusmaven/GerarDadosTest.java b/sistema-usuarios/src/test/java/com/nexusmaven/GerarDadosTest.java
+new file mode 100644
+index 0000000..6b69888
+--- /dev/null
++++ b/sistema-usuarios/src/test/java/com/nexusmaven/GerarDadosTest.java
+@@ -0,0 +1,107 @@
++package com.nexusmaven;
++
++import static com.nexusmaven.ApoioDeTestes.capturarSaida;
++import static com.nexusmaven.ApoioDeTestes.entrada;
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertFalse;
++import static org.junit.Assert.assertTrue;
++
++import java.io.File;
++import java.util.List;
++
++import org.junit.Rule;
++import org.junit.Test;
++import org.junit.rules.TemporaryFolder;
++
++/** Fluxo do GerarDados do começo ao fim, gravando em bancos temporários. */
++public class GerarDadosTest {
++
++    @Rule
++    public TemporaryFolder pasta = new TemporaryFolder();
++
++    private String usuarios() { return new File(pasta.getRoot(), "usuarios.json").getPath(); }
++    private String imoveis() { return new File(pasta.getRoot(), "imoveis.json").getPath(); }
++
++    private String rodar(String... digitado) {
++        return capturarSaida(() -> GerarDados.executar(entrada(digitado), usuarios(), imoveis()));
++    }
++
++    @Test
++    public void criaInquilinoComoContaPadrao() {
++        String saida = rodar("1", "Maria", "maria@nexus.com", "abc12345", "1");
++
++        List<Usuario> lidos = JsonUtil.ler(usuarios(), Usuario.class);
++        assertEquals(1, lidos.size());
++        assertTrue(lidos.get(0) instanceof Inquilino);
++        assertTrue(saida, saida.contains("Tipo: Inquilino"));
++    }
++
++    @Test
++    public void qualquerRespostaDiferenteDe2ViraInquilino() {
++        rodar("1", "Maria", "maria@nexus.com", "abc12345", "");
++        assertTrue(JsonUtil.ler(usuarios(), Usuario.class).get(0) instanceof Inquilino);
++    }
++
++    @Test
++    public void criaAdministrador() {
++        String saida = rodar("1", "Chefe", "chefe@nexus.com", "abc12345", "2");
++
++        assertTrue(JsonUtil.ler(usuarios(), Usuario.class).get(0) instanceof Admin);
++        assertTrue(saida, saida.contains("Tipo: Administrador"));
++    }
++
++    @Test
++    public void novoUsuarioNaoApagaOsQueJaExistem() {
++        rodar("1", "Um", "um@nexus.com", "abc12345", "1");
++        rodar("1", "Dois", "dois@nexus.com", "abc12345", "2");
++
++        List<Usuario> lidos = JsonUtil.ler(usuarios(), Usuario.class);
++        assertEquals(2, lidos.size());
++        assertEquals("um@nexus.com", lidos.get(0).getEmail());
++        assertEquals("dois@nexus.com", lidos.get(1).getEmail());
++    }
++
++    @Test
++    public void emailRepetidoERecusadoMesmoComMaiusculas() {
++        rodar("1", "Um", "um@nexus.com", "abc12345", "1");
++        String saida = rodar("1", "Outro", "UM@Nexus.com", "abc12345", "1");
++
++        assertEquals(1, JsonUtil.ler(usuarios(), Usuario.class).size());
++        assertTrue(saida, saida.contains("já existe"));
++    }
++
++    @Test
++    public void senhaCurtaNaoCriaOBanco() {
++        String saida = rodar("1", "Maria", "maria@nexus.com", "123", "1");
++
++        assertFalse(new File(usuarios()).exists());
++        assertTrue(saida, saida.contains("Senha deve ter entre 6 e 12 caracteres"));
++    }
++
++    @Test
++    public void criaImovel() {
++        String saida = rodar("2", "Casa de José", "R. Ubiratã, 226 - Recife - PE");
++
++        List<Imovel> lidos = JsonUtil.ler(imoveis(), Imovel.class);
++        assertEquals(1, lidos.size());
++        assertEquals("Casa de José", lidos.get(0).getNome());
++        assertTrue(saida, saida.contains("Total de imóveis no sistema: 1"));
++    }
++
++    @Test
++    public void imovelSemLocalizacaoNaoEGravado() {
++        String saida = rodar("2", "Casa", "");
++
++        assertFalse(new File(imoveis()).exists());
++        assertTrue(saida, saida.contains("localização"));
++    }
++
++    @Test
++    public void opcaoInvalidaNaoGeraNada() {
++        String saida = rodar("9");
++
++        assertFalse(new File(usuarios()).exists());
++        assertFalse(new File(imoveis()).exists());
++        assertTrue(saida, saida.contains("Opção inválida"));
++    }
++}
+diff --git a/sistema-usuarios/src/test/java/com/nexusmaven/JsonUtilTest.java b/sistema-usuarios/src/test/java/com/nexusmaven/JsonUtilTest.java
+new file mode 100644
+index 0000000..13eedc4
+--- /dev/null
++++ b/sistema-usuarios/src/test/java/com/nexusmaven/JsonUtilTest.java
+@@ -0,0 +1,153 @@
++package com.nexusmaven;
++
++import static java.nio.charset.StandardCharsets.ISO_8859_1;
++import static java.nio.charset.StandardCharsets.UTF_8;
++import static org.junit.Assert.assertArrayEquals;
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertFalse;
++import static org.junit.Assert.assertTrue;
++import static org.junit.Assert.fail;
++
++import java.io.File;
++import java.io.IOException;
++import java.io.UncheckedIOException;
++import java.nio.ByteBuffer;
++import java.nio.file.Files;
++import java.nio.file.Path;
++import java.util.ArrayList;
++import java.util.List;
++
++import org.junit.Rule;
++import org.junit.Test;
++import org.junit.rules.TemporaryFolder;
++
++/** Testa a leitura e a gravação dos "bancos de dados" JSON, sempre em arquivos temporários. */
++public class JsonUtilTest {
++
++    @Rule
++    public TemporaryFolder pasta = new TemporaryFolder();
++
++    private String caminho(String nome) {
++        return new File(pasta.getRoot(), nome).getPath();
++    }
++
++    @Test
++    public void arquivoInexistenteRetornaListaVazia() {
++        assertTrue(JsonUtil.ler(caminho("nao-existe.json"), Usuario.class).isEmpty());
++    }
++
++    @Test
++    public void arquivoVazioRetornaListaVazia() throws IOException {
++        File vazio = pasta.newFile("vazio.json");
++        assertTrue(JsonUtil.ler(vazio.getPath(), Usuario.class).isEmpty());
++    }
++
++    @Test
++    public void usuariosSobrevivemAoRoundTripComOTipoCorreto() {
++        List<Usuario> origem = new ArrayList<>();
++        origem.add(new Admin("Ana", "ana@nexus.com", "senha123"));
++        origem.add(new Inquilino("João", "joao@nexus.com", "senha456"));
++        String arquivo = caminho("usuarios.json");
++
++        JsonUtil.salvar(arquivo, origem);
++        List<Usuario> lidos = JsonUtil.ler(arquivo, Usuario.class);
++
++        assertEquals(2, lidos.size());
++        assertTrue(lidos.get(0) instanceof Admin);
++        assertTrue(lidos.get(1) instanceof Inquilino);
++        assertEquals("ana@nexus.com", lidos.get(0).getEmail());
++        assertEquals("João", lidos.get(1).getNome());
++        assertTrue(lidos.get(1).autenticar("JOAO@nexus.com", "senha456"));
++    }
++
++    @Test
++    public void registroSemTipoViraInquilino() throws IOException {
++        File antigo = pasta.newFile("antigo.json");
++        Files.writeString(antigo.toPath(),
++                "[{\"nome\":\"Carlos\",\"email\":\"carlos@hotmail.com\",\"senha\":\"123456\"}]", UTF_8);
++
++        List<Usuario> lidos = JsonUtil.ler(antigo.getPath(), Usuario.class);
++
++        assertEquals(1, lidos.size());
++        assertTrue(lidos.get(0) instanceof Inquilino);
++    }
++
++    @Test
++    public void tipoDesconhecidoDaErroClaroEmVezDeStackOverflow() throws IOException {
++        File arquivo = pasta.newFile("tipo-estranho.json");
++        Files.writeString(arquivo.toPath(),
++                "[{\"tipo\":\"visitante\",\"nome\":\"X\",\"email\":\"x@x.com\",\"senha\":\"123456\"}]", UTF_8);
++        try {
++            JsonUtil.ler(arquivo.getPath(), Usuario.class);
++            fail("Era esperado um erro para o tipo desconhecido");
++        } catch (IllegalStateException e) {
++            assertTrue(e.getMessage(), e.getMessage().contains("visitante"));
++        }
++    }
++
++    @Test(expected = IllegalStateException.class)
++    public void jsonComSintaxeQuebradaDaErroClaro() throws IOException {
++        File quebrado = pasta.newFile("quebrado.json");
++        Files.writeString(quebrado.toPath(), "[{\"nome\": ", UTF_8);
++        JsonUtil.ler(quebrado.getPath(), Usuario.class);
++    }
++
++    @Test
++    public void acentosEApostrofosSaoGravadosEmUtf8EVoltamIntactos() throws IOException {
++        List<Imovel> origem = List.of(
++                new Imovel("Casa de José", "R. Ubiratã, 226 - Alto José do Pinho, Recife - PE"),
++                new Imovel("D'Ávila & Cia", "Av. Ali, 22"));
++        String arquivo = caminho("imoveis.json");
++
++        JsonUtil.salvar(arquivo, origem);
++
++        // A decodificação estrita falha se o arquivo não for UTF-8 válido
++        String texto = UTF_8.newDecoder().decode(ByteBuffer.wrap(Files.readAllBytes(Path.of(arquivo)))).toString();
++        assertTrue(texto.contains("José"));
++        assertTrue(texto.contains("Ubiratã"));
++        assertTrue("& e ' não devem virar \\u0026 / \\u0027", texto.contains("D'Ávila & Cia"));
++
++        List<Imovel> lidos = JsonUtil.ler(arquivo, Imovel.class);
++        assertEquals("Casa de José", lidos.get(0).getNome());
++        assertEquals("D'Ávila & Cia", lidos.get(1).getNome());
++    }
++
++    @Test
++    public void arquivoForaDeUtf8ERecusadoEmVezDeTrocarOsAcentosPorInterrogacao() throws IOException {
++        File antigo = pasta.newFile("latin1.json");
++        Files.write(antigo.toPath(), "[{\"nome\":\"José\",\"localizacao\":\"Rua A\"}]".getBytes(ISO_8859_1));
++        try {
++            JsonUtil.ler(antigo.getPath(), Imovel.class);
++            fail("Era esperado um erro para arquivo fora de UTF-8");
++        } catch (UncheckedIOException e) {
++            assertTrue(e.getMessage(), e.getMessage().contains("UTF-8"));
++        }
++    }
++
++    @Test
++    public void imovelAntigoComChaveLnomeContinuaLegivelEESalvaComNome() throws IOException {
++        File antigo = pasta.newFile("imoveis-antigo.json");
++        Files.writeString(antigo.toPath(), "[{\"lnome\":\"Casa A\",\"localizacao\":\"Rua B\"}]", UTF_8);
++
++        List<Imovel> lidos = JsonUtil.ler(antigo.getPath(), Imovel.class);
++        assertEquals("Casa A", lidos.get(0).getNome());
++
++        JsonUtil.salvar(antigo.getPath(), lidos);
++        String texto = Files.readString(antigo.toPath(), UTF_8);
++        assertTrue(texto.contains("\"nome\""));
++        assertFalse(texto.contains("lnome"));
++    }
++
++    @Test
++    public void salvarSubstituiOConteudoAnteriorENaoDeixaTemporarioParaTras() {
++        String arquivo = caminho("u.json");
++        JsonUtil.salvar(arquivo, List.of(new Inquilino("Um", "um@um.com", "123456"),
++                                          new Inquilino("Dois", "dois@dois.com", "123456")));
++        JsonUtil.salvar(arquivo, List.of(new Inquilino("Zé", "ze@ze.com", "123456")));
++
++        List<Usuario> lidos = JsonUtil.ler(arquivo, Usuario.class);
++        assertEquals(1, lidos.size());
++        assertEquals("Zé", lidos.get(0).getNome());
++        assertArrayEquals(new String[] {"u.json"}, pasta.getRoot().list());
++    }
++}
+diff --git a/sistema-usuarios/src/test/java/com/nexusmaven/LoginEMenusTest.java b/sistema-usuarios/src/test/java/com/nexusmaven/LoginEMenusTest.java
+new file mode 100644
+index 0000000..a1905f4
+--- /dev/null
++++ b/sistema-usuarios/src/test/java/com/nexusmaven/LoginEMenusTest.java
+@@ -0,0 +1,141 @@
++package com.nexusmaven;
++
++import static com.nexusmaven.ApoioDeTestes.capturarSaida;
++import static com.nexusmaven.ApoioDeTestes.entrada;
++import static org.junit.Assert.assertFalse;
++import static org.junit.Assert.assertTrue;
++
++import java.io.File;
++import java.util.List;
++
++import org.junit.Before;
++import org.junit.Rule;
++import org.junit.Test;
++import org.junit.rules.TemporaryFolder;
++
++/** Login (Main) e menus (Admin e Inquilino), com teclado simulado e banco temporário. */
++public class LoginEMenusTest {
++
++    @Rule
++    public TemporaryFolder pasta = new TemporaryFolder();
++
++    private String banco;
++
++    @Before
++    public void criarBanco() {
++        banco = new File(pasta.getRoot(), "usuarios.json").getPath();
++        JsonUtil.salvar(banco, List.of(
++                new Admin("Chefe", "admin@nexus.com", "admin123"),
++                new Inquilino("João", "joao@nexus.com", "comum123")));
++    }
++
++    private String loginComo(String... digitado) {
++        return capturarSaida(() -> Main.executar(entrada(digitado), banco));
++    }
++
++    // ===== Login =====
++
++    @Test
++    public void loginDeInquilinoAbreOMenuDoInquilino() {
++        String saida = loginComo("joao@nexus.com", "comum123", "0");
++        assertTrue(saida, saida.contains("Login realizado com sucesso! Bem-vindo, João."));
++        assertTrue(saida, saida.contains("MENU INQUILINO"));
++        assertFalse(saida, saida.contains("MENU ADMIN"));
++    }
++
++    @Test
++    public void loginDeAdminAbreOMenuDoAdmin() {
++        String saida = loginComo("ADMIN@nexus.com", "admin123", "0");
++        assertTrue(saida, saida.contains("MENU ADMIN"));
++        assertFalse(saida, saida.contains("MENU INQUILINO"));
++    }
++
++    @Test
++    public void senhaIncorretaPedeDeNovoEDepoisAceita() {
++        String saida = loginComo("joao@nexus.com", "errada1", "joao@nexus.com", "comum123", "0");
++        assertTrue(saida, saida.contains("Senha incorreta"));
++        assertTrue(saida, saida.contains("Login realizado com sucesso"));
++    }
++
++    @Test
++    public void emailInexistenteEFimDaEntradaEncerramSemTravar() {
++        String saida = loginComo("ninguem@nexus.com", "123456");
++        assertTrue(saida, saida.contains("Email não encontrado"));
++        assertFalse(saida, saida.contains("MENU"));
++    }
++
++    @Test
++    public void bancoVazioAvisaParaRodarOGerarDados() {
++        String vazio = new File(pasta.getRoot(), "nao-existe.json").getPath();
++        String saida = capturarSaida(() -> Main.executar(entrada("a", "b"), vazio));
++        assertTrue(saida, saida.contains("Nenhum usuário encontrado"));
++    }
++
++    // ===== Menu do inquilino =====
++
++    private String menuInquilino(String... digitado) {
++        Inquilino inquilino = new Inquilino("João", "joao@nexus.com", "comum123");
++        return capturarSaida(() -> inquilino.abrirMenu(entrada(digitado)));
++    }
++
++    @Test
++    public void inquilinoVeSeusDados() {
++        String saida = menuInquilino("1", "0");
++        assertTrue(saida, saida.contains("Nome: João"));
++        assertTrue(saida, saida.contains("Email: joao@nexus.com"));
++    }
++
++    @Test
++    public void opcoesAindaNaoImplementadasAvisamEmDesenvolvimento() {
++        String saida = menuInquilino("3", "4", "5", "6", "7", "0");
++        for (String recurso : new String[] {"Meu contrato", "Próximo aluguel", "Extratos", "Documentos", "Notificações"}) {
++            assertTrue(recurso + " / " + saida, saida.contains(recurso + " - funcionalidade em desenvolvimento."));
++        }
++    }
++
++    @Test
++    public void menuDoInquilinoTrataTextoOpcaoInvalidaEFimDaEntrada() {
++        String saida = menuInquilino("abc", "99");   // sem "0": a entrada termina e o menu sai sozinho
++        assertTrue(saida, saida.contains("Por favor, digite um número válido"));
++        assertTrue(saida, saida.contains("Opção inválida"));
++        assertTrue(saida, saida.contains("Saindo do menu do inquilino"));
++    }
++
++    @Test
++    public void listaDeImoveisMostraNomeELocalizacao() {
++        Inquilino inquilino = new Inquilino("João", "joao@nexus.com", "comum123");
++        String saida = capturarSaida(() -> inquilino.exibirImoveis(List.of(
++                new Imovel("Casa de José", "R. Ubiratã, 226"), new Imovel("Apto 301", "Av. Ali, 22"))));
++        assertTrue(saida, saida.contains("1. Casa de José - R. Ubiratã, 226"));
++        assertTrue(saida, saida.contains("2. Apto 301 - Av. Ali, 22"));
++    }
++
++    @Test
++    public void listaDeImoveisVaziaAvisa() {
++        Inquilino inquilino = new Inquilino("João", "joao@nexus.com", "comum123");
++        String saida = capturarSaida(() -> inquilino.exibirImoveis(List.of()));
++        assertTrue(saida, saida.contains("Nenhum imóvel cadastrado."));
++    }
++
++    // ===== Menu do admin =====
++
++    @Test
++    public void menuDoAdminTrataOpcoesESai() {
++        Admin admin = new Admin("Chefe", "admin@nexus.com", "admin123");
++        String saida = capturarSaida(() -> admin.abrirMenu(entrada("2", "x", "7", "0")));
++        assertTrue(saida, saida.contains("Registrar pagamentos - funcionalidade em desenvolvimento."));
++        assertTrue(saida, saida.contains("Por favor, digite um número válido"));
++        assertTrue(saida, saida.contains("Opção inválida"));
++        assertTrue(saida, saida.contains("Saindo do menu admin"));
++    }
++
++    @Test
++    public void adminGeraDadosPeloMenuUsandoOMesmoScannerDoPrograma() {
++        // Opção 1 do menu chama o GerarDados; depois o menu continua lendo do mesmo teclado.
++        // Só a opção inválida é digitada dentro do GerarDados, então nenhum banco é alterado.
++        Admin admin = new Admin("Chefe", "admin@nexus.com", "admin123");
++        String saida = capturarSaida(() -> admin.abrirMenu(entrada("1", "9", "0")));
++        assertTrue(saida, saida.contains("Nenhum dado foi gerado"));   // GerarDados recebeu o "9"
++        assertTrue(saida, saida.contains("Saindo do menu admin"));     // e o menu ainda leu o "0"
++    }
++}
+diff --git a/sistema-usuarios/src/test/java/com/nexusmaven/UsuarioEImovelTest.java b/sistema-usuarios/src/test/java/com/nexusmaven/UsuarioEImovelTest.java
+new file mode 100644
+index 0000000..c8ead6a
+--- /dev/null
++++ b/sistema-usuarios/src/test/java/com/nexusmaven/UsuarioEImovelTest.java
+@@ -0,0 +1,88 @@
++package com.nexusmaven;
++
++import static org.junit.Assert.assertEquals;
++import static org.junit.Assert.assertFalse;
++import static org.junit.Assert.assertTrue;
++
++import org.junit.Test;
++
++public class UsuarioEImovelTest {
++
++    // ===== Usuario =====
++
++    @Test
++    public void usuarioValidoNormalizaNomeEEmail() {
++        Usuario u = new Usuario("  Maria  ", "  Maria@Nexus.COM ", "abc123");
++        assertEquals("Maria", u.getNome());
++        assertEquals("maria@nexus.com", u.getEmail());
++    }
++
++    @Test(expected = IllegalArgumentException.class)
++    public void nomeVazioERecusado() {
++        new Usuario("   ", "a@a.com", "123456");
++    }
++
++    @Test(expected = IllegalArgumentException.class)
++    public void emailSemArrobaERecusado() {
++        new Usuario("Ana", "sem-arroba", "123456");
++    }
++
++    @Test(expected = IllegalArgumentException.class)
++    public void emailSemDominioERecusado() {
++        new Usuario("Ana", "ana@", "123456");
++    }
++
++    @Test(expected = IllegalArgumentException.class)
++    public void emailComEspacoNoMeioERecusado() {
++        new Usuario("Ana", "ana @nexus.com", "123456");
++    }
++
++    @Test(expected = IllegalArgumentException.class)
++    public void senhaComCincoCaracteresERecusada() {
++        new Usuario("Ana", "ana@nexus.com", "12345");
++    }
++
++    @Test(expected = IllegalArgumentException.class)
++    public void senhaComTrezeCaracteresERecusada() {
++        new Usuario("Ana", "ana@nexus.com", "1234567890123");
++    }
++
++    @Test
++    public void senhasNosLimitesSaoAceitas() {
++        new Usuario("Ana", "ana@nexus.com", "123456");        // 6
++        new Usuario("Ana", "ana@nexus.com", "123456789012");  // 12
++    }
++
++    @Test
++    public void autenticarIgnoraMaiusculasNoEmailMasNaoNaSenha() {
++        Usuario u = new Usuario("Ana", "ana@nexus.com", "Senha123");
++        assertTrue(u.autenticar("ANA@NEXUS.COM", "Senha123"));
++        assertFalse(u.autenticar("ana@nexus.com", "senha123"));
++        assertFalse(u.autenticar("outro@nexus.com", "Senha123"));
++        assertFalse(u.autenticar(null, null));
++    }
++
++    @Test
++    public void usuarioLidoDeJsonIncompletoNaoQuebraNoAutenticar() {
++        assertFalse(new Usuario().autenticar("a@a.com", "123456"));
++    }
++
++    // ===== Imovel =====
++
++    @Test
++    public void imovelValidoRemoveEspacosDasPontas() {
++        Imovel i = new Imovel("  Casa 1 ", " Rua A, 10 ");
++        assertEquals("Casa 1", i.getNome());
++        assertEquals("Rua A, 10", i.getLocalizacao());
++    }
++
++    @Test(expected = IllegalArgumentException.class)
++    public void imovelSemNomeERecusado() {
++        new Imovel("", "Rua A");
++    }
++
++    @Test(expected = IllegalArgumentException.class)
++    public void imovelSemLocalizacaoERecusado() {
++        new Imovel("Casa 1", null);
++    }
++}
