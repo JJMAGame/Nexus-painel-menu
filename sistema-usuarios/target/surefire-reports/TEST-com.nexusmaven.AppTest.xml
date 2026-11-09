@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nexusmaven.AppTest" time="0.021" tests="2" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="25"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="D:\GITHUB REPOSITORY\Nexus-painel-menu\sistema-usuarios\target\test-classes;D:\GITHUB REPOSITORY\Nexus-painel-menu\sistema-usuarios\target\classes;C:\Users\jorgi\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\jorgi\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\jorgi\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;"/>
+    <property name="java.vm.vendor" value="Eclipse Adoptium"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://adoptium.net/"/>
+    <property name="user.timezone" value="America/Sao_Paulo"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="25"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.boot.library.path" value="C:\Users\jorgi\.jdk\jdk-25.0.5+8\bin"/>
+    <property name="sun.java.command" value="C:\Users\jorgi\AppData\Local\Temp\surefire12280877884521326389\surefirebooter10172319823428502647.jar C:\Users\jorgi\AppData\Local\Temp\surefire12280877884521326389 2026-11-04T16-40-06_748-jvmRun1 surefire9729112115919177680tmp surefire_07120133020439019745tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\GITHUB REPOSITORY\Nexus-painel-menu\sistema-usuarios\target\test-classes;D:\GITHUB REPOSITORY\Nexus-painel-menu\sistema-usuarios\target\classes;C:\Users\jorgi\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\jorgi\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\jorgi\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\jorgi"/>
+    <property name="user.language" value="pt"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2026-10-20"/>
+    <property name="java.home" value="C:\Users\jorgi\.jdk\jdk-25.0.5+8"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\GITHUB REPOSITORY\Nexus-painel-menu\sistema-usuarios"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\jorgi\AppData\Local\Temp\surefire12280877884521326389\surefirebooter10172319823428502647.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="25.0.5+8-LTS"/>
+    <property name="user.name" value="jorgi"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Temurin-25.0.5+8"/>
+    <property name="localRepository" value="C:\Users\jorgi\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
+    <property name="java.io.tmpdir" value="C:\Users\jorgi\AppData\Local\Temp\"/>
+    <property name="java.version" value="25.0.5"/>
+    <property name="user.dir" value="D:\GITHUB REPOSITORY\Nexus-painel-menu\sistema-usuarios"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Users\jorgi\.jdk\jdk-25.0.5+8\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Python314\Scripts\;C:\Program Files\Python314\;C:\Program Files\Eclipse Adoptium\jre-8.0.504.1-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\dotnet\;E:\;C:\Program Files\Microsoft VS Code\bin\copilot-shim;C:\Users\jorgi\scoop\shims;C:\Users\jorgi\AppData\Local\Microsoft\WindowsApps;C:\Users\jorgi\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.0.2-full_build\bin;C:\Users\jorgi\AppData\Local\cava\;c:\Program Files\Microsoft VS Code\e646868227\resources\app\node_modules.asar.unpacked\@vscode\ripgrep-universal\bin\win32-x64;c:\Program Files\Microsoft VS Code\e646868227\resources\app\node_modules.asar.unpacked\@github\copilot-sdk-win32-x64\ripgrep\bin\win32-x64;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Eclipse Adoptium"/>
+    <property name="java.vm.version" value="25.0.5+8-LTS"/>
+    <property name="stdin.encoding" value="Cp1252"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="69.0"/>
+  </properties>
+  <testcase name="shouldAnswerWithTrue" classname="com.nexusmaven.AppTest" time="0.001"/>
+  <testcase name="testClassesUseJava25Bytecode" classname="com.nexusmaven.AppTest" time="0"/>
+</testsuite>

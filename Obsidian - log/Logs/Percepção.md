@@ -204,7 +204,7 @@ e estão presentes na classe filhas, e depois disso criar um UsuarioAdapter que 
 Na ultima reunião foi mencionado que eu estou desenvolvedo a segurança do aplicativo e digo que as coisa que venho melhorando principalmente que foi o loop e ta sendo aplicado cada vez que avança
 
 ## As Armadilhas do Caminho 
-(Segundo deepseek AI)
+(Segundo deepseek AI com as anotações minhas)
 
 - **Construtores:** Aprendeu que o Gson precisa de um `public Usuario() {}` vazio em todas as classes para conseguir criar o objeto ao ler do JSON. Sem isso, o Java dá erro de "construtor implícito".
     
