@@ -3,79 +3,71 @@ package com.nexusmaven;
 import java.util.List;
 import java.util.Scanner;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        try (Scanner scanner = EntradaConsole.criarScanner()) {
+            executar(scanner, JsonUtil.ARQUIVO_USUARIOS);
+        }
+    }
 
+    // Separado do main para poder ser testado com outro banco e outra entrada
+    static void executar(Scanner scanner, String arquivoUsuarios) {
         System.out.println("=================================");
         System.out.println("      TELA DE LOGIN - NEXUS      ");
         System.out.println("=================================");
 
-        boolean logado = false;
+        Usuario usuarioLogado = fazerLogin(scanner, arquivoUsuarios);
+        if (usuarioLogado == null) {
+            return;
+        }
 
-        Usuario usuarioLogado = null; // Variável para armazenar o usuário logado
+        // ===== CHAMANDO O MENU DO TIPO DE USUÁRIO =====
+        if (usuarioLogado instanceof Admin admin) {
+            admin.abrirMenu(scanner);
+        } else if (usuarioLogado instanceof Inquilino inquilino) {
+            inquilino.abrirMenu(scanner);
+        } else {
+            System.out.println("Tipo de usuário desconhecido. Encerrando o programa.");
+        }
+    }
 
-        //loop de login
-        while (!logado) {
+    /** Repete o login até acertar. Devolve null se não há usuários ou se a entrada terminar. */
+    static Usuario fazerLogin(Scanner scanner, String arquivoUsuarios) {
+        List<Usuario> usuarios = JsonUtil.ler(arquivoUsuarios, Usuario.class);
+
+        if (usuarios.isEmpty()) {
+            System.out.println("\n Nenhum usuário encontrado no JSON. Rode o GerarDados primeiro.\n");
+            return null;
+        }
+
+        while (true) {
             System.out.print("Email: ");
-            String emailDigitado = scanner.nextLine();
+            if (!scanner.hasNextLine()) return null;
+            String emailDigitado = scanner.nextLine().trim();
 
             System.out.print("Senha: ");
+            if (!scanner.hasNextLine()) return null;
             String senhaDigitada = scanner.nextLine();
 
-            List<Usuario> usuarios = JsonUtil.ler("usuarios.json", Usuario.class);
+            Usuario encontrado = buscarPorEmail(usuarios, emailDigitado);
 
-            if (usuarios.isEmpty()) {
-                System.out.println("\n Nenhum usuário encontrado no JSON. Rode o GerarDados primeiro.\n");
-                break;
-            }
-
-            boolean encontrouEmail = false;
-
-            // 2. Procura o usuário na lista
-            for (Usuario u : usuarios) {
-                if (u.getEmail().equalsIgnoreCase(emailDigitado)) {
-                    encontrouEmail = true;
-                    
-                    // 3. Tenta autenticar (O método autenticar usa o Hash e o Salt)
-                    if (u.autenticar(emailDigitado, senhaDigitada)) {
-                        System.out.println("\n Login realizado com sucesso! Bem-vindo, " + u.getNome() + ".");
-                        logado = true;
-                        usuarioLogado = u; // Armazena o usuário logado
-                        logado = true;
-                    } else {
-                        System.out.println("\n Senha incorreta. Tente novamente.\n");
-                    }
-                    break;
-                }
-            }
-
-            if (!encontrouEmail) {
+            if (encontrado == null) {
                 System.out.println("\n Email não encontrado no sistema. Tente novamente.\n");
+            } else if (encontrado.autenticar(emailDigitado, senhaDigitada)) {
+                System.out.println("\n Login realizado com sucesso! Bem-vindo, " + encontrado.getNome() + ".");
+                return encontrado;
+            } else {
+                System.out.println("\n Senha incorreta. Tente novamente.\n");
             }
         }
-        
-        // ===== CHAMANDO O OUTRO JAVA =====
-        // Se o login deu certo, chama a classe PainelUsuario
-        if (logado && usuarioLogado != null) {
-            
-            // admin
-            if (usuarioLogado instanceof admin) {
-                admin admin = (admin) usuarioLogado;
-                admin.abrirMenu();
-            }
+    }
 
-            //inquilino
-            else if (usuarioLogado instanceof inquilino) {
-                inquilino inquilino = (inquilino) usuarioLogado;
-                inquilino.abrirMenu(scanner);
+    private static Usuario buscarPorEmail(List<Usuario> usuarios, String email) {
+        for (Usuario u : usuarios) {
+            if (email.equalsIgnoreCase(u.getEmail())) {
+                return u;
             }
-
-            //Caso der errado
-            else {
-                System.out.println("Tipo de usuário desconhecido. Encerrando o programa.");
-            }
-        }    
-        scanner.close();
+        }
+        return null;
     }
 }
