@@ -45,7 +45,7 @@ public class BancosDoRepositorioTest {
         for (Usuario u : usuarios) {
             assertTrue("Tipo inesperado: " + u, u instanceof Admin || u instanceof Inquilino);
             // refaz a validação dos setters, que o Gson ignora ao ler o arquivo
-            new Usuario(u.getNome(), u.getEmail(), u.getSenha());
+            new Usuario(u.getNome(), u.getEmail(), u.getSenha(), u instanceof Admin ? "admin" : "inquilino");
             assertTrue("Email repetido: " + u.getEmail(), emails.add(u.getEmail().toLowerCase(Locale.ROOT)));
             temAdmin |= u instanceof Admin;
         }

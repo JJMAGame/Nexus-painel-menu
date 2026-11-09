@@ -583,3 +583,9 @@ public class GerarDados {
 Ao gerar o JSON, notamos que palavras como "São" e "Paraíso" estavam virando `S?o` e `Para?so`.
 
 **Causa:** O Windows/PowerShell não estava configurado para UTF-8, e o Gson estava tentando escapar caracteres especiais (HTML Escaping).
+
+---
+# Inquilino atualizado
+
+nesse meio tempo o inquilino foi construído junto com todo código.
+o código foi completamente inovado, mas ouve uma serie de bug que tive que corrigir para fazer o processo de importação do projeto, mas de resto ta bom

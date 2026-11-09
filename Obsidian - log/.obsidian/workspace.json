@@ -30,12 +30,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "file:D:/GITHUB REPOSITORY/Nexus-painel-menu/files/sistema-usuarios/README.md",
+                "file": "Logs/Iniciando a construção do Admin.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "Iniciando a construção do Admin"
             }
           }
         ],
@@ -220,15 +220,16 @@
   },
   "active": "fe44d69306fd41cd",
   "lastOpenFiles": [
+    "Logs/Percepção.md",
+    "Logs/Criando os java.md",
+    "Logs/Direcionameto.md",
+    "Logs/Produzindo um projeto ( Parte 1 ).md",
+    "Fluxograma.canvas",
+    "file:D:/GITHUB REPOSITORY/Nexus-painel-menu/files/sistema-usuarios/README.md",
     "Logs/Iniciando a construção do Admin.md",
     "outros/Pasted image 20261103090957.png",
-    "Fluxograma.canvas",
-    "Logs/Direcionameto.md",
-    "Logs/Percepção.md",
     "outros/Pasted image 20261029181917.png",
-    "Logs/Produzindo um projeto ( Parte 1 ).md",
     "Logs/Fazendo as primeira partes do código.md",
-    "Logs/Criando os java.md",
     "Logs/Criando - Criação de conta... em partes.md",
     "Logs/Commit inicial.md",
     "Logs/Colocando o sistema Gson no código.md",
