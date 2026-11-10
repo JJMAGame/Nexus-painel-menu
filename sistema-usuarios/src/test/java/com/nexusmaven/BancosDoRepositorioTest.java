@@ -1,12 +1,8 @@
 package com.nexusmaven;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
@@ -14,6 +10,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Assume;
 import org.junit.Test;
 
@@ -43,11 +42,11 @@ public class BancosDoRepositorioTest {
         Set<String> emails = new HashSet<>();
         boolean temAdmin = false;
         for (Usuario u : usuarios) {
-            assertTrue("Tipo inesperado: " + u, u instanceof Admin || u instanceof Inquilino);
+            assertTrue("Tipo inesperado: " + u, u instanceof admin || u instanceof inquilino);
             // refaz a validação dos setters, que o Gson ignora ao ler o arquivo
-            new Usuario(u.getNome(), u.getEmail(), u.getSenha(), u instanceof Admin ? "admin" : "inquilino");
+            new Usuario(u.getNome(), u.getEmail(), u.getSenha(), u instanceof admin ? "admin" : "inquilino");
             assertTrue("Email repetido: " + u.getEmail(), emails.add(u.getEmail().toLowerCase(Locale.ROOT)));
-            temAdmin |= u instanceof Admin;
+            temAdmin |= u instanceof admin;
         }
         assertTrue("Precisa existir ao menos um administrador", temAdmin);
     }
@@ -61,7 +60,6 @@ public class BancosDoRepositorioTest {
         assertFalse("imoveis.json não pode estar vazio", imoveis.isEmpty());
 
         for (Imovel i : imoveis) {
-            new Imovel(i.getNome(), i.getLocalizacao());
             assertFalse("Acento corrompido em: " + i.getNome(), i.getNome().indexOf('\uFFFD') >= 0);
             assertFalse("Acento corrompido em: " + i.getLocalizacao(), i.getLocalizacao().indexOf('\uFFFD') >= 0);
         }

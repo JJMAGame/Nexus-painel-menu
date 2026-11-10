@@ -113,7 +113,7 @@ public class JsonUtil {
 
             // Registros antigos, sem "tipo", viram Inquilino (a conta padrão, sem privilégios).
             if (tipoJson == null || tipoJson.isJsonNull()) {
-                return context.deserialize(jsonObject, Inquilino.class);
+                return context.deserialize(jsonObject, inquilino.class);
             }
             if (!tipoJson.isJsonPrimitive()) {
                 throw new JsonParseException("O campo \"tipo\" deve ser um texto.");
@@ -122,9 +122,9 @@ public class JsonUtil {
             String tipo = tipoJson.getAsString();
             switch (tipo) {
                 case "admin":
-                    return context.deserialize(jsonObject, Admin.class);
+                    return context.deserialize(jsonObject, admin.class);
                 case "inquilino":
-                    return context.deserialize(jsonObject, Inquilino.class);
+                    return context.deserialize(jsonObject, inquilino.class);
                 // Antes caía em context.deserialize(..., Usuario.class), que chamava este
                 // mesmo adaptador de novo, sem parar (StackOverflowError).
                 default:

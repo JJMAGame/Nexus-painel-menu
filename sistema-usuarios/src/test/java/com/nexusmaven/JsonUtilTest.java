@@ -45,16 +45,16 @@ public class JsonUtilTest {
     @Test
     public void usuariosSobrevivemAoRoundTripComOTipoCorreto() {
         List<Usuario> origem = new ArrayList<>();
-        origem.add(new Admin("Ana", "ana@nexus.com", "senha123"));
-        origem.add(new Inquilino("João", "joao@nexus.com", "senha456"));
+        origem.add(new admin("Ana", "ana@nexus.com", "senha123", ""));
+        origem.add(new inquilino("João", "joao@nexus.com", "senha456", ""));
         String arquivo = caminho("usuarios.json");
 
         JsonUtil.salvar(arquivo, origem);
         List<Usuario> lidos = JsonUtil.ler(arquivo, Usuario.class);
 
         assertEquals(2, lidos.size());
-        assertTrue(lidos.get(0) instanceof Admin);
-        assertTrue(lidos.get(1) instanceof Inquilino);
+        assertTrue(lidos.get(0) instanceof admin);
+        assertTrue(lidos.get(1) instanceof inquilino);
         assertEquals("ana@nexus.com", lidos.get(0).getEmail());
         assertEquals("João", lidos.get(1).getNome());
         assertTrue(lidos.get(1).autenticar("JOAO@nexus.com", "senha456"));
@@ -69,7 +69,7 @@ public class JsonUtilTest {
         List<Usuario> lidos = JsonUtil.ler(antigo.getPath(), Usuario.class);
 
         assertEquals(1, lidos.size());
-        assertTrue(lidos.get(0) instanceof Inquilino);
+        assertTrue(lidos.get(0) instanceof inquilino);
     }
 
     @Test
@@ -95,8 +95,8 @@ public class JsonUtilTest {
     @Test
     public void acentosEApostrofosSaoGravadosEmUtf8EVoltamIntactos() throws IOException {
         List<Imovel> origem = List.of(
-                new Imovel("Casa de José", "R. Ubiratã, 226 - Alto José do Pinho, Recife - PE"),
-                new Imovel("D'Ávila & Cia", "Av. Ali, 22"));
+                new Imovel("Casa de José", "R. Ubiratã, 226 - Alto José do Pinho, Recife - PE", "", 0.0),
+                new Imovel("D'Ávila & Cia", "Av. Ali, 22", "", 0.0));
         String arquivo = caminho("imoveis.json");
 
         JsonUtil.salvar(arquivo, origem);
@@ -141,9 +141,9 @@ public class JsonUtilTest {
     @Test
     public void salvarSubstituiOConteudoAnteriorENaoDeixaTemporarioParaTras() {
         String arquivo = caminho("u.json");
-        JsonUtil.salvar(arquivo, List.of(new Inquilino("Um", "um@um.com", "123456"),
-                                          new Inquilino("Dois", "dois@dois.com", "123456")));
-        JsonUtil.salvar(arquivo, List.of(new Inquilino("Zé", "ze@ze.com", "123456")));
+        JsonUtil.salvar(arquivo, List.of(new inquilino("Um", "um@um.com", "123456", ""),
+                          new inquilino("Dois", "dois@dois.com", "123456", "")));
+        JsonUtil.salvar(arquivo, List.of(new inquilino("Zé", "ze@ze.com", "123456", "")));
 
         List<Usuario> lidos = JsonUtil.ler(arquivo, Usuario.class);
         assertEquals(1, lidos.size());

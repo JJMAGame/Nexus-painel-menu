@@ -3,11 +3,11 @@ package com.nexusmaven;
 import java.util.List;
 import java.util.Scanner;
 
-public class Inquilino extends Usuario {
+public class inquilino extends Usuario {
     private final String tipo = "inquilino";
 
-    public Inquilino() {}
-    public Inquilino(String nome, String email, String senha, String cpf) { super(nome, email, senha, cpf); }
+    public inquilino() {}
+    public inquilino(String nome, String email, String senha, String cpf) { super(nome, email, senha, cpf); }
 
     public String getTipo() { return tipo; }
 
