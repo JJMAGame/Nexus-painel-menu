@@ -12,50 +12,50 @@ public class UsuarioEImovelTest {
 
     @Test
     public void usuarioValidoNormalizaNomeEEmail() {
-        Usuario u = new Usuario("  Maria  ", "  Maria@Nexus.COM ", "abc123");
+        Usuario u = new Usuario("  Maria  ", "  Maria@Nexus.COM ", "abc123", null);
         assertEquals("Maria", u.getNome());
         assertEquals("maria@nexus.com", u.getEmail());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void nomeVazioERecusado() {
-        new Usuario("   ", "a@a.com", "123456");
+        new Usuario("   ", "a@a.com", "123456", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void emailSemArrobaERecusado() {
-        new Usuario("Ana", "sem-arroba", "123456");
+        new Usuario("Ana", "sem-arroba", "123456", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void emailSemDominioERecusado() {
-        new Usuario("Ana", "ana@", "123456");
+        new Usuario("Ana", "ana@", "123456", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void emailComEspacoNoMeioERecusado() {
-        new Usuario("Ana", "ana @nexus.com", "123456");
+        new Usuario("Ana", "ana @nexus.com", "123456", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void senhaComCincoCaracteresERecusada() {
-        new Usuario("Ana", "ana@nexus.com", "12345");
+        new Usuario("Ana", "ana@nexus.com", "12345", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void senhaComTrezeCaracteresERecusada() {
-        new Usuario("Ana", "ana@nexus.com", "1234567890123");
+        new Usuario("Ana", "ana@nexus.com", "1234567890123", null);
     }
 
     @Test
     public void senhasNosLimitesSaoAceitas() {
-        new Usuario("Ana", "ana@nexus.com", "123456");        // 6
-        new Usuario("Ana", "ana@nexus.com", "123456789012");  // 12
+        new Usuario("Ana", "ana@nexus.com", "123456", null);        // 6
+        new Usuario("Ana", "ana@nexus.com", "123456789012", null);  // 12
     }
 
     @Test
     public void autenticarIgnoraMaiusculasNoEmailMasNaoNaSenha() {
-        Usuario u = new Usuario("Ana", "ana@nexus.com", "Senha123");
+        Usuario u = new Usuario("Ana", "ana@nexus.com", "Senha123", null);
         assertTrue(u.autenticar("ANA@NEXUS.COM", "Senha123"));
         assertFalse(u.autenticar("ana@nexus.com", "senha123"));
         assertFalse(u.autenticar("outro@nexus.com", "Senha123"));
@@ -71,18 +71,18 @@ public class UsuarioEImovelTest {
 
     @Test
     public void imovelValidoRemoveEspacosDasPontas() {
-        Imovel i = new Imovel("  Casa 1 ", " Rua A, 10 ");
+        Imovel i = new Imovel("  Casa 1 ", " Rua A, 10 ", "", 0.0);
         assertEquals("Casa 1", i.getNome());
         assertEquals("Rua A, 10", i.getLocalizacao());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void imovelSemNomeERecusado() {
-        new Imovel("", "Rua A");
+        new Imovel("", "Rua A", "", 0.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void imovelSemLocalizacaoERecusado() {
-        new Imovel("Casa 1", null);
+        new Imovel("Casa 1", null, "", 0.0);
     }
 }

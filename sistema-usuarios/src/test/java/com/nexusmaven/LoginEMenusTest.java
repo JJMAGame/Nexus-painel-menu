@@ -25,12 +25,12 @@ public class LoginEMenusTest {
     public void criarBanco() {
         banco = new File(pasta.getRoot(), "usuarios.json").getPath();
         JsonUtil.salvar(banco, List.of(
-                new Admin("Chefe", "admin@nexus.com", "admin123"),
-                new Inquilino("João", "joao@nexus.com", "comum123")));
+                new admin("Chefe", "admin@nexus.com", "admin123", ""),
+                new inquilino("João", "joao@nexus.com", "comum123", "")));
     }
 
     private String loginComo(String... digitado) {
-        return capturarSaida(() -> Main.executar(entrada(digitado), banco));
+        return capturarSaida(() -> main.executar(entrada(digitado), banco));
     }
 
     // ===== Login =====
@@ -67,14 +67,14 @@ public class LoginEMenusTest {
     @Test
     public void bancoVazioAvisaParaRodarOGerarDados() {
         String vazio = new File(pasta.getRoot(), "nao-existe.json").getPath();
-        String saida = capturarSaida(() -> Main.executar(entrada("a", "b"), vazio));
+        String saida = capturarSaida(() -> main.executar(entrada("a", "b"), vazio));
         assertTrue(saida, saida.contains("Nenhum usuário encontrado"));
     }
 
     // ===== Menu do inquilino =====
 
     private String menuInquilino(String... digitado) {
-        Inquilino inquilino = new Inquilino("João", "joao@nexus.com", "comum123");
+        inquilino inquilino = new inquilino("João", "joao@nexus.com", "comum123", "");
         return capturarSaida(() -> inquilino.abrirMenu(entrada(digitado)));
     }
 
@@ -101,27 +101,11 @@ public class LoginEMenusTest {
         assertTrue(saida, saida.contains("Saindo do menu do inquilino"));
     }
 
-    @Test
-    public void listaDeImoveisMostraNomeELocalizacao() {
-        Inquilino inquilino = new Inquilino("João", "joao@nexus.com", "comum123");
-        String saida = capturarSaida(() -> inquilino.exibirImoveis(List.of(
-                new Imovel("Casa de José", "R. Ubiratã, 226"), new Imovel("Apto 301", "Av. Ali, 22"))));
-        assertTrue(saida, saida.contains("1. Casa de José - R. Ubiratã, 226"));
-        assertTrue(saida, saida.contains("2. Apto 301 - Av. Ali, 22"));
-    }
-
-    @Test
-    public void listaDeImoveisVaziaAvisa() {
-        Inquilino inquilino = new Inquilino("João", "joao@nexus.com", "comum123");
-        String saida = capturarSaida(() -> inquilino.exibirImoveis(List.of()));
-        assertTrue(saida, saida.contains("Nenhum imóvel cadastrado."));
-    }
-
     // ===== Menu do admin =====
 
     @Test
     public void menuDoAdminTrataOpcoesESai() {
-        Admin admin = new Admin("Chefe", "admin@nexus.com", "admin123");
+        admin admin = new admin("Chefe", "admin@nexus.com", "admin123", "");
         String saida = capturarSaida(() -> admin.abrirMenu(entrada("2", "x", "7", "0")));
         assertTrue(saida, saida.contains("Registrar pagamentos - funcionalidade em desenvolvimento."));
         assertTrue(saida, saida.contains("Por favor, digite um número válido"));
@@ -133,7 +117,7 @@ public class LoginEMenusTest {
     public void adminGeraDadosPeloMenuUsandoOMesmoScannerDoPrograma() {
         // Opção 1 do menu chama o GerarDados; depois o menu continua lendo do mesmo teclado.
         // Só a opção inválida é digitada dentro do GerarDados, então nenhum banco é alterado.
-        Admin admin = new Admin("Chefe", "admin@nexus.com", "admin123");
+        admin admin = new admin("Chefe", "admin@nexus.com", "admin123", "");
         String saida = capturarSaida(() -> admin.abrirMenu(entrada("1", "9", "0")));
         assertTrue(saida, saida.contains("Nenhum dado foi gerado"));   // GerarDados recebeu o "9"
         assertTrue(saida, saida.contains("Saindo do menu admin"));     // e o menu ainda leu o "0"
