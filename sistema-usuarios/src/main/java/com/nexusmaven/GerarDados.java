@@ -23,15 +23,12 @@ public class GerarDados {
         String escolha = scanner.nextLine().trim();
 
         switch (escolha) {
-            case "1":
+            case "1" ->
                 gerarUsuario(scanner, arquivoUsuarios);
-                break;
-            case "2":
+            case "2" ->
                 gerarImovel(scanner, arquivoImoveis);
-                break;
-            default:
+            default ->
                 System.out.println("❌ Opção inválida. Nenhum dado foi gerado.");
-                break;
         }
     }
 
@@ -84,7 +81,7 @@ public class GerarDados {
         String cpfProprietario = scanner.nextLine();        // ⚠️ ADICIONADO
 
         System.out.print("Digite o valor do aluguel: R$ "); // ⚠️ ADICIONADO
-        double valorAluguel = 0;
+        double valorAluguel;
         try {
             valorAluguel = Double.parseDouble(scanner.nextLine()); // ⚠️ ADICIONADO
         } catch (NumberFormatException e) {
