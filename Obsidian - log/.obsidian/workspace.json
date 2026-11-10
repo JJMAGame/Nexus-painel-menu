@@ -28,14 +28,17 @@
             "id": "fe44d69306fd41cd",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "Logs/Iniciando a construção do Admin.md",
-                "mode": "source",
-                "source": false
+                "file": "Fluxograma.canvas",
+                "viewState": {
+                  "x": 1409.4781767980758,
+                  "y": 28.671620928431153,
+                  "zoom": -0.22104668935922683
+                }
               },
-              "icon": "lucide-file",
-              "title": "Iniciando a construção do Admin"
+              "icon": "lucide-layout-dashboard",
+              "title": "Fluxograma"
             }
           }
         ],
@@ -220,13 +223,13 @@
   },
   "active": "fe44d69306fd41cd",
   "lastOpenFiles": [
+    "Logs/Iniciando a construção do Admin.md",
     "Logs/Percepção.md",
     "Logs/Criando os java.md",
     "Logs/Direcionameto.md",
     "Logs/Produzindo um projeto ( Parte 1 ).md",
     "Fluxograma.canvas",
     "file:D:/GITHUB REPOSITORY/Nexus-painel-menu/files/sistema-usuarios/README.md",
-    "Logs/Iniciando a construção do Admin.md",
     "outros/Pasted image 20261103090957.png",
     "outros/Pasted image 20261029181917.png",
     "Logs/Fazendo as primeira partes do código.md",

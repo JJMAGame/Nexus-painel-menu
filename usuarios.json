@@ -26,5 +26,12 @@
     "email": "cobaia@yahoo.com",
     "senha": "cobaia123",
     "cpf": "19405432199"
+  },
+  {
+    "tipo": "inquilino",
+    "nome": "Jorge",
+    "email": "jorge@gmail.com",
+    "senha": "jorgemacedo",
+    "cpf": "15390440605"
   }
 ]
