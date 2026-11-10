@@ -3,5 +3,6 @@
     "terminal.integrated.env.windows": {
         "JAVA_TOOL_OPTIONS": "-Dfile.encoding=UTF-8"
     },
+    "files.encoding": "utf8",
     "java.debug.settings.onBuildFailureProceed": true
 }

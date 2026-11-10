@@ -10,7 +10,6 @@ public class main {
         }
     }
 
-    // Separado do main para poder ser testado com outro banco e outra entrada
     static void executar(Scanner scanner, String arquivoUsuarios) {
         System.out.println("=================================");
         System.out.println("      TELA DE LOGIN - NEXUS      ");
@@ -31,7 +30,6 @@ public class main {
         }
     }
 
-    /** Repete o login até acertar. Devolve null se não há usuários ou se a entrada terminar. */
     static Usuario fazerLogin(Scanner scanner, String arquivoUsuarios) {
         List<Usuario> usuarios = JsonUtil.ler(arquivoUsuarios, Usuario.class);
 
@@ -41,23 +39,41 @@ public class main {
         }
 
         while (true) {
+            // ⚠️ 1. VALIDAÇÃO DO EMAIL
             System.out.print("Email: ");
             if (!scanner.hasNextLine()) return null;
             String emailDigitado = scanner.nextLine().trim();
 
+            if (emailDigitado.isEmpty()) {
+                System.out.println("Você precisa fornecer o email.");
+                continue; // Volta para o início do loop (pede o email de novo)
+            }
+
+            // ⚠️ 2. VALIDAÇÃO DA SENHA
             System.out.print("Senha: ");
             if (!scanner.hasNextLine()) return null;
             String senhaDigitada = scanner.nextLine();
 
+            if (senhaDigitada.isEmpty()) {
+                System.out.println("Você precisa fornecer a senha.");
+                continue; // Volta para o início do loop
+            }
+
+            // ⚠️ 3. VALIDAÇÃO DE USUÁRIO EXISTENTE
             Usuario encontrado = buscarPorEmail(usuarios, emailDigitado);
 
             if (encontrado == null) {
                 System.out.println("\n Email não encontrado no sistema. Tente novamente.\n");
-            } else if (encontrado.autenticar(emailDigitado, senhaDigitada)) {
-                System.out.println("\n Login realizado com sucesso! Bem-vindo, " + encontrado.getNome() + ".");
+                continue; // Volta para o início
+            }
+
+            // ⚠️ 4. VALIDAÇÃO DE SENHA CORRETA
+            if (encontrado.autenticar(emailDigitado, senhaDigitada)) {
+                System.out.println("\n ✅ Login realizado com sucesso! Bem-vindo, " + encontrado.getNome() + ".");
                 return encontrado;
             } else {
                 System.out.println("\n Senha incorreta. Tente novamente.\n");
+                // Aqui não precisa de 'continue' porque o loop já vai voltar para o início sozinho
             }
         }
     }
