@@ -1,0 +1,13 @@
+[
+  {
+    "descricao": "Energia da sede, nov/2026",
+    "categoria": "ENERGIA",
+    "status": "PAGO",
+    "lancadaPor": "admin",
+    "aprovadaPor": "admin",
+    "id": 1,
+    "valor": 3000.0,
+    "vencimento": "2026-11-18",
+    "dataPagamento": "2026-11-12"
+  }
+]
