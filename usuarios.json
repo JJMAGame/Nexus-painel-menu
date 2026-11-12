@@ -5,5 +5,12 @@
     "email": "admin@admin.com",
     "senha": "admin123",
     "cpf": "99999999900"
+  },
+  {
+    "tipo": "inquilino",
+    "nome": "comum",
+    "email": "comum@comum.com",
+    "senha": "comum123",
+    "cpf": "12312312399"
   }
 ]
