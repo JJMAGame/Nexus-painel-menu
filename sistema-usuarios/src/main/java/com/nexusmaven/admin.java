@@ -1,7 +1,7 @@
 package com.nexusmaven;
 
-import java.util.List;
 import java.util.Scanner;
+import java.util.List;
 
 public class admin extends Usuario {
     private final String tipo = "admin";
@@ -19,8 +19,10 @@ public class admin extends Usuario {
             System.out.println("===================================");
             System.out.println("Olá, " + getNome() + "! O que deseja fazer?");
             System.out.println("1 - Gerar novos dados (Usuários/Imóveis)");
-            System.out.println("2 - Registrar pagamentos (Financeiro)");
-            System.out.println("3 - Ver todas as receitas"); // BÔNUS
+            System.out.println("2 - Solicitações de pagamento (Cobranças)");
+            System.out.println("3 - Despesas da Fundação");
+            System.out.println("4 - Imóveis");
+            System.out.println("5 - Acessos (funcionários e inquilinos)");
             System.out.println("0 - Sair (Logout)");
             System.out.print("Escolha uma opção: ");
 
@@ -32,13 +34,19 @@ public class admin extends Usuario {
 
             switch (opcao) {
                 case 1:
-                    GerarDados.executar(scanner); // Puxa os dados
+                    GerarDados.executar(scanner); 
                     break;
                 case 2:
-                    registrarPagamento(scanner);  // ⚠️ NOVO
+                    new MenuCobrancas(scanner).abrir();
                     break;
                 case 3:
-                    verReceitas();                // ⚠️ NOVO
+                    new MenuDespesas(scanner, getNome()).abrir();
+                    break;
+                case 4:
+                    new MenuImoveis(scanner).abrir();
+                    break;
+                case 5:
+                    new MenuAcessos(scanner, getEmail()).abrir();
                     break;
                 case 0:
                     System.out.println("👋 Saindo...");
@@ -47,37 +55,6 @@ public class admin extends Usuario {
                     System.out.println("❌ Opção inválida.");
                     break;
             }
-        }
-    }
-
-    private void registrarPagamento(Scanner scanner) {
-        System.out.println("\n--- REGISTRO FINANCEIRO ---");
-        System.out.print("CPF do Inquilino: ");
-        String cpf = scanner.nextLine();
-        System.out.print("Nome do Local: ");
-        String local = scanner.nextLine();
-        System.out.print("Mês de referência (ex: 11/2026): ");
-        String mes = scanner.nextLine();
-
-        try {
-            System.out.print("Valor do Aluguel: R$ ");
-            double aluguel = Double.parseDouble(scanner.nextLine());
-            System.out.print("Água: R$ ");
-            double agua = Double.parseDouble(scanner.nextLine());
-            System.out.print("Energia: R$ ");
-            double energia = Double.parseDouble(scanner.nextLine());
-            System.out.print("Manutenção: R$ ");
-            double manutencao = Double.parseDouble(scanner.nextLine());
-
-            Financeiro fin = new Financeiro(cpf, local, aluguel, agua, energia, manutencao, mes);
-
-            List<Financeiro> listaFin = JsonUtil.ler("financeiro.json", Financeiro.class);
-            listaFin.add(fin);
-            JsonUtil.salvar("financeiro.json", listaFin);
-
-            System.out.println("\n✅ Registro salvo! Total: R$ " + fin.calcularTotal());
-        } catch (NumberFormatException e) {
-            System.out.println("❌ Erro: Digite valores numéricos (use ponto para centavos).");
         }
     }
 

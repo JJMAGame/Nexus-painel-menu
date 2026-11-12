@@ -20,7 +20,7 @@ public class inquilino extends Usuario {
             System.out.println("Olá, " + getNome() + "! O que deseja fazer?");
             System.out.println("1 - Ver meus dados");
             System.out.println("2 - Ver imóveis disponíveis");
-            System.out.println("3 - Meu contrato e aluguel");
+            System.out.println("3 - Minhas faturas (Cobranças)");
             System.out.println("0 - Sair (Logout)");
             System.out.print("Escolha uma opção: ");
 
@@ -38,7 +38,7 @@ public class inquilino extends Usuario {
                     verImoveisDisponiveis();
                     break;
                 case 3:
-                    verMeuContrato();
+                    verMinhasCobrancas();
                     break;
                 case 0:
                     System.out.println("👋 Saindo...");
@@ -65,25 +65,28 @@ public class inquilino extends Usuario {
             return;
         }
         for (Imovel i : imoveis) {
-            System.out.println("🏠 " + i.getNome() + " - " + i.getLocalizacao() + " | Aluguel: R$" + i.getValorAluguel());
+            System.out.println("🏠 " + i.getNome() + " - " + i.getLocalizacao() + " | Aluguel: " + Moeda.formatar(i.getValorAluguel()));
         }
     }
 
-    private void verMeuContrato() {
-        System.out.println("\n--- MEU CONTRATO FINANCEIRO ---");
-        List<Financeiro> listaFin = JsonUtil.ler("financeiro.json", Financeiro.class);
+    // ⚠️ NOVO MÉTODO INTEGRADO AO COBRANCAS.JSON
+    private void verMinhasCobrancas() {
+        System.out.println("\n--- MINHAS FATURAS DE ALUGUEL ---");
+        List<Cobranca> cobrancas = JsonUtil.ler(MenuCobrancas.ARQUIVO_COBRANCAS, Cobranca.class);
         
         boolean encontrou = false;
-        for (Financeiro f : listaFin) {
-            // Filtra pelo CPF do inquilino logado
-            if (f.getCpfInquilino().equals(this.getCpf())) {
-                System.out.println(f.toString());
+        for (Cobranca c : cobrancas) {
+            if (c.getCpfInquilino().equals(this.getCpf())) {
+                System.out.println("Nº: " + c.getId() + " | Mês: " + c.getMesReferencia() + " | Imóvel: " + c.getNomeImovel());
+                System.out.println("   Valor: " + Moeda.formatar(c.getValor()) + " | Vencimento: " + Datas.formatar(c.getVencimento()));
+                System.out.println("   Situação: " + c.getSituacao(java.time.LocalDate.now()));
+                System.out.println("-------------------------------------------------");
                 encontrou = true;
             }
         }
         
         if (!encontrou) {
-            System.out.println("Nenhum contrato ou aluguel registrado no seu CPF.");
+            System.out.println("Nenhuma fatura registrada no seu CPF.");
         }
     }
 }

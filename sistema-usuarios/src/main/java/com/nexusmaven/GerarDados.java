@@ -23,11 +23,11 @@ public class GerarDados {
         String escolha = scanner.nextLine().trim();
 
         switch (escolha) {
-            case "1" ->
+            case "1" :
                 gerarUsuario(scanner, arquivoUsuarios);
-            case "2" ->
+            case "2" :
                 gerarImovel(scanner, arquivoImoveis);
-            default ->
+            default :
                 System.out.println("❌ Opção inválida. Nenhum dado foi gerado.");
         }
     }
