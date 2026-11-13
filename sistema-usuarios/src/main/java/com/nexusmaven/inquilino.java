@@ -21,6 +21,7 @@ public class inquilino extends Usuario {
             System.out.println("1 - Ver meus dados");
             System.out.println("2 - Ver imóveis disponíveis");
             System.out.println("3 - Minhas faturas (Cobranças)");
+            System.out.println("4 - Acompanhar minha locação");
             System.out.println("0 - Sair (Logout)");
             System.out.print("Escolha uma opção: ");
 
@@ -39,6 +40,9 @@ public class inquilino extends Usuario {
                     break;
                 case 3:
                     verMinhasCobrancas();
+                    break;
+                case 4:
+                    verMinhaLocacao();
                     break;
                 case 0:
                     System.out.println("👋 Saindo...");
@@ -84,9 +88,32 @@ public class inquilino extends Usuario {
                 encontrou = true;
             }
         }
-        
         if (!encontrou) {
             System.out.println("Nenhuma fatura registrada no seu CPF.");
+        }
+    }
+
+    private void verMinhaLocacao() {
+        System.out.println("\n--- MEU PROCESSO DE LOCAÇÃO ---");
+        List<ProcessoLocacao> processos = JsonUtil.ler(LocacaoService.ARQUIVO_LOCACOES, ProcessoLocacao.class);
+
+        boolean encontrou = false;
+        for (ProcessoLocacao p : processos) {
+            if (p.getCpfInquilino().equals(this.getCpf())) {
+                System.out.println("Processo: " + p.getId() + " | Imóvel: " + p.getNomeImovel());
+                System.out.println("Etapa atual: " + p.getEtapaAtual().getRotulo());
+                System.out.println("Pendências:");
+                if (p.getPendencias().isEmpty()) {
+                    System.out.println("  - Nenhuma (Tudo certo!)");
+                } else {
+                    p.getPendencias().forEach(pend -> System.out.println("  - " + pend));
+                }
+                System.out.println("-------------------------------------------------");
+                encontrou = true;
+            }
+        }
+        if (!encontrou) {
+            System.out.println("Você ainda não possui nenhum processo de locação em andamento.");
         }
     }
 }

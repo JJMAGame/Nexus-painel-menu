@@ -12,5 +12,12 @@
     "email": "comum@comum.com",
     "senha": "comum123",
     "cpf": "12312312399"
+  },
+  {
+    "tipo": "inquilino",
+    "nome": "test",
+    "email": "test@test.com",
+    "senha": "testeteste",
+    "cpf": "98765432100"
   }
 ]
