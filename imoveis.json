@@ -1,14 +1,14 @@
 [
   {
-    "lnome": "Casa do interior",
-    "localizacao": "R. Guariroba - Sï¿½o Jorge, Alto Paraï¿½so de Goiï¿½s - GO, 73770-000",
-    "cpfProprietario": "19405432199",
-    "valorAluguel": 1500.5
+    "nome": "Casa do Pedro",
+    "localizacao": "Av. Miguel Castro, 673-603 - Lagoa Nova, Natal - RN, 59075-745",
+    "cpfProprietario": "99999999900",
+    "valorAluguel": 8500.0
   },
   {
-    "lnome": "Apartamento nobre",
-    "localizacao": "Condom¡nio Edf Ana Costa - Av. Boa Viagem, 4610 - Boa Viagem, Recife - PE, 51021-000",
-    "cpfProprietario": "12312312300",
-    "valorAluguel": 1860.3
+    "nome": "Casa da pessoa comum",
+    "localizacao": "Rua Sylo Bittencourt - Boa Viagem, Recife - PE, 51030-080",
+    "cpfProprietario": "12312312399",
+    "valorAluguel": 9000.0
   }
 ]
