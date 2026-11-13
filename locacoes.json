@@ -1,0 +1,10 @@
+[
+  {
+    "id": "LOC-001",
+    "cpfInquilino": "12312312399",
+    "nomeImovel": "Casa do Pedro",
+    "etapaAtual": "CONCLUIDA",
+    "pendencias": [],
+    "rendaMensal": 50000.0
+  }
+]
