@@ -31,7 +31,12 @@ public class ProcessoLocacao {
     public double getRendaMensal() { return rendaMensal; }
 
     public EtapaLocacao getEtapaAtual() {
-        return EtapaLocacao.valueOf(this.etapaAtual);
+        if (etapaAtual == null || etapaAtual.isBlank()) return null;
+        try {
+            return EtapaLocacao.valueOf(etapaAtual);
+        } catch (IllegalArgumentException e) {
+            return null; // registro antigo/editado com etapa desconhecida
+        }
     }
 
     public void setEtapaAtual(EtapaLocacao etapa) {

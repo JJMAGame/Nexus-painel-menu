@@ -28,32 +28,33 @@ public class GerarDadosTest {
 
     @Test
     public void criaInquilinoComoContaPadrao() {
-        String saida = rodar("1", "Maria", "maria@nexus.com", "abc12345", "1");
+        // ordem do GerarDados: nome, email, CPF, senha, tipo
+        String saida = rodar("1", "Maria", "maria@nexus.com", "11111111111", "abc12345", "1");
 
         List<Usuario> lidos = JsonUtil.ler(usuarios(), Usuario.class);
         assertEquals(1, lidos.size());
         assertTrue(lidos.get(0) instanceof inquilino);
-        assertTrue(saida, saida.contains("Tipo: Inquilino"));
+        assertTrue(saida, saida.contains("Usuário do tipo Inquilino salvo"));
     }
 
     @Test
     public void qualquerRespostaDiferenteDe2ViraInquilino() {
-        rodar("1", "Maria", "maria@nexus.com", "abc12345", "");
+        rodar("1", "Maria", "maria@nexus.com", "11111111111", "abc12345", "");
         assertTrue(JsonUtil.ler(usuarios(), Usuario.class).get(0) instanceof inquilino);
     }
 
     @Test
     public void criaAdministrador() {
-        String saida = rodar("1", "Chefe", "chefe@nexus.com", "abc12345", "2");
+        String saida = rodar("1", "Chefe", "chefe@nexus.com", "11111111111", "abc12345", "2");
 
         assertTrue(JsonUtil.ler(usuarios(), Usuario.class).get(0) instanceof admin);
-        assertTrue(saida, saida.contains("Tipo: Administrador"));
+        assertTrue(saida, saida.contains("Usuário do tipo Administrador salvo"));
     }
 
     @Test
     public void novoUsuarioNaoApagaOsQueJaExistem() {
-        rodar("1", "Um", "um@nexus.com", "abc12345", "1");
-        rodar("1", "Dois", "dois@nexus.com", "abc12345", "2");
+        rodar("1", "Um", "um@nexus.com", "11111111111", "abc12345", "1");
+        rodar("1", "Dois", "dois@nexus.com", "22222222222", "abc12345", "2");
 
         List<Usuario> lidos = JsonUtil.ler(usuarios(), Usuario.class);
         assertEquals(2, lidos.size());
@@ -63,8 +64,8 @@ public class GerarDadosTest {
 
     @Test
     public void emailRepetidoERecusadoMesmoComMaiusculas() {
-        rodar("1", "Um", "um@nexus.com", "abc12345", "1");
-        String saida = rodar("1", "Outro", "UM@Nexus.com", "abc12345", "1");
+        rodar("1", "Um", "um@nexus.com", "11111111111", "abc12345", "1");
+        String saida = rodar("1", "Outro", "UM@Nexus.com", "22222222222", "abc12345", "1");
 
         assertEquals(1, JsonUtil.ler(usuarios(), Usuario.class).size());
         assertTrue(saida, saida.contains("já existe"));
@@ -72,7 +73,7 @@ public class GerarDadosTest {
 
     @Test
     public void senhaCurtaNaoCriaOBanco() {
-        String saida = rodar("1", "Maria", "maria@nexus.com", "123", "1");
+        String saida = rodar("1", "Maria", "maria@nexus.com", "11111111111", "123", "1");
 
         assertFalse(new File(usuarios()).exists());
         assertTrue(saida, saida.contains("Senha deve ter entre 6 e 12 caracteres"));
@@ -80,17 +81,17 @@ public class GerarDadosTest {
 
     @Test
     public void criaImovel() {
-        String saida = rodar("2", "Casa de José", "R. Ubiratã, 226 - Recife - PE");
+        String saida = rodar("2", "Casa de José", "R. Ubiratã, 226 - Recife - PE", "33333333333", "1500,50");
 
         List<Imovel> lidos = JsonUtil.ler(imoveis(), Imovel.class);
         assertEquals(1, lidos.size());
         assertEquals("Casa de José", lidos.get(0).getNome());
-        assertTrue(saida, saida.contains("Total de imóveis no sistema: 1"));
+        assertTrue(saida, saida.contains("Imóvel salvo"));
     }
 
     @Test
     public void imovelSemLocalizacaoNaoEGravado() {
-        String saida = rodar("2", "Casa", "");
+        String saida = rodar("2", "Casa", "", "33333333333", "1500,50");
 
         assertFalse(new File(imoveis()).exists());
         assertTrue(saida, saida.contains("localização"));

@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------------
+Test set: com.nexusmaven.MenuLocacoesTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.176 s <<< FAILURE! - in com.nexusmaven.MenuLocacoesTest
+painelMostraProgressoECpfMascarado(com.nexusmaven.MenuLocacoesTest)  Time elapsed: 0.01 s  <<< FAILURE!
+java.lang.AssertionError: 
+
+------ PROCESSOS DE LOCAÇÃO ------
+1 - Iniciar nova proposta de locação
+2 - Ver painel de locações
+3 - Ver detalhes de um processo
+4 - Mudar etapa (avançar ou voltar)
+5 - Gerenciar pendências
+6 - Cancelar processo
+0 - Voltar
+Escolha uma opção: 
+--- PAINEL DE LOCAÇÕES ---
+[LOC-001] Casa do Pedro (CPF ***.123.123-**)
+   Etapa 2/9 | ✓Proposta → [Documentos] → Consulta CPF → Renda → Aprovação → Vistoria → Contrato → Chaves → Concluída
+   Pendência: Nenhuma
+
+------ PROCESSOS DE LOCAÇÃO ------
+1 - Iniciar nova proposta de locação
+2 - Ver painel de locações
+3 - Ver detalhes de um processo
+4 - Mudar etapa (avançar ou voltar)
+5 - Gerenciar pendências
+6 - Cancelar processo
+0 - Voltar
+Escolha uma opção: 
+	at com.nexusmaven.MenuLocacoesTest.painelMostraProgressoECpfMascarado(MenuLocacoesTest.java:160)
+

@@ -42,9 +42,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public void setCpf(String cpf) { // ⚠️ RECOLOCADO
+    public void setCpf(String cpf) {
         if (cpf == null || cpf.trim().isEmpty()) throw new IllegalArgumentException("CPF não pode ser vazio");
-        this.cpf = cpf.trim();
+        String digitos = cpf.replaceAll("\\D", "");
+        if (digitos.length() != 11) throw new IllegalArgumentException("CPF deve ter 11 dígitos");
+        this.cpf = digitos;
     }
 
     public boolean autenticar(String email, String senha) {

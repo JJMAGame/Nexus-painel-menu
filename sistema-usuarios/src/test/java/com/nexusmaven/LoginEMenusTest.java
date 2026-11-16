@@ -25,8 +25,8 @@ public class LoginEMenusTest {
     public void criarBanco() {
         banco = new File(pasta.getRoot(), "usuarios.json").getPath();
         JsonUtil.salvar(banco, List.of(
-                new admin("Chefe", "admin@nexus.com", "admin123", ""),
-                new inquilino("João", "joao@nexus.com", "comum123", "")));
+                new admin("Chefe", "admin@nexus.com", "admin123", "11111111111"),
+                new inquilino("João", "joao@nexus.com", "comum123", "22222222222")));
     }
 
     private String loginComo(String... digitado) {
@@ -74,7 +74,7 @@ public class LoginEMenusTest {
     // ===== Menu do inquilino =====
 
     private String menuInquilino(String... digitado) {
-        inquilino inquilino = new inquilino("João", "joao@nexus.com", "comum123", "");
+        inquilino inquilino = new inquilino("João", "joao@nexus.com", "comum123", "22222222222");
         return capturarSaida(() -> inquilino.abrirMenu(entrada(digitado)));
     }
 
@@ -86,40 +86,41 @@ public class LoginEMenusTest {
     }
 
     @Test
-    public void opcoesAindaNaoImplementadasAvisamEmDesenvolvimento() {
-        String saida = menuInquilino("3", "4", "5", "6", "7", "0");
-        for (String recurso : new String[] {"Meu contrato", "Próximo aluguel", "Extratos", "Documentos", "Notificações"}) {
-            assertTrue(recurso + " / " + saida, saida.contains(recurso + " - funcionalidade em desenvolvimento."));
-        }
+    public void opcoesInformativasDoInquilinoSaoExibidas() {
+        String saida = menuInquilino("5", "6", "7", "8", "9", "0");
+        assertTrue(saida, saida.contains("COMO PAGAR O ALUGUEL"));
+        assertTrue(saida, saida.contains("MEUS RECIBOS"));
+        assertTrue(saida, saida.contains("MEUS DOCUMENTOS"));
+        assertTrue(saida, saida.contains("AVISOS DA FUNDAÇÃO"));
+        assertTrue(saida, saida.contains("FALAR COM A FUNDAÇÃO"));
     }
 
     @Test
     public void menuDoInquilinoTrataTextoOpcaoInvalidaEFimDaEntrada() {
         String saida = menuInquilino("abc", "99");   // sem "0": a entrada termina e o menu sai sozinho
-        assertTrue(saida, saida.contains("Por favor, digite um número válido"));
+        assertTrue(saida, saida.contains("Digite um número válido"));
         assertTrue(saida, saida.contains("Opção inválida"));
-        assertTrue(saida, saida.contains("Saindo do menu do inquilino"));
+        assertTrue(saida, saida.contains("Saindo..."));
     }
 
     // ===== Menu do admin =====
 
     @Test
     public void menuDoAdminTrataOpcoesESai() {
-        admin admin = new admin("Chefe", "admin@nexus.com", "admin123", "");
-        String saida = capturarSaida(() -> admin.abrirMenu(entrada("2", "x", "7", "0")));
-        assertTrue(saida, saida.contains("Registrar pagamentos - funcionalidade em desenvolvimento."));
-        assertTrue(saida, saida.contains("Por favor, digite um número válido"));
+        admin admin = new admin("Chefe", "admin@nexus.com", "admin123", "11111111111");
+        String saida = capturarSaida(() -> admin.abrirMenu(entrada("7", "x", "0")));
+        assertTrue(saida, saida.contains("Digite um número válido"));
         assertTrue(saida, saida.contains("Opção inválida"));
-        assertTrue(saida, saida.contains("Saindo do menu admin"));
+        assertTrue(saida, saida.contains("Saindo..."));
     }
 
     @Test
     public void adminGeraDadosPeloMenuUsandoOMesmoScannerDoPrograma() {
         // Opção 1 do menu chama o GerarDados; depois o menu continua lendo do mesmo teclado.
         // Só a opção inválida é digitada dentro do GerarDados, então nenhum banco é alterado.
-        admin admin = new admin("Chefe", "admin@nexus.com", "admin123", "");
+        admin admin = new admin("Chefe", "admin@nexus.com", "admin123", "11111111111");
         String saida = capturarSaida(() -> admin.abrirMenu(entrada("1", "9", "0")));
         assertTrue(saida, saida.contains("Nenhum dado foi gerado"));   // GerarDados recebeu o "9"
-        assertTrue(saida, saida.contains("Saindo do menu admin"));     // e o menu ainda leu o "0"
+        assertTrue(saida, saida.contains("Saindo..."));                // e o menu ainda leu o "0"
     }
 }
