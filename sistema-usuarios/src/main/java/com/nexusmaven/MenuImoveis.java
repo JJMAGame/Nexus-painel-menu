@@ -69,10 +69,14 @@ public class MenuImoveis {
         return JsonUtil.ler(arquivoImoveis, Imovel.class);
     }
 
+    // ✅ MELHORIA: Considera alugado se houver um processo de locação ATIVO
     private Set<String> alugados() {
         Set<String> nomes = new HashSet<>();
-        for (Cobranca c : JsonUtil.ler(arquivoCobrancas, Cobranca.class)) {
-            nomes.add(c.getNomeImovel().toLowerCase(Locale.ROOT));
+        List<ProcessoLocacao> processos = JsonUtil.ler(LocacaoService.ARQUIVO_LOCACOES, ProcessoLocacao.class);
+        for (ProcessoLocacao p : processos) {
+            if (p.getEtapaAtual() != null) { // Processo válido
+                nomes.add(p.getNomeImovel().toLowerCase(Locale.ROOT));
+            }
         }
         return nomes;
     }

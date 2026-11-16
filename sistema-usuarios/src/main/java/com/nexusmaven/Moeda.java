@@ -45,6 +45,8 @@ public final class Moeda {
 
     /** Arredonda para centavos. */
     public static double arredondar(double valor) {
-        return Math.round(valor * 100.0) / 100.0;
+        // ✅ MELHORIA: Evita -0.0 após o arredondamento
+        double arredondado = Math.round(valor * 100.0) / 100.0;
+        return arredondado == 0.0 ? 0.0 : arredondado;
     }
 }

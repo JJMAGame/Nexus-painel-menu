@@ -1,6 +1,7 @@
 package com.nexusmaven;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LocacaoService {
     public static final String ARQUIVO_LOCACOES = "locacoes.json";
@@ -56,5 +57,12 @@ public class LocacaoService {
         List<ProcessoLocacao> processos = listar();
         processos.removeIf(p -> p.getId().equals(id));
         JsonUtil.salvar(arquivoLocacoes, processos);
+    }
+
+    // ✅ MELHORIA: Método utilitário para buscar processos por CPF
+    public List<ProcessoLocacao> buscarPorCpf(String cpf) {
+        return listar().stream()
+                .filter(p -> p.getCpfInquilino().equals(cpf))
+                .collect(Collectors.toList());
     }
 }

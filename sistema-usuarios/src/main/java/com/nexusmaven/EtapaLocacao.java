@@ -42,6 +42,15 @@ public enum EtapaLocacao {
         }
     }
 
+    // ✅ MELHORIA: Métodos utilitários para verificar primeira/última etapa
+    public boolean isUltima() {
+        return this == CONCLUIDA;
+    }
+
+    public boolean isPrimeira() {
+        return this == PROPOSTA;
+    }
+
     public static EtapaLocacao porRotulo(String rotulo) {
         for (EtapaLocacao e : values()) {
             if (e.getRotulo().equalsIgnoreCase(rotulo) || e.name().equalsIgnoreCase(rotulo)) return e;

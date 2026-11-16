@@ -159,7 +159,7 @@ public class MenuLocacoes {
             return;
         }
 
-        // Regra de negócio: só sai da análise de renda com renda >= 3x o aluguel
+        // ✅ MELHORIA: Regra de negócio: só sai da análise de renda com renda >= 3x o aluguel
         if (avancar && atual == EtapaLocacao.ANALISE_RENDA) {
             Imovel imovel = buscarImovel(p.getNomeImovel());
             if (imovel != null && p.getRendaMensal() < imovel.getValorAluguel() * 3) {
@@ -194,12 +194,14 @@ public class MenuLocacoes {
         String resp = EntradaTexto.perguntar(scanner, "Digite o número da pendência para resolver (ou Enter para voltar): ");
         if (resp == null || resp.isEmpty()) return;
 
+        // ✅ MELHORIA: Tratamento específico para índices inválidos e uso do método seguro
         try {
             int index = Integer.parseInt(resp) - 1;
-            String pendenciaResolvida = p.getPendencias().remove(index);
+            String pendenciaSelecionada = p.getPendencias().get(index);
+            p.resolverPendencia(pendenciaSelecionada);
             service.atualizar(p);
-            System.out.println("✅ Pendência resolvida: " + pendenciaResolvida);
-        } catch (Exception e) {
+            System.out.println("✅ Pendência resolvida: " + pendenciaSelecionada);
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
             System.out.println("❌ Número inválido.");
         }
     }

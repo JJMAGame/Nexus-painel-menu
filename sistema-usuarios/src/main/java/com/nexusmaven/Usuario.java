@@ -1,6 +1,7 @@
 package com.nexusmaven;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Usuario {
@@ -51,6 +52,20 @@ public class Usuario {
 
     public boolean autenticar(String email, String senha) {
         return email != null && email.equalsIgnoreCase(this.email) && senha != null && senha.equals(this.senha);
+    }
+
+    // ✅ MELHORIA: Implementação de equals e hashCode baseados no CPF
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(cpf, usuario.cpf);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cpf);
     }
 
     @Override

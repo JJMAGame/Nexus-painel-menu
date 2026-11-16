@@ -165,8 +165,12 @@ public class MenuCobrancas {
             String detalhe;
             switch (c.getStatus(data)) {
                 case EM_DIA:
+                    // ✅ MELHORIA: Verifica se a forma de pagamento não é nula
+                    String formaPagamento = c.getFormaPagamento() != null 
+                            ? c.getFormaPagamento().getRotulo() 
+                            : "Não informada";
                     detalhe = "Pago " + Moeda.formatar(c.getValorPago()) + " em " + Datas.formatar(c.getDataPagamento())
-                            + " (" + c.getFormaPagamento().getRotulo() + ", recibo " + c.getNumeroRecibo() + ")";
+                            + " (" + formaPagamento + ", recibo " + c.getNumeroRecibo() + ")";
                     break;
                 case ATRASADO:
                     double devido = c.getTotalDevido(data, regra);
