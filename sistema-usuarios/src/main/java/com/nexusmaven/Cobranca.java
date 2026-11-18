@@ -2,6 +2,7 @@ package com.nexusmaven;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Solicitação de pagamento do aluguel de um inquilino em um mês.
@@ -39,10 +40,21 @@ public class Cobranca extends Lancamento {
     public double getValorPago() { return valorPago; }
     public int getNumeroRecibo() { return numeroRecibo; }
 
-    /** Em dia = já paga; A vencer = em aberto e no prazo; Atrasado = em aberto e vencida. */
+    /**
+     * Em dia = já paga OU ainda longe do vencimento (faltam mais de 7 dias);
+     * A vencer = em aberto e faltam 7 dias ou menos para vencer;
+     * Atrasado = em aberto e o vencimento já passou (aqui entram multa e juros).
+     */
     public StatusCobranca getStatus(LocalDate hoje) {
         if (estaPago()) return StatusCobranca.EM_DIA;
-        return estaVencido(hoje) ? StatusCobranca.ATRASADO : StatusCobranca.A_VENCER;
+
+        LocalDate vencimento = getVencimento();
+        if (vencimento == null) return StatusCobranca.A_VENCER;
+        if (vencimento.isBefore(hoje)) return StatusCobranca.ATRASADO;
+
+        return ChronoUnit.DAYS.between(hoje, vencimento) <= 7
+                ? StatusCobranca.A_VENCER
+                : StatusCobranca.EM_DIA;
     }
 
     public double getMulta(LocalDate hoje, RegraDeEncargos regra) {

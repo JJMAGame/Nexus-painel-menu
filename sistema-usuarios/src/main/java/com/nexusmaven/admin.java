@@ -1,7 +1,6 @@
 package com.nexusmaven;
 
 import java.util.Scanner;
-import java.util.List;
 
 public class admin extends Usuario {
     private final String tipo = "admin";
@@ -23,6 +22,7 @@ public class admin extends Usuario {
             System.out.println("3 - Despesas da Fundação");
             System.out.println("4 - Imóveis");
             System.out.println("5 - Acessos (funcionários e inquilinos)");
+            System.out.println("6 - Processos de Locação");
             System.out.println("0 - Sair (Logout)");
             System.out.print("Escolha uma opção: ");
 
@@ -48,6 +48,9 @@ public class admin extends Usuario {
                 case 5:
                     new MenuAcessos(scanner, getEmail()).abrir();
                     break;
+                case 6:
+                    new MenuLocacoes(scanner).abrir();
+                    break;
                 case 0:
                     System.out.println("👋 Saindo...");
                     break;
@@ -56,22 +59,5 @@ public class admin extends Usuario {
                     break;
             }
         }
-    }
-
-    private void verReceitas() {
-        System.out.println("\n--- EXTRATO DE RECEITAS ---");
-        List<Financeiro> listaFin = JsonUtil.ler("financeiro.json", Financeiro.class);
-        if (listaFin.isEmpty()) {
-            System.out.println("Nenhum pagamento registrado ainda.");
-            return;
-        }
-        double totalGeral = 0;
-        for (Financeiro f : listaFin) {
-            System.out.println(f.toString());
-            totalGeral += f.calcularTotal();
-        }
-        System.out.println("=================================");
-        System.out.println("💵 RECEITA TOTAL ACUMULADA: R$ " + totalGeral);
-        System.out.println("=================================");
     }
 }

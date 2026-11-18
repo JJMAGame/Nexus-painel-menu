@@ -25,7 +25,7 @@ public class AppTest
     }
 
     @Test
-    public void testClassesUseJava25Bytecode() throws IOException
+    public void testClassesUseJava21Bytecode() throws IOException
     {
         try (InputStream classResource = AppTest.class.getResourceAsStream("AppTest.class"))
         {
@@ -34,7 +34,7 @@ public class AppTest
             {
                 assertEquals(0xCAFEBABE, classFile.readInt());
                 classFile.readUnsignedShort(); // Minor version
-                assertEquals("Java 25 class-file version", 69, classFile.readUnsignedShort());
+                assertEquals("Java 21 class-file version", 65, classFile.readUnsignedShort());
             }
         }
     }

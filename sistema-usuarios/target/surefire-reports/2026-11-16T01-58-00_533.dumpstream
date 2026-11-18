@@ -1,0 +1,9 @@
+# Created at 2026-11-16T01:58:01.001
+WARNING: Final field tipo in class com.nexusmaven.admin has been mutated reflectively by class com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$1 in unnamed module @77468bd9 (file:/C:/Users/jorgi/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar)
+
+# Created at 2026-11-16T01:58:01.001
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+
+# Created at 2026-11-16T01:58:01.002
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+

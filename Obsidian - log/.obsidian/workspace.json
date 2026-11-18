@@ -61,16 +61,44 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "file:C:/Users/jorgi/AppData/Local/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalState/sessions/ED58CED69241D847FB64A670F276D8738CDD761D/transfers/2026-45/Administração - solicitações de pagamento, despesas, imóveis e acessos.md",
+                "file": "Administração - solicitações de pagamento, despesas, imóveis e acessos.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "Administração - solicitações de pagamento, despesas, imóveis e acessos"
             }
+          },
+          {
+            "id": "9797dc8ae96a90bc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "file:C:/Users/jorgi/OneDrive/Desktop/Administração - solicitações de pagamento, despesas, imóveis e acessos.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Administração - solicitações de pagamento, despesas, imóveis e acessos"
+            }
+          },
+          {
+            "id": "9fc4bf163ff7ef1c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Logs/Percepção.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Percepção"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -249,13 +277,13 @@
       "audio-recorder:Começar/parar a gravação de áudio": false
     }
   },
-  "active": "1e62645be4411196",
+  "active": "9797dc8ae96a90bc",
   "lastOpenFiles": [
     "Administração - solicitações de pagamento, despesas, imóveis e acessos.md",
-    "Logs/Iniciando a construção do Admin.md",
     "Logs/Percepção.md",
-    "Logs/Criando os java.md",
     "Logs/Direcionameto.md",
+    "Logs/Iniciando a construção do Admin.md",
+    "Logs/Criando os java.md",
     "Logs/Produzindo um projeto ( Parte 1 ).md",
     "Fluxograma.canvas",
     "file:D:/GITHUB REPOSITORY/Nexus-painel-menu/files/sistema-usuarios/README.md",

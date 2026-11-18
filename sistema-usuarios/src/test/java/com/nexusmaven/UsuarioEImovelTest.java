@@ -12,7 +12,7 @@ public class UsuarioEImovelTest {
 
     @Test
     public void usuarioValidoNormalizaNomeEEmail() {
-        Usuario u = new Usuario("  Maria  ", "  Maria@Nexus.COM ", "abc123", null);
+        Usuario u = new Usuario("  Maria  ", "  Maria@Nexus.COM ", "abc123", "11111111111");
         assertEquals("Maria", u.getNome());
         assertEquals("maria@nexus.com", u.getEmail());
     }
@@ -49,13 +49,13 @@ public class UsuarioEImovelTest {
 
     @Test
     public void senhasNosLimitesSaoAceitas() {
-        new Usuario("Ana", "ana@nexus.com", "123456", null);        // 6
-        new Usuario("Ana", "ana@nexus.com", "123456789012", null);  // 12
+        new Usuario("Ana", "ana@nexus.com", "123456", "11111111111");        // 6
+        new Usuario("Ana", "ana@nexus.com", "123456789012", "22222222222");  // 12
     }
 
     @Test
     public void autenticarIgnoraMaiusculasNoEmailMasNaoNaSenha() {
-        Usuario u = new Usuario("Ana", "ana@nexus.com", "Senha123", null);
+        Usuario u = new Usuario("Ana", "ana@nexus.com", "Senha123", "11111111111");
         assertTrue(u.autenticar("ANA@NEXUS.COM", "Senha123"));
         assertFalse(u.autenticar("ana@nexus.com", "senha123"));
         assertFalse(u.autenticar("outro@nexus.com", "Senha123"));
@@ -71,7 +71,7 @@ public class UsuarioEImovelTest {
 
     @Test
     public void imovelValidoRemoveEspacosDasPontas() {
-        Imovel i = new Imovel("  Casa 1 ", " Rua A, 10 ", "", 0.0);
+        Imovel i = new Imovel("  Casa 1 ", " Rua A, 10 ", "33333333333", 0.0);
         assertEquals("Casa 1", i.getNome());
         assertEquals("Rua A, 10", i.getLocalizacao());
     }

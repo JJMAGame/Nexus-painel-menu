@@ -45,8 +45,8 @@ public class JsonUtilTest {
     @Test
     public void usuariosSobrevivemAoRoundTripComOTipoCorreto() {
         List<Usuario> origem = new ArrayList<>();
-        origem.add(new admin("Ana", "ana@nexus.com", "senha123", ""));
-        origem.add(new inquilino("João", "joao@nexus.com", "senha456", ""));
+        origem.add(new admin("Ana", "ana@nexus.com", "senha123", "11111111111"));
+        origem.add(new inquilino("João", "joao@nexus.com", "senha456", "22222222222"));
         String arquivo = caminho("usuarios.json");
 
         JsonUtil.salvar(arquivo, origem);
@@ -95,8 +95,8 @@ public class JsonUtilTest {
     @Test
     public void acentosEApostrofosSaoGravadosEmUtf8EVoltamIntactos() throws IOException {
         List<Imovel> origem = List.of(
-                new Imovel("Casa de José", "R. Ubiratã, 226 - Alto José do Pinho, Recife - PE", "", 0.0),
-                new Imovel("D'Ávila & Cia", "Av. Ali, 22", "", 0.0));
+                new Imovel("Casa de José", "R. Ubiratã, 226 - Alto José do Pinho, Recife - PE", "33333333333", 0.0),
+                new Imovel("D'Ávila & Cia", "Av. Ali, 22", "44444444444", 0.0));
         String arquivo = caminho("imoveis.json");
 
         JsonUtil.salvar(arquivo, origem);
@@ -141,9 +141,9 @@ public class JsonUtilTest {
     @Test
     public void salvarSubstituiOConteudoAnteriorENaoDeixaTemporarioParaTras() {
         String arquivo = caminho("u.json");
-        JsonUtil.salvar(arquivo, List.of(new inquilino("Um", "um@um.com", "123456", ""),
-                          new inquilino("Dois", "dois@dois.com", "123456", "")));
-        JsonUtil.salvar(arquivo, List.of(new inquilino("Zé", "ze@ze.com", "123456", "")));
+        JsonUtil.salvar(arquivo, List.of(new inquilino("Um", "um@um.com", "123456", "11111111111"),
+                          new inquilino("Dois", "dois@dois.com", "123456", "22222222222")));
+        JsonUtil.salvar(arquivo, List.of(new inquilino("Zé", "ze@ze.com", "123456", "33333333333")));
 
         List<Usuario> lidos = JsonUtil.ler(arquivo, Usuario.class);
         assertEquals(1, lidos.size());
