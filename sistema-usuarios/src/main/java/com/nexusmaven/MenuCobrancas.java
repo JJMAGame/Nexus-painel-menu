@@ -3,6 +3,7 @@ package com.nexusmaven;
 import java.io.UncheckedIOException;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -48,7 +49,7 @@ public class MenuCobrancas {
             System.out.println("\n------ SOLICITAÇÕES DE PAGAMENTO ------");
             System.out.println("1 - Nova solicitação de pagamento");
             System.out.println("2 - Listar todas");
-            System.out.println("3 - Filtrar: Em dia (pagas)");
+            System.out.println("3 - Filtrar: Em dia");
             System.out.println("4 - Filtrar: A vencer");
             System.out.println("5 - Filtrar: Atrasadas (com multa e juros)");
             System.out.println("6 - Registrar pagamento e emitir recibo");
@@ -165,12 +166,17 @@ public class MenuCobrancas {
             String detalhe;
             switch (c.getStatus(data)) {
                 case EM_DIA:
-                    // ✅ MELHORIA: Verifica se a forma de pagamento não é nula
-                    String formaPagamento = c.getFormaPagamento() != null 
-                            ? c.getFormaPagamento().getRotulo() 
-                            : "Não informada";
-                    detalhe = "Pago " + Moeda.formatar(c.getValorPago()) + " em " + Datas.formatar(c.getDataPagamento())
-                            + " (" + formaPagamento + ", recibo " + c.getNumeroRecibo() + ")";
+                    if (c.estaPago()) {
+                        String formaPagamento = c.getFormaPagamento() != null
+                                ? c.getFormaPagamento().getRotulo()
+                                : "Não informada";
+                        detalhe = "Pago " + Moeda.formatar(c.getValorPago()) + " em " + Datas.formatar(c.getDataPagamento())
+                                + " (" + formaPagamento + ", recibo " + c.getNumeroRecibo() + ")";
+                    } else {
+                        // Em aberto, mas ainda longe do vencimento (mais de 7 dias).
+                        detalhe = "No prazo | " + textoVencimento(data, c.getVencimento());
+                        totalDevido += c.getValor();
+                    }
                     break;
                 case ATRASADO:
                     double devido = c.getTotalDevido(data, regra);
@@ -178,8 +184,8 @@ public class MenuCobrancas {
                     detalhe = c.diasDeAtraso(data) + " dias | multa " + Moeda.formatar(c.getMulta(data, regra))
                             + " + juros " + Moeda.formatar(c.getJuros(data, regra)) + " = " + Moeda.formatar(devido);
                     break;
-                default:
-                    detalhe = "";
+                default: // A_VENCER: faltam 7 dias ou menos
+                    detalhe = textoVencimento(data, c.getVencimento());
                     totalDevido += c.getValor();
             }
             totalValor += c.getValor();
@@ -189,7 +195,7 @@ public class MenuCobrancas {
         }
         System.out.println("-------------------------------------------");
         System.out.println(lista.size() + " solicitação(ões) | Valor dos aluguéis: " + Moeda.formatar(totalValor));
-        if (filtro != StatusCobranca.EM_DIA && totalDevido > 0) {
+        if (totalDevido > 0) {
             System.out.println("Total em aberto hoje (com encargos): " + Moeda.formatar(totalDevido));
         }
     }
@@ -253,6 +259,13 @@ public class MenuCobrancas {
                 + " | Data: " + Datas.formatar(c.getDataPagamento()));
         System.out.println("===========================================");
         System.out.println("✅ Pagamento registrado.");
+    }
+
+    /** Texto curto da contagem de dias até o vencimento. */
+    private static String textoVencimento(LocalDate hoje, LocalDate vencimento) {
+        if (vencimento == null) return "sem vencimento";
+        long dias = ChronoUnit.DAYS.between(hoje, vencimento);
+        return dias == 0 ? "vence hoje" : "vence em " + dias + " dia(s)";
     }
 
     private static int proximoId(List<? extends Lancamento> lista) {
