@@ -6,5 +6,13 @@
     "etapaAtual": "CONCLUIDA",
     "pendencias": [],
     "rendaMensal": 50000.0
+  },
+  {
+    "id": "LOC-002",
+    "cpfInquilino": "99988877700",
+    "nomeImovel": "Casa de jorge",
+    "etapaAtual": "CONCLUIDA",
+    "pendencias": [],
+    "rendaMensal": 10000.0
   }
 ]

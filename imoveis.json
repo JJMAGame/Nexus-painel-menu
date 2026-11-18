@@ -10,5 +10,11 @@
     "localizacao": "Rua Sylo Bittencourt - Boa Viagem, Recife - PE, 51030-080",
     "cpfProprietario": "12312312399",
     "valorAluguel": 9000.0
+  },
+  {
+    "nome": "Casa de jorge",
+    "localizacao": "Av. Rui Barbosa, S/N - Gra�as, Recife - PE, 50050-290",
+    "cpfProprietario": "99988877700",
+    "valorAluguel": 2500.0
   }
 ]

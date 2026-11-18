@@ -1,0 +1,13 @@
+[
+  {
+    "cpfInquilino": "99988877700",
+    "nomeInquilino": "Jorge Alves",
+    "nomeImovel": "Casa de jorge",
+    "mesReferencia": "12/2026",
+    "valorPago": 0.0,
+    "numeroRecibo": 0,
+    "id": 1,
+    "valor": 2500.0,
+    "vencimento": "2026-12-07"
+  }
+]
