@@ -1479,7 +1479,7 @@ aluguel
 
 **Duração:** 5 minutos · **Formato:** Login (main) → Inquilino → Admin
 **Foco:** mostrar, grupo a grupo, quais conceitos de POO foram respeitados
-**Stack:** Java 21, Maven, Gson, JUnit · **Autor:** Melqui
+**Stack:** Java 21, Maven, Gson, JUnit.
 
 > [!tip] Regra de ouro
 > Em relação ao código. mostre **1 arquivo** e diga **1 conceito respeitado**. Não explique o menu inteiro.
