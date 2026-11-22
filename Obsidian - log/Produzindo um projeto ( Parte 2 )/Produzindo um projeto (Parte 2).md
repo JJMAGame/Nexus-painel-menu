@@ -1482,7 +1482,7 @@ aluguel
 **Stack:** Java 21, Maven, Gson, JUnit · **Autor:** Melqui
 
 > [!tip] Regra de ouro
-> O código é o slide. Em cada grupo, mostre **1 arquivo** e diga **1 conceito respeitado**. Não explique o menu inteiro.
+> Em relação ao código. mostre **1 arquivo** e diga **1 conceito respeitado**. Não explique o menu inteiro.
 
 ## Cronômetro
 
